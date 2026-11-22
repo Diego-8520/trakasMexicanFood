@@ -1,0 +1,43 @@
+---
+// Video corto de fondo que se descarga solo al entrar en pantalla.
+// Si el clip aún no existe en public/videos/, se muestra solo el póster (sin <video>, sin 404).
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props {
+  clip?: string;            // nombre base: /videos/{clip}-{720|1080}.{webm|mp4}
+  poster: ImageMetadata;
+  alt: string;
+  prioridad?: boolean;      // true solo para el hero (póster = LCP)
+  class?: string;
+}
+const { clip, poster, alt, prioridad = false, class: clase } = Astro.props;
+const disponible = !!clip && existsSync(join(process.cwd(), 'public', 'videos', `${clip}-720.mp4`));
+---
+<div class:list={['vs', clase]} data-video={clip ?? ''} data-prioridad={prioridad ? '' : undefined}>
+  <Image
+    class="vs__poster" src={poster} alt={alt}
+    widths={[480, 960, 1600]} sizes="100vw" quality={72}
+    loading={prioridad ? 'eager' : 'lazy'} fetchpriority={prioridad ? 'high' : 'auto'}
+  />
+  {disponible && (
+    <video class="vs__video" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"
+      data-src={`/videos/${clip}`}></video>
+  )}
+  <div class="vs__capa"><slot /></div>
+</div>
+
+<script>
+  import { iniciarVideos } from '../scripts/videos';
+  iniciarVideos();
+</script>
+
+<style>
+  .vs { position: relative; overflow: hidden; isolation: isolate; }
+  .vs__poster, .vs__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .vs__video { opacity: 0; transition: opacity .6s var(--ease-out); }
+  .vs__video.listo { opacity: 1; }
+  .vs__capa { position: relative; z-index: 1; height: 100%; }
+</style>

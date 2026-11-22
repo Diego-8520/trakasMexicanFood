@@ -1,6 +1,19 @@
 ---
+// Portada provisional (Fase 3 la reemplaza): usada para probar VideoSection.
 import Base from '../layouts/Base.astro';
+import VideoSection from '../components/VideoSection.astro';
+import heroPoster from '../assets/posters/hero-provisional.jpg';
+import chilePoster from '../assets/posters/chile-zoom-poster.webp';
 ---
 <Base title="Trakas Mexican Food" description="Tacos de birria y comida mexicana. Pide por WhatsApp.">
-  <main class="wrap"><h1 class="display" style="font-size:4rem">Trakas Mexican Food</h1><p>Sitio en construcción.</p></main>
+  <VideoSection clip="hero" poster={heroPoster} alt="Trakas Mexican Food" prioridad class="demo-hero">
+    <h1 class="display" style="font-size:4rem;padding:2rem">Trakas Mexican Food</h1>
+  </VideoSection>
+  <div style="height:150vh"></div>
+  <VideoSection clip="chile-zoom" poster={chilePoster} alt="El Chile, mascota de Trakas" class="demo-chile" />
+  <div style="height:50vh"></div>
 </Base>
+<style>
+  :global(.demo-hero) { height: 100svh; }
+  :global(.demo-chile) { height: 70vh; }
+</style>

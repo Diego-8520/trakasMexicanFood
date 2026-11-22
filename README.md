@@ -25,7 +25,9 @@ npm run qr           # genera el QR del menú en public/qr/
 - `/qr-poster` póster imprimible con el QR (no aparece en Google).
 
 ## Videos y fotos
-Copiar las tomas originales a `media-original/` (no se suben a GitHub) y procesarlas con `scripts/procesar-media.mjs`.
+Copiar las tomas originales a `media-original/` (no se suben a GitHub) y ejecutar `npm run media`.
+Requiere ffmpeg (`winget install Gyan.FFmpeg`). Resultado: videos en `public/videos/` (AV1 + H.264, 720p/1080p, sin audio, máx. 10 s), pósters en `src/assets/posters/`, fotos en `src/assets/fotos/`.
+En una sección: `<VideoSection clip="nombre" poster={...} alt="..." />`. Si el clip no existe, se ve solo el póster.
 
 ## Publicación
 Vercel, conectado al repositorio de GitHub: cada push a `main` publica.
