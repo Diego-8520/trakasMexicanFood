@@ -14,11 +14,11 @@ const tonos = ['chile', 'comal', 'nopal', 'fuego'];
     </div>
     <a class="btn btn--vidrio label" href="/menu">Ver el menú completo</a>
   </div>
-  <ol class="caps__pista">
+  <ol class="caps__pista" tabindex="0" aria-label="Platos, desliza para ver más">
     {platos.map((p, i) => (
       <li class:list={['cap', `cap--${tonos[i % tonos.length]}`]} data-capitulo={p.id}>
         <span class="cap__n label" aria-hidden="true">Cap. {String(i + 1).padStart(2, '0')}</span>
-        {p.destacado && <span class="cap__sello label">★ Favorito</span>}
+        {p.destacado && i === 0 && <span class="cap__sello label">★ Favorito</span>}
         <div class="cap__info">
           <h3 class="display cap__nombre">{p.nombre}</h3>
           <p class="cap__desc">{p.desc}</p>
@@ -46,8 +46,8 @@ const tonos = ['chile', 'comal', 'nopal', 'fuego'];
   .cap--chile { --tono: linear-gradient(170deg, #e2341f, #9e1a0f); }
   .cap--comal { --tono: linear-gradient(170deg, #3a2a22, #1a1412); }
   .cap--nopal { --tono: linear-gradient(170deg, #2a8d44, #13511f); }
-  .cap--fuego { --tono: linear-gradient(170deg, #f7832f, #b9480e); }
-  .cap__n { position: absolute; top: 1.2rem; left: 1.4rem; font-size: 3.4rem; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(255,246,229,.75); }
+  .cap--fuego { --tono: linear-gradient(170deg, #d9601a, #8f3608); }
+  .cap__n { position: absolute; top: 1.2rem; left: 1.4rem; font-size: 3.4rem; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(255,246,229,.4); }
   .cap__sello { position: absolute; top: 1.3rem; right: -.2rem; padding: .3rem .9rem .2rem .8rem; background: var(--maiz); color: var(--comal); font-size: 1rem; transform: rotate(4deg); box-shadow: 0 4px 12px rgba(0,0,0,.3); }
   .cap__nombre { font-size: 2.3rem; line-height: .95; color: var(--tortilla); text-shadow: 3px 3px 0 rgba(0,0,0,.25); }
   .cap__desc { margin: .7rem 0 0; color: rgba(255,246,229,.88); font-size: .97rem; line-height: 1.45; }

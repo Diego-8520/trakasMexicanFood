@@ -18,6 +18,6 @@ Aprendizajes del historial del proyecto (ver `memoria/historial-proyecto.md` y e
 
 ## Estado de las piezas
 - **Sitio:** Astro 5 en la raíz (plan: `docs/superpowers/plans/2026-11-22-sitio-final-astro.md`). Prototipo anterior en `prototipo/` (no se publica).
-- **Logo vigente:** `prototipo/assets/logo-nuevo/` (master en `prototipo/assets/source/logo-trakas-master-v2.png`), hecho con la mascota oficial. Copia exacta para el sitio en `public/brand/logo/`.
-- **Mascota oficial:** `prototipo/assets/mascota-oficial/` (originales del cliente en `prototipo/assets/source/`). Copia exacta en `public/brand/mascota/`.
+- **Logo vigente:** `prototipo/assets/logo-nuevo/` (master en `prototipo/assets/source/logo-trakas-master-v2.png`), hecho con la mascota oficial. Copia exacta para el sitio en `src/assets/brand/logo/`.
+- **Mascota oficial:** `prototipo/assets/mascota-oficial/` (originales del cliente en `prototipo/assets/source/`). Copia exacta en `src/assets/brand/mascota/`.
 - **Fuente de titulares:** `public/fonts/TrakasBrush.woff2` (mínimo 28 px).

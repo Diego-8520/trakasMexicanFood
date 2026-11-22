@@ -17,7 +17,7 @@ npm run qr           # genera el QR del menú en public/qr/
 - **Datos del negocio y menú:** `src/data/trakas.ts` (un solo archivo; portada, `/menu` y Google se actualizan solos).
 - **Dominio:** `SITE_URL` en `astro.config.mjs` (después: `npm run qr` para regenerar el QR).
 - **Colores y tipografías:** `src/styles/tokens.css`.
-- **Marca (no modificar):** `public/brand/logo/`, `public/brand/mascota/`, `public/fonts/TrakasBrush.woff2`.
+- **Marca (no modificar):** `src/assets/brand/logo/`, `src/assets/brand/mascota/`, `public/fonts/TrakasBrush.woff2`.
 
 ## Páginas
 - `/` portada.

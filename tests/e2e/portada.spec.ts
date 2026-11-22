@@ -71,3 +71,36 @@ test.describe('sin JavaScript', () => {
     await expect(page.locator('#ubicacion [data-horario]')).toContainText('12:00');
   });
 });
+
+test('carrusel de platos accesible por teclado', async ({ page }) => {
+  await page.goto('/');
+  const pista = page.locator('#menu .caps__pista');
+  await expect(pista).toHaveAttribute('tabindex', '0');
+  await expect(pista).toHaveAttribute('aria-label', /platos/i);
+});
+
+test('móvil: hay acceso al menú desde la cabecera', async ({ page }) => {
+  await page.goto('/');
+  const enlace = page.locator('.nav a[href="/menu"]');
+  await expect(enlace).toBeVisible();
+  expect((await enlace.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+});
+
+test('un solo sello "Favorito" para no diluir el énfasis', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#menu .cap__sello')).toHaveCount(1);
+});
+
+test.describe('escritorio', () => {
+  test.use({ viewport: { width: 1440, height: 900 }, isMobile: false, hasTouch: false });
+  test('enlaces del menú superior con objetivo de 44 px', async ({ page }) => {
+    await page.goto('/');
+    for (const a of await page.locator('.nav__links a').all()) {
+      expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    }
+  });
+  test('sin desplazamiento horizontal', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  });
+});

@@ -20,6 +20,7 @@ import chile from '../../assets/brand/mascota/chile-presentando.png';
     <nav class="nav__links label" aria-label="Principal">
       <a href="#menu">Menú</a><a href="#chile">El Chile</a><a href="#nosotros">Nosotros</a><a href="#ubicacion">Visítanos</a>
     </nav>
+    <a class="btn btn--vidrio btn--chico label nav__menu" href="/menu">Menú</a>
     <a class="btn btn--sol btn--chico label" href={whatsappUrl()} target="_blank" rel="noopener">Pedir</a>
   </header>
 
@@ -56,6 +57,7 @@ import chile from '../../assets/brand/mascota/chile-presentando.png';
   .hero { position: relative; min-height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; isolation: isolate; }
   :global(.hero__fondo) { position: absolute !important; inset: 0; z-index: -2; }
   .hero__velo { position: absolute; inset: 0; z-index: -1; background:
+      radial-gradient(60% 70% at 72% 45%, rgba(242,106,27,.18), transparent 70%),
       linear-gradient(90deg, rgba(14,12,11,.9) 0%, rgba(14,12,11,.6) 42%, rgba(14,12,11,.1) 75%),
       linear-gradient(0deg, var(--comal) 0%, transparent 28%); }
   .picado { position: absolute; inset: 0 0 auto; height: 14px; opacity: .9;
@@ -65,14 +67,15 @@ import chile from '../../assets/brand/mascota/chile-presentando.png';
   .nav { display: flex; align-items: center; gap: 2rem; padding: 1.6rem clamp(1.2rem, 4vw, 3.5rem) 0; }
   .nav :global(img) { width: 84px; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
   .nav__links { display: flex; gap: 2rem; margin-left: auto; font-size: 1.15rem; }
-  .nav__links a { text-decoration: none; color: var(--tortilla-dim); transition: color .2s; }
+  .nav__links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--tortilla-dim); transition: color .2s; }
+  .nav__menu { display: none !important; }
   .nav__links a:hover { color: var(--maiz); }
 
   .hero__cuerpo { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 2rem; padding: 0 clamp(1.2rem, 5vw, 5rem); }
   .titulo { display: grid; font-size: clamp(3.4rem, 7.4vw, 7rem); line-height: .86; color: var(--tortilla); }
-  .titulo span { display: block; text-shadow: 5px 5px 0 var(--chile); animation: sube .8s var(--ease-out) both; }
+  .titulo span { display: block; text-shadow: 3px 3px 0 var(--chile); animation: sube .8s var(--ease-out) both; }
   .titulo span:nth-child(2) { animation-delay: .1s; padding-left: .35em; }
-  .titulo span:nth-child(3) { animation-delay: .2s; text-shadow: 5px 5px 0 var(--nopal); }
+  .titulo span:nth-child(3) { animation-delay: .2s; text-shadow: 3px 3px 0 var(--nopal); }
   .titulo__maiz { color: var(--maiz); }
   @keyframes sube { from { opacity: 0; transform: translateY(30px); } }
   .sub { max-width: 33rem; margin: 1.5rem 0 0; color: rgba(255,246,229,.78); font-size: 1.12rem; line-height: 1.65; }
@@ -98,11 +101,12 @@ import chile from '../../assets/brand/mascota/chile-presentando.png';
   @media (max-width: 899px) {
     .nav { padding-top: 1.2rem; }
     .nav__links { display: none; }
-    .nav .btn { margin-left: auto; }
+    .nav__menu { display: inline-flex !important; margin-left: auto; }
+    .nav { gap: .7rem; }
     .hero__velo { background: linear-gradient(0deg, var(--comal) 12%, rgba(14,12,11,.6) 55%, rgba(14,12,11,.25)); }
     .hero__cuerpo { grid-template-columns: 1fr; gap: 0; padding-bottom: 1rem; }
-    .anfitrion { order: -1; width: min(84vw, 380px); margin: -.5rem 0 -1rem; justify-self: center; }
-    .globo { left: -4%; top: 0; max-width: 9.5rem; padding: .6rem .8rem; font-size: .8rem; }
+    .anfitrion { order: -1; width: min(84vw, 380px); margin: .75rem 0 1rem; justify-self: center; }
+    .globo { left: -4%; top: 4%; max-width: 9.5rem; padding: .6rem .8rem; font-size: .8rem; }
     .titulo { font-size: clamp(3.2rem, 15vw, 4.6rem); }
     .sub { font-size: 1.02rem; }
     .desliza { display: none; }
