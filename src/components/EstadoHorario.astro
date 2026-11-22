@@ -37,7 +37,7 @@ const filas = orden.map((d) => ({ dia: DIAS[d], franja: trakas.horario.find((f) 
     display: inline-flex; align-items: center; gap: .55rem; margin: 0;
     padding: .4rem .85rem; border-radius: 999px;
     background: rgba(214,39,24,.16); border: 1px solid rgba(214,39,24,.5);
-    font: 700 .8rem/1.2 var(--f-body); color: var(--tortilla); white-space: nowrap;
+    font: 700 .875rem/1.25 var(--f-body); color: var(--tortilla); text-wrap: balance;
   }
   .horario__dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--chile); flex: none; }
   .horario__estado.abierto { background: rgba(31,122,53,.2); border-color: rgba(76,190,104,.55); }

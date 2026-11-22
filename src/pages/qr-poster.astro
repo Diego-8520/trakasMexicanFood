@@ -32,7 +32,7 @@ const urlCorta = new URL('/menu', Astro.site).host + '/menu';
   .tarjeta {
     position: relative; overflow: hidden;
     width: 105mm; height: 148mm; padding: 9mm 7mm 6mm;
-    display: flex; flex-direction: column; align-items: center; text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
     background:
       radial-gradient(90% 55% at 50% 0%, rgba(214,39,24,.35), transparent 70%),
       var(--comal);
@@ -54,17 +54,17 @@ const urlCorta = new URL('/menu', Astro.site).host + '/menu';
   .qr-zona { position: relative; margin-top: 4mm; }
   .qr {
     width: 50mm; height: 50mm; display: block;
-    background: #fff; border-radius: 3mm; padding: 1.5mm;
+    background: #fff; border-radius: 3mm; padding: 3mm;
     outline: 1.2mm solid var(--maiz); outline-offset: 0;
   }
   .chile {
-    position: absolute; width: 23mm; height: auto;
-    right: -25.5mm; bottom: -4mm; transform: rotate(6deg);
+    position: absolute; width: 30mm; height: auto;
+    right: -27mm; bottom: -3mm; transform: rotate(6deg);
     filter: drop-shadow(0 2mm 3mm rgba(0,0,0,.5));
   }
   .pasos { margin: 4mm 0 0; color: var(--maiz); font-size: 12pt; }
-  .url { margin: 1mm 0 0; font-size: 7.5pt; color: var(--tortilla-dim); }
-  .wa { margin: auto 0 0; font-size: 10pt; color: var(--tortilla); letter-spacing: .08em; }
+  .url { margin: 1mm 0 0; font-size: 8.5pt; color: var(--tortilla); }
+  .wa { margin: 3mm 0 0; font-size: 10pt; color: var(--tortilla); letter-spacing: .08em; }
 
   @media print {
     :global(body) { background: none; }

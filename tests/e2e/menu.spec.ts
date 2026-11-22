@@ -14,7 +14,7 @@ test('muestra los 7 platos con precio y "Pregunta" en bebidas', async ({ page })
   await page.goto(URL_QR);
   await expect(page.locator('[data-plato]')).toHaveCount(7);
   await expect(page.locator('[data-plato="birria"]')).toContainText('$25.000');
-  await expect(page.locator('#bebidas')).toContainText('Pregunta');
+  await expect(page.locator('#bebidas')).toContainText('Pregúntanos el precio en caja');
   await expect(page.locator('#proteinas')).toContainText('Chanchullo');
 });
 
@@ -56,4 +56,30 @@ test('sin desplazamiento horizontal en móvil', async ({ page }) => {
   await page.goto(URL_QR);
   const ancho = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(ancho).toBeLessThanOrEqual(0);
+});
+
+test('primera pantalla: el precio del plato 01 se ve completo encima del botón fijo', async ({ page }) => {
+  await page.goto(URL_QR);
+  const precio = await page.locator('[data-plato="birria"] .plato__precio').boundingBox();
+  const cta = await page.locator('[data-whatsapp-fijo]').boundingBox();
+  expect(precio!.y + precio!.height).toBeLessThan(cta!.y);
+});
+
+test('pestañas con objetivo táctil de 44 px o más', async ({ page }) => {
+  await page.goto(URL_QR);
+  for (const a of await page.locator('.tabs a').all()) {
+    expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test('la pestaña activa sigue a la sección visible', async ({ page }) => {
+  await page.goto(URL_QR);
+  await expect(page.locator('.tabs a[aria-current="true"]')).toHaveText('Platos');
+  await page.locator('#bebidas').scrollIntoViewIfNeeded();
+  await expect(page.locator('.tabs a[aria-current="true"]')).toHaveText('Bebidas');
+});
+
+test('bebidas sin precio no repiten "Pregunta" en cada fila', async ({ page }) => {
+  await page.goto(URL_QR);
+  await expect(page.locator('#bebidas li', { hasText: 'Pregunta' })).toHaveCount(0);
 });
