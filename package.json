@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "astro build && playwright test",
     "qr": "node scripts/generar-qr.mjs"
   },
   "dependencies": {
@@ -20,6 +20,11 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@playwright/test": "^1.65.1",
+    "@types/pngjs": "^6.0.5",
+    "@types/qrcode": "^1.5.6",
+    "jsqr": "^1.4.0",
+    "pngjs": "^7.0.0",
+    "qrcode": "^1.5.4",
     "typescript": "^5.9.3",
     "vitest": "^5.1.1"
   }
