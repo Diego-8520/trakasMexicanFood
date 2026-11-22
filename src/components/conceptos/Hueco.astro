@@ -11,7 +11,7 @@ const { texto, class: clase, tono = 'oscuro' } = Astro.props;
 <style>
   .hueco { position: relative; display: grid; place-content: center; justify-items: center; gap: .6rem; overflow: hidden;
     background: repeating-linear-gradient(135deg, rgba(255,246,229,.035) 0 14px, transparent 14px 28px), linear-gradient(160deg, #2b201b, #171211);
-    border: 1.5px dashed rgba(255,194,26,.35); color: rgba(255,246,229,.7); text-align: center; padding: 1rem; }
+    border: 1.5px dashed rgba(255,194,26,.35); color: rgba(255,246,229,.85); text-align: center; padding: 1rem; }
   .hueco--claro { background: repeating-linear-gradient(135deg, rgba(20,17,16,.04) 0 14px, transparent 14px 28px), #f3e6cc; border-color: rgba(185,120,46,.5); color: #7a5a37; }
   .hueco__play { width: 54px; height: 54px; border-radius: 50%; border: 2px solid currentColor; position: relative; opacity: .8; }
   .hueco__play::after { content: ''; position: absolute; left: 21px; top: 15px; border: 12px solid transparent; border-left: 18px solid currentColor; border-right: 0; }

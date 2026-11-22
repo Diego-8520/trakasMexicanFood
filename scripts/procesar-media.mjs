@@ -6,12 +6,27 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { mkdir, readdir, rm, stat } from 'node:fs/promises';
+import { existsSync, readdirSync } from 'node:fs';
 import { basename, extname, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const run = promisify(execFile);
-export const FFMPEG = process.env.FFMPEG_PATH || 'ffmpeg';
+/** ffmpeg: variable FFMPEG_PATH, instalación de winget (Gyan.FFmpeg) o el PATH. */
+function buscarFfmpeg() {
+  if (process.env.FFMPEG_PATH) return process.env.FFMPEG_PATH;
+  const raiz = process.env.LOCALAPPDATA && join(process.env.LOCALAPPDATA, 'Microsoft', 'WinGet', 'Packages');
+  if (raiz && existsSync(raiz)) {
+    for (const pkg of readdirSync(raiz).filter((d) => d.startsWith('Gyan.FFmpeg'))) {
+      for (const sub of readdirSync(join(raiz, pkg))) {
+        const exe = join(raiz, pkg, sub, 'bin', 'ffmpeg.exe');
+        if (existsSync(exe)) return exe;
+      }
+    }
+  }
+  return 'ffmpeg';
+}
+export const FFMPEG = buscarFfmpeg();
 export const FFPROBE = process.env.FFPROBE_PATH || FFMPEG.replace(/ffmpeg(\.exe)?$/i, (m, exe) => `ffprobe${exe || ''}`);
 
 const DURACION_MAX = 10;   // segundos

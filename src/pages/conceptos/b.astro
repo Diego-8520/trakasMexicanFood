@@ -27,7 +27,7 @@ const capitulos = trakas.menu.platos.filter((p) => ['birria', 'ramen', 'gringas'
       </div>
     </div>
     <figure class="anfitrion">
-      <Image src={presentando} alt="El Chile, anfitrión de Trakas" width={200} densities={[1, 2]} loading="eager" />
+      <Image src={presentando} alt="El Chile, anfitrión de Trakas" width={340} densities={[1, 2]} loading="eager" />
       <figcaption class="globo">¡Bienvenido! Yo te recomiendo la birria.</figcaption>
     </figure>
     <p class="scroll label" aria-hidden="true">Desliza</p>
@@ -77,15 +77,15 @@ const capitulos = trakas.menu.platos.filter((p) => ['birria', 'ramen', 'gringas'
   .btn--sol { background: var(--maiz); color: var(--comal); }
   .btn--vidrio { background: rgba(255,246,229,.08); border: 1px solid rgba(255,246,229,.18); box-shadow: inset 0 1px 0 rgba(255,255,255,.1); backdrop-filter: blur(8px); }
   .anfitrion { position: absolute; z-index: 3; right: clamp(1rem, 5vw, 5rem); bottom: 2.5rem; margin: 0; display: flex; align-items: flex-end; gap: .4rem; animation: flota 4.5s ease-in-out infinite; }
-  .anfitrion :global(img) { width: 200px; height: auto; filter: drop-shadow(0 20px 30px rgba(0,0,0,.6)); }
-  .globo { order: -1; margin-bottom: 9rem; max-width: 13rem; padding: .8rem 1rem; border-radius: 16px 16px 4px 16px; background: var(--tortilla); color: var(--comal); font-weight: 700; font-size: .95rem; line-height: 1.3; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .anfitrion :global(img) { width: clamp(220px, 24vw, 340px); height: auto; filter: drop-shadow(0 20px 30px rgba(0,0,0,.6)); }
+  .globo { order: -1; margin-bottom: 15rem; max-width: 13rem; padding: .8rem 1rem; border-radius: 16px 16px 4px 16px; background: var(--tortilla); color: var(--comal); font-weight: 700; font-size: .95rem; line-height: 1.3; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
   @keyframes flota { 50% { transform: translateY(-8px); } }
   .scroll { position: relative; z-index: 2; justify-self: center; padding-bottom: 1.4rem; color: var(--tortilla-dim); font-size: .95rem; }
 
   .caps { padding: 7rem 0 6rem; }
   .caps__cab { padding: 0 clamp(1.2rem, 6vw, 6rem); margin-bottom: 3rem; }
   .caps__titulo { font-size: clamp(2.6rem, 5vw, 4.4rem); line-height: .95; }
-  .caps__pista { display: grid; grid-auto-flow: column; grid-auto-columns: min(78vw, 340px); gap: 1.4rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 clamp(1.2rem, 6vw, 6rem) 1rem; scrollbar-width: none; }
+  .caps__pista { display: grid; grid-auto-flow: column; grid-auto-columns: min(78vw, 340px); gap: 1.4rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: clamp(1.2rem, 6vw, 6rem); padding: 0 clamp(1.2rem, 6vw, 6rem) 1rem; scrollbar-width: none; }
   .cap { scroll-snap-align: start; }
   :global(.cap__video) { aspect-ratio: 9 / 14; border-radius: 22px; }
   .cap__info { padding: 1.1rem .2rem 0; }

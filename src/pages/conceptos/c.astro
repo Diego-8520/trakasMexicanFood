@@ -37,7 +37,7 @@ const platos = trakas.menu.platos.slice(0, 4);
   </section>
 
   <section class="mascara">
-    <Hueco class="mascara__video" tono="oscuro" texto="Tu video (detrás de las letras): queso estirándose, consomé, fuego" />
+    <Hueco class="mascara__video" tono="claro" texto="Tu video (detrás de las letras): queso estirándose, consomé, fuego" />
     <h2 class="display mascara__texto" aria-label="Birria">BIRRIA</h2>
   </section>
 
@@ -89,10 +89,9 @@ const platos = trakas.menu.platos.slice(0, 4);
 
   .platos { width: min(100% - 2.5rem, 1200px); margin: 0 auto; padding: 6rem 0; }
   .platos__titulo { font-size: clamp(2.6rem, 5vw, 4.6rem); color: var(--chile); margin-bottom: 2.5rem; }
-  .platos__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 1.5rem; }
+  .platos__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
   .plato { background: #fff; border-radius: 22px; padding: 1rem 1rem 1.3rem; box-shadow: 0 14px 30px -12px rgba(120,60,20,.25); }
-  .plato--0 { grid-row: span 2; }
-  .plato--0 :global(.plato__foto) { aspect-ratio: 4 / 5; }
+  
   :global(.plato__foto) { aspect-ratio: 4 / 3; border-radius: 14px; }
   .plato__nombre { font-size: 2rem; margin: 1rem 0 .4rem; }
   .plato p { color: #5a4a40; font-size: .98rem; margin: 0 0 .8rem; }
