@@ -40,3 +40,18 @@ export function estadoHorario(ahora: Date, horario: Franja[]): { abierto: boolea
   const cuando = mejor.f.dia === dia && mejor.delta < 1440 ? 'hoy' : mejor.f.dia === (dia + 1) % 7 ? 'mañana' : DIAS[mejor.f.dia];
   return { abierto: false, texto: `Cerrado — abrimos ${cuando} ${mejor.f.abre}` };
 }
+
+const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
+
+/** Texto corto del horario, p. ej. "Miércoles a domingo desde las 12:00" (respaldo sin JavaScript). */
+export function resumenHorario(horario: Franja[]): string {
+  const orden = (d: number) => (d + 6) % 7; // lunes primero
+  const dias = [...new Set(horario.map((f) => f.dia))].sort((a, b) => orden(a) - orden(b));
+  if (!dias.length) return 'Cerrado';
+  const consecutivos = dias.every((d, i) => i === 0 || orden(d) === orden(dias[i - 1]) + 1);
+  const textoDias = dias.length === 1 ? cap(DIAS[dias[0]])
+    : consecutivos ? `${cap(DIAS[dias[0]])} a ${DIAS[dias[dias.length - 1]]}`
+    : cap(dias.map((d) => DIAS[d]).join(', '));
+  const aperturas = [...new Set(horario.map((f) => f.abre))];
+  return aperturas.length === 1 ? `${textoDias} desde las ${aperturas[0]}` : textoDias;
+}

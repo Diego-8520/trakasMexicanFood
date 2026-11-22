@@ -30,3 +30,14 @@ describe('estadoHorario', () => {
     expect(estadoHorario(new Date('2026-11-28T01:00:00-05:00'), h).abierto).toBe(true);
   });
 });
+
+import { resumenHorario } from '../src/lib/horario';
+describe('resumenHorario', () => {
+  it('resume el horario actual a partir de los datos', () => {
+    expect(resumenHorario(trakas.horario)).toBe('Miércoles a domingo desde las 12:00');
+  });
+  it('se actualiza si cambian los días', () => {
+    const h = [4, 5, 6, 0].map((dia) => ({ dia, abre: '13:00', cierra: '22:00' }));
+    expect(resumenHorario(h)).toBe('Jueves a domingo desde las 13:00');
+  });
+});

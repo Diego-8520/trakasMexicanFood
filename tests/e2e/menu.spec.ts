@@ -31,6 +31,8 @@ test.describe('sin JavaScript', () => {
     await page.goto(URL_QR);
     await expect(page.locator('[data-plato="ramen"]')).toContainText('$20.000');
     await expect(page.locator('[data-horario]')).toContainText('12:00');
+    await expect(page.locator('[data-estado]').first()).toHaveText('Miércoles a domingo desde las 12:00');
+    await expect(page.locator('[data-estado-wrap]').first()).not.toHaveClass(/cerrado|abierto/);
   });
 });
 
@@ -49,7 +51,7 @@ test('peso total transferido < 100 KB (HTML comprimido como en Vercel)', async (
   const lista = await page.evaluate(() =>
     (performance.getEntriesByType('resource') as PerformanceResourceTiming[]).map((r) => `${(r.encodedBodySize / 1024).toFixed(1)}KB ${r.name.split('/').pop()}`));
   console.log(`/menu transfiere ${(total / 1024).toFixed(1)} KB (HTML gzip ${(html / 1024).toFixed(1)} KB)\n  ${lista.join('\n  ')}`);
-  expect(total).toBeLessThan(100 * 1024);
+  expect(total).toBeLessThan(96 * 1024); // margen de 4 KB bajo el tope de 100 KB
 });
 
 test('sin desplazamiento horizontal en móvil', async ({ page }) => {
