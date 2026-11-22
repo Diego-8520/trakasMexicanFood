@@ -3,6 +3,9 @@
 // Mientras no hay videos, la tarjeta muestra el número y el nombre sobre el comal.
 import { trakas } from '../../data/trakas';
 import { formatoPrecio } from '../../lib/formato';
+import { posterDe } from '../../lib/posters';
+import VideoSection from '../VideoSection.astro';
+// Clip vertical de cada plato: media-original/{id}.mp4 (birria, ramen, volcanes, gringas) → npm run media
 const orden = ['birria', 'ramen', 'volcanes', 'gringas'];
 const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!).filter(Boolean);
 ---
@@ -18,6 +21,7 @@ const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!
     {capitulos.map((p, i) => (
       <li class="cap" data-capitulo={p.id}>
         <div class="cap__media" aria-hidden="true">
+          {posterDe(p.id) && <VideoSection clip={p.id} poster={posterDe(p.id)!} alt="" class="cap__vs" />}
           <span class="cap__num label">{String(i + 1).padStart(2, '0')}</span>
         </div>
         <div class="cap__info">
@@ -44,7 +48,8 @@ const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!
     background: radial-gradient(120% 70% at 80% 0%, rgba(242,106,27,.22), transparent 60%), linear-gradient(170deg, #2b201b, #141110);
     border: 1px solid rgba(255,246,229,.08); transition: transform .35s var(--ease-out); }
   .cap:hover .cap__media { transform: translateY(-6px); }
-  .cap__num { font-size: 2rem; line-height: 1; color: rgba(255,246,229,.5); }
+  .cap__num { position: relative; font-size: 2rem; line-height: 1; color: rgba(255,246,229,.7); text-shadow: 0 2px 8px rgba(0,0,0,.6); }
+  :global(.cap__vs) { position: absolute !important; inset: 0; }
   .cap__info { padding: 1.1rem .2rem 0; }
   .cap__n { color: var(--fuego); font-size: 1rem; }
   .cap__nombre { font-size: 2rem; margin: .3rem 0 .6rem; }

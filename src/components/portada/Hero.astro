@@ -4,9 +4,12 @@
 import { Image } from 'astro:assets';
 import VideoSection from '../VideoSection.astro';
 import { whatsappUrl } from '../../lib/formato';
-import poster from '../../assets/posters/hero-provisional.webp';
+import provisional from '../../assets/posters/hero-provisional.webp';
+import { posterDe } from '../../lib/posters';
 import logo from '../../assets/brand/logo/logo-sticker.png';
 import chile from '../../assets/brand/mascota/chile-presentando-sticker-1024.webp';
+// Video de fondo: media-original/hero.mp4 → npm run media
+const poster = posterDe('hero') ?? provisional;
 ---
 <section class="hero" aria-labelledby="hero-titulo">
   <VideoSection clip="hero" poster={poster} alt="" prioridad class="hero__fondo" />

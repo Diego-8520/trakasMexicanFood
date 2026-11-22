@@ -2,7 +2,10 @@
 // "Conoce al Chile": sección propia de la mascota, con su video (concepto B).
 import { Image } from 'astro:assets';
 import VideoSection from '../VideoSection.astro';
-import poster from '../../assets/posters/chile-zoom-poster.webp';
+import { posterDe } from '../../lib/posters';
+// Video propio del Chile: media-original/chile.mp4; mientras tanto, el clip de muestra
+const clip = posterDe('chile') ? 'chile' : 'chile-zoom';
+const poster = posterDe(clip)!;
 import taco from '../../assets/brand/mascota/chile-taco-sticker-1024.webp';
 import fuego from '../../assets/brand/mascota/chile-fuego-sticker-1024.webp';
 import moto from '../../assets/brand/mascota/chile-moto-sticker-1024.webp';
@@ -14,7 +17,7 @@ const poses = [
 ---
 <section id="chile" class="chile" aria-labelledby="chile-titulo">
   <div class="chile__video">
-    <VideoSection clip="chile-zoom" poster={poster} alt="El Chile, mascota de Trakas, saludando" class="chile__vs" />
+    <VideoSection clip={clip} poster={poster} alt="El Chile, mascota de Trakas, saludando" class="chile__vs" />
   </div>
   <div class="chile__texto">
     <p class="label kicker">El Chile</p>
