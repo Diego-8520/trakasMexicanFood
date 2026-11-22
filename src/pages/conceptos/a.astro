@@ -1,0 +1,131 @@
+---
+// CONCEPTO A — "Cartel de lucha": maximalista, cartel callejero, la mascota rompe el marco. (Maqueta desechable)
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Hueco from '../../components/conceptos/Hueco.astro';
+import { trakas } from '../../data/trakas';
+import { formatoPrecio, whatsappUrl } from '../../lib/formato';
+import logo from '../../assets/brand/logo/logo.png';
+import fuego from '../../assets/brand/mascota/chile-fuego.png';
+import taco from '../../assets/brand/mascota/chile-taco.png';
+const [birria, , , ramen] = trakas.menu.platos;
+---
+<Base title="Concepto A — Cartel de lucha" description="Maqueta" noIndex>
+  <div class="picado" aria-hidden="true"></div>
+  <header class="nav">
+    <Image src={logo} alt="Trakas Mexican Food" width={92} densities={[1, 2]} />
+    <nav class="nav__links label"><a href="#">Menú</a><a href="#">Nosotros</a><a href="#">Visítanos</a></nav>
+    <a class="btn btn--wa label" href={whatsappUrl()}>Pedir</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero__texto">
+      <p class="label kicker">Birria · Tacos · Ramen · {trakas.eslogan}</p>
+      <h1 class="display titulo">
+        <span class="t1">Moja.</span>
+        <span class="t2">Muerde.</span>
+        <span class="t3">Repite.</span>
+      </h1>
+      <p class="sub">Tacos de birria dorados en su grasa, con consomé caliente para mojar. Así se come en Trakas.</p>
+      <div class="ctas">
+        <a class="btn btn--wa label" href={whatsappUrl()}>Pedir por WhatsApp</a>
+        <a class="btn btn--linea label" href="/menu">Ver el menú</a>
+      </div>
+    </div>
+    <div class="hero__arte">
+      <Hueco class="hero__video" texto="Tu video: taco de birria entrando al consomé (6 s)" />
+      <Image class="hero__chile" src={fuego} alt="El Chile, mascota de Trakas, lanzando fuego" width={620} densities={[1, 2]} loading="eager" />
+    </div>
+  </section>
+
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta__pista label">
+      {Array.from({ length: 2 }).map(() => (
+        <span>¡Pica rico! ★ Birria en consomé ★ Domicilios por WhatsApp ★ Miércoles a domingo ★ Birria ramen ★&nbsp;</span>
+      ))}
+    </div>
+  </div>
+
+  <section class="favs">
+    <h2 class="display favs__titulo">Los que mandan</h2>
+    {[birria, ramen].map((p, i) => (
+      <article class:list={['fav', { 'fav--inv': i % 2 }]}>
+        <Hueco class="fav__video" texto={`Tu video: ${p.nombre}`} />
+        <div class="fav__texto">
+          <span class="fav__num label">0{i + 1}</span>
+          <h3 class="display fav__nombre">{p.nombre}</h3>
+          <p>{p.desc}</p>
+          <p class="precio label">{formatoPrecio(p.precio)}</p>
+        </div>
+      </article>
+    ))}
+    <Image class="favs__chile" src={taco} alt="" width={300} densities={[1, 2]} />
+  </section>
+</Base>
+
+<style>
+  :global(body) { background: var(--comal); }
+  :global(body)::after { /* grano fijo */
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .picado { height: 30px; background: repeating-linear-gradient(90deg, var(--chile) 0 64px, var(--maiz) 64px 128px, var(--nopal) 128px 192px, var(--fuego) 192px 256px);
+    -webkit-mask: radial-gradient(12px at 50% 100%, transparent 98%, #000) 0 0 / 32px 100%; mask: radial-gradient(12px at 50% 100%, transparent 98%, #000) 0 0 / 32px 100%; }
+  .nav { display: flex; align-items: center; gap: 2rem; width: min(100% - 2.5rem, 1320px); margin: .5rem auto 0; }
+  .nav :global(img) { width: 92px; height: auto; }
+  .nav__links { display: flex; gap: 1.8rem; margin-left: auto; font-size: 1.2rem; }
+  .nav__links a { text-decoration: none; }
+  .btn { display: inline-flex; align-items: center; min-height: 48px; padding: .2rem 1.4rem 0; border-radius: 999px; text-decoration: none; font-size: 1.25rem; }
+  .btn--wa { background: var(--nopal); color: #fff; box-shadow: 0 5px 0 #0f4a1f; }
+  .btn--linea { border: 2px solid var(--tortilla); }
+
+  .hero { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 2rem;
+    width: min(100% - 2.5rem, 1320px); margin: 0 auto; min-height: calc(100dvh - 140px); padding-block: 2rem 4rem; }
+  .hero::before { content: ''; position: absolute; inset: -10% -30% auto 30%; height: 120%; z-index: -1;
+    background: radial-gradient(closest-side, rgba(214,39,24,.45), transparent); }
+  .kicker { color: var(--maiz); font-size: 1.2rem; margin: 0 0 1rem; }
+  .titulo { display: grid; font-size: clamp(4rem, 9.5vw, 9.5rem); line-height: .82; }
+  .titulo span { display: block; animation: sube .8s var(--ease-bounce) both; }
+  .t1 { color: var(--tortilla); text-shadow: 6px 6px 0 var(--chile); }
+  .t2 { color: var(--maiz); text-shadow: 6px 6px 0 var(--chile); transform: translateX(.3em) rotate(-2deg); animation-delay: .12s !important; }
+  .t3 { color: var(--tortilla); text-shadow: 6px 6px 0 var(--nopal); animation-delay: .24s !important; }
+  @keyframes sube { from { opacity: 0; transform: translateY(40px) scale(.9); } }
+  .sub { max-width: 32rem; font-size: 1.15rem; color: var(--tortilla-dim); margin: 1.6rem 0 0; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.8rem; }
+
+  .hero__arte { position: relative; aspect-ratio: 4 / 5; }
+  :global(.hero__video) { position: absolute !important; inset: 6% 4% 0 18%; place-content: start center !important; padding-top: 4rem !important; border-radius: 6px; transform: rotate(3deg);
+    clip-path: polygon(0 2%, 8% 0, 22% 3%, 40% 0, 60% 2%, 78% 0, 100% 3%, 98% 30%, 100% 60%, 97% 100%, 70% 97%, 45% 100%, 20% 97%, 0 100%, 3% 60%, 0 30%); }
+  .hero__chile { position: absolute; width: 78%; height: auto; left: -14%; bottom: -6%; z-index: 2;
+    filter: drop-shadow(0 30px 40px rgba(0,0,0,.6)); animation: entra 1s var(--ease-bounce) .3s both; }
+  @keyframes entra { from { opacity: 0; transform: translate(-60px, 60px) rotate(-10deg) scale(.8); } }
+
+  .cinta { background: var(--chile); transform: rotate(-2deg); margin: -1rem -2rem 0; padding: .8rem 0; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .cinta__pista { display: flex; width: max-content; font-size: 2rem; color: var(--tortilla); animation: marquesina 26s linear infinite; }
+  @keyframes marquesina { to { transform: translateX(-50%); } }
+
+  .favs { position: relative; width: min(100% - 2.5rem, 1200px); margin: 0 auto; padding: 7rem 0 6rem; }
+  .favs__titulo { font-size: clamp(3rem, 7vw, 6rem); color: var(--maiz); margin-bottom: 3rem; }
+  .fav { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; margin-bottom: 4rem; }
+  .fav--inv { grid-template-columns: 1fr 1.2fr; }
+  .fav--inv :global(.fav__video) { order: 2; }
+  :global(.fav__video) { aspect-ratio: 16 / 10; border-radius: var(--radius); }
+  .fav__num { font-size: 4rem; color: transparent; -webkit-text-stroke: 2px var(--fuego); }
+  .fav__nombre { font-size: clamp(2.4rem, 4vw, 3.6rem); margin: .2rem 0 1rem; }
+  .fav__texto p { color: var(--tortilla-dim); font-size: 1.1rem; max-width: 30rem; }
+  .precio { display: inline-block; background: var(--maiz); color: var(--comal) !important; font-size: 1.8rem !important; padding: .3rem 1rem .1rem 1.3rem; clip-path: polygon(10px 0,100% 0,100% 100%,10px 100%,0 50%); transform: rotate(-2deg); }
+  .favs__chile { position: absolute; width: 220px; height: auto; right: -2rem; top: 3rem; transform: rotate(8deg); }
+
+  @media (max-width: 767px) {
+    .nav__links { display: none; }
+    .nav .btn { margin-left: auto; }
+    .hero { grid-template-columns: 1fr; min-height: 0; padding-top: 1rem; }
+    .hero__arte { order: -1; aspect-ratio: 1; margin: 0 -.5rem; }
+    .hero__chile { width: 70%; left: -4%; }
+    .titulo { font-size: 4.4rem; }
+    .fav, .fav--inv { grid-template-columns: 1fr; gap: 1.2rem; }
+    .fav--inv :global(.fav__video) { order: 0; }
+    .favs__chile { width: 130px; top: 4rem; right: -1rem; }
+    .cinta__pista { font-size: 1.4rem; }
+  }
+</style>

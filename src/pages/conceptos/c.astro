@@ -1,0 +1,111 @@
+---
+// CONCEPTO C — "Fiesta de maíz": claro, alegre, la mascota gigante es el centro. (Maqueta desechable)
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Hueco from '../../components/conceptos/Hueco.astro';
+import { trakas } from '../../data/trakas';
+import { formatoPrecio, whatsappUrl } from '../../lib/formato';
+import logo from '../../assets/brand/logo/logo.png';
+import presentando from '../../assets/brand/mascota/chile-presentando.png';
+import taco from '../../assets/brand/mascota/chile-taco-sticker-1024.webp';
+import moto from '../../assets/brand/mascota/chile-moto-sticker-1024.webp';
+const platos = trakas.menu.platos.slice(0, 4);
+---
+<Base title="Concepto C — Fiesta de maíz" description="Maqueta" noIndex>
+  <header class="nav">
+    <Image src={logo} alt="Trakas Mexican Food" width={96} densities={[1, 2]} />
+    <nav class="label"><a href="#">Menú</a><a href="#">El Chile</a><a href="#">Visítanos</a></nav>
+    <a class="btn btn--rojo label" href={whatsappUrl()}>Pedir ya</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero__texto">
+      <p class="sello label">Hola, soy el Chile</p>
+      <h1 class="display titulo">¡Pica<br />rico!</h1>
+      <p class="sub">Tacos de birria, birria ramen, gringas y dorilocos. Comida mexicana con corazón colombiano, servida con mucha actitud.</p>
+      <div class="ctas">
+        <a class="btn btn--rojo label" href={whatsappUrl()}>Pedir por WhatsApp</a>
+        <a class="btn btn--linea label" href="/menu">Ver el menú</a>
+      </div>
+    </div>
+    <div class="hero__arte">
+      <div class="sol" aria-hidden="true"></div>
+      <Image class="chile" src={presentando} alt="El Chile, mascota de Trakas, saludando" width={640} densities={[1, 2]} loading="eager" />
+      <Image class="sticker s1" src={taco} alt="" width={170} densities={[1, 2]} />
+      <Image class="sticker s2" src={moto} alt="" width={190} densities={[1, 2]} />
+    </div>
+  </section>
+
+  <section class="mascara">
+    <Hueco class="mascara__video" tono="oscuro" texto="Tu video (detrás de las letras): queso estirándose, consomé, fuego" />
+    <h2 class="display mascara__texto" aria-label="Birria">BIRRIA</h2>
+  </section>
+
+  <section class="platos">
+    <h2 class="display platos__titulo">Lo que pide todo el mundo</h2>
+    <div class="platos__grid">
+      {platos.map((p, i) => (
+        <article class:list={['plato', `plato--${i}`]}>
+          <Hueco class="plato__foto" tono="claro" texto={`Foto: ${p.nombre}`} />
+          <h3 class="display plato__nombre">{p.nombre}</h3>
+          <p>{p.desc}</p>
+          <span class="label plato__precio">{formatoPrecio(p.precio)}</span>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  :global(body) { background: var(--tortilla); color: var(--comal); }
+  .nav { display: flex; align-items: center; gap: 2rem; width: min(100% - 2.5rem, 1320px); margin: 0 auto; padding-top: 1rem; }
+  .nav :global(img) { width: 96px; height: auto; }
+  .nav nav { display: flex; gap: 1.8rem; margin-left: auto; font-size: 1.2rem; }
+  .nav nav a { text-decoration: none; color: var(--comal); }
+  .btn { display: inline-flex; align-items: center; min-height: 50px; padding: .2rem 1.5rem 0; border-radius: 14px; text-decoration: none; font-size: 1.25rem; transition: transform .15s var(--ease-out); }
+  .btn:active { transform: translateY(2px); }
+  .btn--rojo { background: var(--chile); color: #fff; box-shadow: 0 5px 0 #8f170d; }
+  .btn--linea { border: 2.5px solid var(--comal); color: var(--comal); }
+
+  .hero { display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; width: min(100% - 2.5rem, 1320px); margin: 0 auto; min-height: calc(100dvh - 110px); }
+  .sello { display: inline-block; background: var(--nopal); color: #fff; padding: .35rem .9rem .2rem; border-radius: 8px; font-size: 1.1rem; transform: rotate(-3deg); }
+  .titulo { font-size: clamp(5rem, 13vw, 12rem); line-height: .8; color: var(--chile); margin-top: 1rem; text-shadow: 6px 6px 0 var(--maiz); }
+  .sub { max-width: 30rem; font-size: 1.15rem; color: #4a3b33; margin: 1.6rem 0 0; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.8rem; }
+  .hero__arte { position: relative; aspect-ratio: 1; }
+  .sol { position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #ffd65a, var(--maiz) 55%, #f2a71b);
+    box-shadow: 0 0 0 18px rgba(255,194,26,.25), 0 0 0 40px rgba(255,194,26,.12); }
+  .chile { position: absolute; width: 92%; height: auto; left: 2%; bottom: -2%; filter: drop-shadow(0 26px 30px rgba(120,60,20,.35)); animation: salta 1s var(--ease-bounce) both; }
+  @keyframes salta { from { opacity: 0; transform: translateY(80px) scale(.85); } }
+  .sticker { position: absolute; height: auto; filter: drop-shadow(0 10px 14px rgba(120,60,20,.3)); animation: flota 5s ease-in-out infinite; }
+  .s1 { width: 150px; left: -4%; top: 12%; transform: rotate(-12deg); }
+  .s2 { width: 170px; right: -6%; bottom: 10%; transform: rotate(8deg); animation-delay: -2s; }
+  @keyframes flota { 50% { translate: 0 -12px; } }
+
+  .mascara { position: relative; height: 70vh; min-height: 420px; margin-top: 3rem; isolation: isolate; }
+  :global(.mascara__video) { position: absolute !important; inset: 0; border: 0 !important; place-content: end center !important; padding-bottom: 2rem !important; }
+  .mascara__texto { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font-size: clamp(6rem, 26vw, 24rem); line-height: 1;
+    background: var(--tortilla); color: #000; mix-blend-mode: screen; }
+
+  .platos { width: min(100% - 2.5rem, 1200px); margin: 0 auto; padding: 6rem 0; }
+  .platos__titulo { font-size: clamp(2.6rem, 5vw, 4.6rem); color: var(--chile); margin-bottom: 2.5rem; }
+  .platos__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 1.5rem; }
+  .plato { background: #fff; border-radius: 22px; padding: 1rem 1rem 1.3rem; box-shadow: 0 14px 30px -12px rgba(120,60,20,.25); }
+  .plato--0 { grid-row: span 2; }
+  .plato--0 :global(.plato__foto) { aspect-ratio: 4 / 5; }
+  :global(.plato__foto) { aspect-ratio: 4 / 3; border-radius: 14px; }
+  .plato__nombre { font-size: 2rem; margin: 1rem 0 .4rem; }
+  .plato p { color: #5a4a40; font-size: .98rem; margin: 0 0 .8rem; }
+  .plato__precio { background: var(--maiz); padding: .25rem .8rem .1rem; border-radius: 8px; font-size: 1.4rem; }
+
+  @media (max-width: 767px) {
+    .nav nav { display: none; }
+    .nav .btn { margin-left: auto; }
+    .hero { grid-template-columns: 1fr; min-height: 0; }
+    .hero__arte { order: -1; width: 92%; margin: 0 auto; }
+    .titulo { font-size: 6rem; }
+    .s1 { width: 90px; } .s2 { width: 100px; }
+    .platos__grid { grid-template-columns: 1fr; }
+    .plato--0 { grid-row: auto; }
+  }
+</style>
