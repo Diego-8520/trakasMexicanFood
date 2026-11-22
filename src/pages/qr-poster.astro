@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { trakas } from '../data/trakas';
 import logo from '../assets/brand/logo/logo.png';
-import chile from '../assets/brand/mascota/chile-presentando-sticker-1024.webp';
+import chile from '../assets/brand/mascota/chile-presentando-sticker.webp';
 
 const urlCorta = new URL('/menu', Astro.site).host + '/menu';
 ---
@@ -54,7 +54,7 @@ const urlCorta = new URL('/menu', Astro.site).host + '/menu';
   .qr-zona { position: relative; margin-top: 4mm; }
   .qr {
     width: 50mm; height: 50mm; display: block;
-    background: #fff; border-radius: 3mm; padding: 3mm;
+    background: #fff; border-radius: 3mm; padding: 1mm;
     outline: 1.2mm solid var(--maiz); outline-offset: 0;
   }
   .chile {

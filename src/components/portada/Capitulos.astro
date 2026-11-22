@@ -1,13 +1,16 @@
 ---
 // "La carta, por capítulos" (concepto B): tarjeta vertical (aquí irá el clip de cada plato) y datos debajo.
-// Mientras no hay videos, la tarjeta muestra el número y el nombre sobre el comal.
+// Sin video usa la foto del plato; sin foto, el número sobre el comal.
 import { trakas } from '../../data/trakas';
 import { formatoPrecio } from '../../lib/formato';
-import { posterDe } from '../../lib/posters';
+import { posterDe, fotoDe } from '../../lib/media';
 import VideoSection from '../VideoSection.astro';
-// Clip vertical de cada plato: media-original/{id}.mp4 (birria, ramen, volcanes, gringas) → npm run media
+// Clip vertical de cada plato: media-original/{id}.mp4 · foto: media-original/{id}.jpg → npm run media
 const orden = ['birria', 'ramen', 'volcanes', 'gringas'];
-const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!).filter(Boolean);
+const capitulos = orden
+  .map((id) => trakas.menu.platos.find((p) => p.id === id))
+  .filter((p) => p !== undefined)
+  .map((p) => ({ ...p, poster: posterDe(p.id) ?? fotoDe(p.id) }));
 ---
 <section id="menu" class="caps" aria-labelledby="caps-titulo">
   <div class="caps__cab">
@@ -21,7 +24,7 @@ const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!
     {capitulos.map((p, i) => (
       <li class="cap" data-capitulo={p.id}>
         <div class="cap__media" aria-hidden="true">
-          {posterDe(p.id) && <VideoSection clip={p.id} poster={posterDe(p.id)!} alt="" class="cap__vs" />}
+          {p.poster && <VideoSection clip={p.id} poster={p.poster} alt="" class="cap__vs" />}
           <span class="cap__num label">{String(i + 1).padStart(2, '0')}</span>
         </div>
         <div class="cap__info">

@@ -12,7 +12,7 @@ const px = async (f: string, x: number, y: number) => {
 };
 
 describe('limpiar-huecos (chile presentando)', () => {
-  const orig = 'prototipo/assets/mascota-oficial/chile-presentando.png';
+  const orig = 'marca/mascota/v1-con-huecos/chile-presentando.png';
   const out = join(mkdtempSync(join(tmpdir(), 'hueco-')), 'p.png');
   beforeAll(async () => { await limpiar(orig, out, HUECOS.presentando); }, 60_000);
 

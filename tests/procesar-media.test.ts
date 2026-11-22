@@ -3,6 +3,7 @@ import { mkdtempSync, statSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import sharp from 'sharp';
 import { procesarVideo, procesarFoto, FFMPEG, FFPROBE } from '../scripts/procesar-media.mjs';
 
 const probe = (f: string) => JSON.parse(execFileSync(FFPROBE, ['-v', 'error', '-show_streams', '-show_format', '-of', 'json', f]).toString());
@@ -43,11 +44,14 @@ describe('procesar-media', () => {
     expect(statSync(join(salida, 'toma-birria-01-720.webm')).size).toBeLessThanOrEqual(1.5 * 1024 * 1024);
   });
 
-  it('fotos: WebP y AVIF en 480, 960 y 1600 px', async () => {
+  it('fotos: una sola versión WebP de 2000 px máx., sin metadatos (Astro genera los tamaños)', async () => {
     const foto = join(dir, 'Foto Local.jpg');
     execFileSync(FFMPEG, ['-y', '-f', 'lavfi', '-i', 'testsrc2=size=3000x2000', '-frames:v', '1', foto], { stdio: 'ignore' });
     await procesarFoto(foto, salida);
-    for (const w of [480, 960, 1600]) for (const ext of ['webp', 'avif'])
-      expect(existsSync(join(salida, `foto-local-${w}.${ext}`))).toBe(true);
+    const meta = await sharp(join(salida, 'foto-local.webp')).metadata();
+    expect(meta.format).toBe('webp');
+    expect(Math.max(meta.width!, meta.height!)).toBe(2000);
+    expect(meta.exif).toBeUndefined();
+    expect(existsSync(join(salida, 'foto-local-480.webp'))).toBe(false);
   });
 });

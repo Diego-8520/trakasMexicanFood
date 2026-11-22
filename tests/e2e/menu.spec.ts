@@ -45,13 +45,26 @@ test('estado abierto/cerrado se calcula en el navegador', async ({ page }) => {
 test('peso total transferido < 100 KB (HTML comprimido como en Vercel)', async ({ page }) => {
   const res = await page.goto(URL_QR, { waitUntil: 'networkidle' });
   const html = gzipSync(await res!.body()).length;
-  const recursos = await page.evaluate(() =>
-    (performance.getEntriesByType('resource') as PerformanceResourceTiming[]).reduce((s, r) => s + r.encodedBodySize, 0));
+  // Las fotos de los platos son diferidas (loading="lazy"): cargan al desplazarse y no cuentan en la carga inicial
+  const diferidas = await page.evaluate(() => [...document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]')].map((i) => i.currentSrc).filter(Boolean));
+  const recursos = await page.evaluate((excluir) =>
+    (performance.getEntriesByType('resource') as PerformanceResourceTiming[])
+      .filter((r) => !excluir.includes(r.name)).reduce((s, r) => s + r.encodedBodySize, 0), diferidas);
   const total = html + recursos;
   const lista = await page.evaluate(() =>
     (performance.getEntriesByType('resource') as PerformanceResourceTiming[]).map((r) => `${(r.encodedBodySize / 1024).toFixed(1)}KB ${r.name.split('/').pop()}`));
   console.log(`/menu transfiere ${(total / 1024).toFixed(1)} KB (HTML gzip ${(html / 1024).toFixed(1)} KB)\n  ${lista.join('\n  ')}`);
   expect(total).toBeLessThan(96 * 1024); // margen de 4 KB bajo el tope de 100 KB
+});
+
+test('cada miniatura de plato pesa 8 KB o menos', async ({ page }) => {
+  await page.goto(URL_QR);
+  for (const img of await page.locator('.plato__foto').all()) {
+    await img.scrollIntoViewIfNeeded();
+    const src = await img.evaluate((i: HTMLImageElement) => i.currentSrc);
+    const r = await page.request.get(src);
+    expect((await r.body()).length).toBeLessThanOrEqual(8 * 1024);
+  }
 });
 
 test('sin desplazamiento horizontal en móvil', async ({ page }) => {

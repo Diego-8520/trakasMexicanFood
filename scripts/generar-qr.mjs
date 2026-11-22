@@ -5,7 +5,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const OPCIONES = { errorCorrectionLevel: 'H', margin: 2, color: { dark: '#141110', light: '#FFFFFF' } };
+const OPCIONES = { errorCorrectionLevel: 'H', margin: 4, color: { dark: '#141110', light: '#FFFFFF' } };
 
 /** URL que abre el QR de las mesas. */
 export const urlMenuQR = (site) => `${site.replace(/\/$/, '')}/menu?utm_source=qr`;

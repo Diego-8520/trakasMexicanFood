@@ -1,7 +1,7 @@
 // Procesa las tomas del cliente para la web.
 //   node scripts/procesar-media.mjs [carpeta-entrada]   (por defecto: media-original/)
 // Videos → public/videos/{nombre}-{720|1080}.{webm|mp4} (sin audio, máx. 10 s) + póster en src/assets/posters/
-// Fotos  → src/assets/fotos/{nombre}-{480|960|1600}.{webp|avif}
+// Fotos  → src/assets/fotos/{nombre}.webp (p. ej. birria.webp, compartir.webp)
 // Requiere ffmpeg (variable FFMPEG_PATH o en el PATH).
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -27,7 +27,7 @@ function buscarFfmpeg() {
   return 'ffmpeg';
 }
 export const FFMPEG = buscarFfmpeg();
-export const FFPROBE = process.env.FFPROBE_PATH || FFMPEG.replace(/ffmpeg(\.exe)?$/i, (m, exe) => `ffprobe${exe || ''}`);
+export const FFPROBE = process.env.FFPROBE_PATH || FFMPEG.replace(/ffmpeg(\.exe)?$/i, (_m, exe) => `ffprobe${exe || ''}`);
 
 const DURACION_MAX = 10;   // segundos
 const VIDEO = /\.(mp4|mov|m4v|webm|mkv|avi)$/i;
@@ -72,14 +72,14 @@ export async function procesarVideo(entrada, salida, { salidaPoster = salida } =
   return nombre;
 }
 
+/** Foto → una sola WebP (lado mayor ≤ 2000 px, orientación corregida, sin metadatos). Astro genera los tamaños. */
 export async function procesarFoto(entrada, salida) {
   await mkdir(salida, { recursive: true });
   const nombre = slug(entrada);
-  for (const w of [480, 960, 1600]) {
-    const base = sharp(entrada).rotate().resize({ width: w, withoutEnlargement: true });
-    await base.clone().webp({ quality: 78 }).toFile(join(salida, `${nombre}-${w}.webp`));
-    await base.clone().avif({ quality: 55 }).toFile(join(salida, `${nombre}-${w}.avif`));
-  }
+  await sharp(entrada).rotate()
+    .resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
+    .webp({ quality: 88 })
+    .toFile(join(salida, `${nombre}.webp`));
   return nombre;
 }
 

@@ -1,5 +1,7 @@
 ---
+import { getImage } from 'astro:assets';
 import '../styles/global.css';
+import { fotoDe } from '../lib/media';
 
 interface Props {
   title: string;
@@ -7,9 +9,13 @@ interface Props {
   image?: string;
   noIndex?: boolean;
 }
-const { title, description, image = '/og-image.jpg', noIndex = false } = Astro.props;
+const { title, description, image, noIndex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(image, Astro.site);
+// Imagen para compartir: media-original/compartir.jpg (npm run media) o, si no existe, la provisional
+const compartir = fotoDe('compartir');
+const ogSrc = image
+  ?? (compartir ? (await getImage({ src: compartir, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : '/og-image.jpg');
+const ogImage = new URL(ogSrc, Astro.site);
 ---
 <!doctype html>
 <html lang="es-CO">
@@ -21,7 +27,7 @@ const ogImage = new URL(image, Astro.site);
     <link rel="canonical" href={canonical} />
     {noIndex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#141110" />
-    <meta property="og:type" content="restaurant" />
+    <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_CO" />
     <meta property="og:site_name" content="Trakas Mexican Food" />
     <meta property="og:title" content={title} />

@@ -2,13 +2,13 @@
 // "Conoce al Chile": sección propia de la mascota, con su video (concepto B).
 import { Image } from 'astro:assets';
 import VideoSection from '../VideoSection.astro';
-import { posterDe } from '../../lib/posters';
+import { posterDe } from '../../lib/media';
 // Video propio del Chile: media-original/chile.mp4; mientras tanto, el clip de muestra
 const clip = posterDe('chile') ? 'chile' : 'chile-zoom';
 const poster = posterDe(clip)!;
-import taco from '../../assets/brand/mascota/chile-taco-sticker-1024.webp';
-import fuego from '../../assets/brand/mascota/chile-fuego-sticker-1024.webp';
-import moto from '../../assets/brand/mascota/chile-moto-sticker-1024.webp';
+import taco from '../../assets/brand/mascota/chile-taco-sticker.webp';
+import fuego from '../../assets/brand/mascota/chile-fuego-sticker.webp';
+import moto from '../../assets/brand/mascota/chile-moto-sticker.webp';
 const poses = [
   { img: taco, titulo: 'Fan número uno de la birria', texto: 'Si no sabes qué pedir, él ya decidió por ti.' },
   { img: fuego, titulo: 'Pica, pero rico', texto: 'Nuestras salsas tienen carácter. Avisa si eres valiente.' },

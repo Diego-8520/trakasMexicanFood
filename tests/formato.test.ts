@@ -5,6 +5,9 @@ describe('formatoPrecio', () => {
   it('formatea pesos colombianos con punto de miles', () => {
     expect(formatoPrecio(25000)).toBe('$25.000');
   });
+  it('precio 0 (sin definir) también muestra "Pregunta"', () => {
+    expect(formatoPrecio(0)).toBe('Pregunta');
+  });
   it('muestra "Pregunta" cuando el precio es null', () => {
     expect(formatoPrecio(null)).toBe('Pregunta');
   });

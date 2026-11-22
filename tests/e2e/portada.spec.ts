@@ -118,3 +118,9 @@ test.describe('escritorio', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   });
 });
+
+test('metadatos para compartir: tipo website e imagen con URL absoluta', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website');
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /^https:\/\/.+\.(jpe?g|png|webp)$/);
+});
