@@ -7,7 +7,7 @@ test('el póster del hero es la imagen prioritaria (LCP), no un video', async ({
   await expect(poster).toHaveAttribute('loading', 'eager');
 });
 
-test('la mascota es protagonista en la primera pantalla', async ({ page }) => {
+test('el Chile anfitrión se ve en la primera pantalla (concepto B)', async ({ page }) => {
   await page.goto('/');
   await page.waitForTimeout(1500); // termina la animación de entrada
   const chile = page.locator('[data-mascota-hero]');
@@ -15,7 +15,8 @@ test('la mascota es protagonista en la primera pantalla', async ({ page }) => {
   const caja = (await chile.boundingBox())!;
   const vh = page.viewportSize()!.height;
   expect(caja.y).toBeLessThan(vh);              // aparece sin desplazarse
-  expect(caja.height).toBeGreaterThanOrEqual(vh * 0.3);
+  expect(caja.y + caja.height).toBeLessThanOrEqual(vh);
+  expect(caja.height).toBeGreaterThanOrEqual(vh * 0.15);
 });
 
 test('secciones con anclas para la navegación', async ({ page }) => {
@@ -48,6 +49,8 @@ test('platos estrella vienen de los datos (destacados primero)', async ({ page }
 
 test('sin desplazamiento horizontal en móvil', async ({ page }) => {
   await page.goto('/', { waitUntil: 'networkidle' });
+  // el navegador móvil no debe alejar la página para que quepa contenido desbordado
+  expect(await page.evaluate(() => innerWidth)).toBe(page.viewportSize()!.width);
   const extra = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(extra).toBeLessThanOrEqual(0);
 });
@@ -98,6 +101,12 @@ test('móvil: "Pedir por WhatsApp" se ve completo sin desplazar', async ({ page 
   const cta = page.locator('.hero .ctas a').first();
   const caja = (await cta.boundingBox())!;
   expect(caja.y + caja.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+  // el Chile no tapa los botones
+  const chile = (await page.locator('[data-mascota-hero]').boundingBox())!;
+  for (const b of await page.locator('.hero .ctas a').all()) {
+    const c = (await b.boundingBox())!;
+    expect(c.y + c.height <= chile.y + 10 || c.x + c.width <= chile.x).toBe(true);
+  }
 });
 
 test.describe('escritorio', () => {

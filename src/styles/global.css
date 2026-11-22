@@ -18,7 +18,7 @@ h1, h2, h3 { margin: 0; line-height: 1; }
 .display { font-family: var(--f-display); font-weight: 400; letter-spacing: .01em; }
 .label { font-family: var(--f-label); letter-spacing: .06em; text-transform: uppercase; }
 .wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
-.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 :focus-visible { outline: 3px solid var(--maiz); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -1,5 +1,5 @@
 ---
-// "Conoce al Chile": sección propia de la mascota (sello y sol del concepto C, video del concepto B).
+// "Conoce al Chile": sección propia de la mascota, con su video (concepto B).
 import { Image } from 'astro:assets';
 import VideoSection from '../VideoSection.astro';
 import poster from '../../assets/posters/chile-zoom-poster.webp';
@@ -17,7 +17,7 @@ const poses = [
     <VideoSection clip="chile-zoom" poster={poster} alt="El Chile, mascota de Trakas, saludando" class="chile__vs" />
   </div>
   <div class="chile__texto">
-    <p class="sello label">Hola, soy el Chile</p>
+    <p class="label kicker">El Chile</p>
     <h2 id="chile-titulo" class="display seccion-titulo">El que le pone<br /><span>el picante</span></h2>
     <p class="chile__intro">Gafas oscuras, sombrero de fiesta y cero miedo al picante. El Chile es la cara de Trakas: te recibe en la puerta, te recomienda la birria y sale en moto con tu pedido.</p>
     <ul class="poses">
@@ -34,12 +34,10 @@ const poses = [
 <style>
   .chile { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center;
     padding: clamp(4rem, 8vw, 7rem) clamp(1.2rem, 5vw, 5rem);
-    background: radial-gradient(60% 70% at 85% 50%, rgba(255,194,26,.12), transparent 70%); }
+ }
   .chile__video { position: relative; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden;
-    background: radial-gradient(circle at 50% 45%, var(--maiz) 0 38%, var(--comal-2) 39%);
-    box-shadow: 0 0 0 10px rgba(255,194,26,.12), 0 30px 60px rgba(0,0,0,.5); }
+    border: 1px solid rgba(255,246,229,.08); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
   :global(.chile__vs) { position: absolute !important; inset: 0; }
-  .sello { display: inline-block; margin: 0 0 1.2rem; padding: .4rem 1rem .25rem; border-radius: 8px; background: var(--nopal); color: #fff; font-size: 1.1rem; transform: rotate(-3deg); }
   .seccion-titulo span { color: var(--maiz); }
   .chile__intro { max-width: 34rem; margin: 1.4rem 0 2rem; color: rgba(255,246,229,.78); font-size: 1.08rem; line-height: 1.65; }
   .poses { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }

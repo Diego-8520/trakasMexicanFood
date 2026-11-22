@@ -56,6 +56,7 @@ test('peso total transferido < 100 KB (HTML comprimido como en Vercel)', async (
 
 test('sin desplazamiento horizontal en móvil', async ({ page }) => {
   await page.goto(URL_QR);
+  expect(await page.evaluate(() => innerWidth)).toBe(page.viewportSize()!.width);
   const ancho = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(ancho).toBeLessThanOrEqual(0);
 });

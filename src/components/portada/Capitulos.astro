@@ -1,28 +1,32 @@
 ---
-// "La carta, por capítulos" (concepto B): tarjetas verticales con desplazamiento horizontal.
-// Mientras no hay fotos/videos de cada plato, la tarjeta es tipográfica (color de la paleta).
+// "La carta, por capítulos" (concepto B): tarjeta vertical (aquí irá el clip de cada plato) y datos debajo.
+// Mientras no hay videos, la tarjeta muestra el número y el nombre sobre el comal.
 import { trakas } from '../../data/trakas';
 import { formatoPrecio } from '../../lib/formato';
-const platos = [...trakas.menu.platos].sort((a, b) => Number(!!b.destacado) - Number(!!a.destacado));
-const tonos = ['chile', 'comal', 'nopal', 'fuego'];
+const orden = ['birria', 'ramen', 'gringas', 'volcanes'];
+const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!).filter(Boolean);
 ---
 <section id="menu" class="caps" aria-labelledby="caps-titulo">
   <div class="caps__cab">
     <div>
       <p class="label kicker">La carta, por capítulos</p>
-      <h2 id="caps-titulo" class="display seccion-titulo">Siete razones<br />para volver</h2>
+      <h2 id="caps-titulo" class="display seccion-titulo">Cuatro razones<br />para volver</h2>
     </div>
     <a class="btn btn--vidrio label" href="/menu">Ver el menú completo</a>
   </div>
   <ol class="caps__pista" tabindex="0" aria-label="Platos, desliza para ver más">
-    {platos.map((p, i) => (
-      <li class:list={['cap', `cap--${tonos[i % tonos.length]}`]} data-capitulo={p.id}>
-        <span class="cap__n label" aria-hidden="true">Cap. {String(i + 1).padStart(2, '0')}</span>
-        {p.destacado && i === 0 && <span class="cap__sello label">★ Favorito</span>}
+    {capitulos.map((p, i) => (
+      <li class="cap" data-capitulo={p.id}>
+        <div class="cap__media" aria-hidden="true">
+          <span class="cap__num label">{String(i + 1).padStart(2, '0')}</span>
+          <span class="cap__marca display">{p.nombre}</span>
+          {p.destacado && i === 0 && <span class="cap__sello label">★ Favorito</span>}
+        </div>
         <div class="cap__info">
+          <span class="label cap__n">Cap. {String(i + 1).padStart(2, '0')}</span>
           <h3 class="display cap__nombre">{p.nombre}</h3>
-          <p class="cap__desc">{p.desc}</p>
-          <p class="cap__precio label"><span class="sr-only">Precio: </span>{formatoPrecio(p.precio)}</p>
+          <p>{p.desc}</p>
+          <span class="label cap__precio"><span class="sr-only">Precio: </span>{formatoPrecio(p.precio)}</span>
         </div>
       </li>
     ))}
@@ -30,28 +34,24 @@ const tonos = ['chile', 'comal', 'nopal', 'fuego'];
 </section>
 
 <style>
-  .caps { padding: clamp(5rem, 9vw, 8rem) 0 5rem; }
+  .caps { padding: 7rem 0 6rem; }
   .caps__cab { display: flex; align-items: end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
-    padding: 0 clamp(1.2rem, 5vw, 5rem); margin-bottom: 2.5rem; }
-  .caps__pista { list-style: none; margin: 0; display: grid; grid-auto-flow: column; grid-auto-columns: min(76vw, 320px); gap: 1.2rem;
-    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: clamp(1.2rem, 5vw, 5rem);
-    padding: .5rem clamp(1.2rem, 5vw, 5rem) 1.5rem; scrollbar-width: thin; scrollbar-color: var(--ocre) transparent; }
-  .cap { position: relative; scroll-snap-align: start; aspect-ratio: 9 / 13.5; border-radius: 24px; overflow: hidden;
-    display: flex; flex-direction: column; justify-content: flex-end; padding: 1.4rem;
-    background: var(--tono); isolation: isolate; transition: transform .35s var(--ease-out); }
-  .cap:hover { transform: translateY(-6px); }
-  .cap::before { content: ''; position: absolute; inset: 0; z-index: -1;
-    background: radial-gradient(120% 70% at 85% 0%, rgba(255,246,229,.22), transparent 60%),
-      repeating-linear-gradient(135deg, rgba(0,0,0,.06) 0 2px, transparent 2px 9px); }
-  .cap--chile { --tono: linear-gradient(170deg, #e2341f, #9e1a0f); }
-  .cap--comal { --tono: linear-gradient(170deg, #3a2a22, #1a1412); }
-  .cap--nopal { --tono: linear-gradient(170deg, #2a8d44, #13511f); }
-  .cap--fuego { --tono: linear-gradient(170deg, #d9601a, #8f3608); }
-  .cap__n { position: absolute; top: 1.2rem; left: 1.4rem; font-size: 3.4rem; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(255,246,229,.4); }
-  .cap__sello { position: absolute; top: 1.3rem; right: -.2rem; padding: .3rem .9rem .2rem .8rem; background: var(--maiz); color: var(--comal); font-size: 1rem; transform: rotate(4deg); box-shadow: 0 4px 12px rgba(0,0,0,.3); }
-  .cap__nombre { font-size: 2.3rem; line-height: .95; color: var(--tortilla); text-shadow: 3px 3px 0 rgba(0,0,0,.25); }
-  .cap__desc { margin: .7rem 0 0; color: rgba(255,246,229,.88); font-size: .97rem; line-height: 1.45; }
-  .cap__precio { display: inline-block; margin: 1rem 0 0; padding: .3rem .9rem .15rem 1.2rem; font-size: 1.5rem; line-height: 1;
-    background: var(--maiz); color: var(--comal); clip-path: polygon(9px 0, 100% 0, 100% 100%, 9px 100%, 0 50%); transform: rotate(-2deg); }
-  .cap--fuego .cap__precio { background: var(--tortilla); }
+    padding: 0 clamp(1.2rem, 6vw, 6rem); margin-bottom: 3rem; }
+  .caps__pista { list-style: none; margin: 0; display: grid; grid-auto-flow: column; grid-auto-columns: min(78vw, 340px); gap: 1.4rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: clamp(1.2rem, 6vw, 6rem);
+    padding: 0 clamp(1.2rem, 6vw, 6rem) 1rem; scrollbar-width: none; }
+  .cap { position: relative; scroll-snap-align: start; }
+  .cap__media { position: relative; aspect-ratio: 9 / 14; border-radius: 22px; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 1.4rem;
+    background: radial-gradient(120% 70% at 80% 0%, rgba(242,106,27,.22), transparent 60%), linear-gradient(170deg, #2b201b, #141110);
+    border: 1px solid rgba(255,246,229,.08); transition: transform .35s var(--ease-out); }
+  .cap:hover .cap__media { transform: translateY(-6px); }
+  .cap__num { font-size: 4.5rem; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(255,246,229,.35); }
+  .cap__marca { font-size: 2.6rem; line-height: .95; color: rgba(255,246,229,.92); }
+  .cap__sello { position: absolute; top: 1.4rem; right: -.2rem; padding: .3rem .9rem .2rem .8rem; background: var(--maiz); color: var(--comal); font-size: 1rem; transform: rotate(4deg); }
+  .cap__info { padding: 1.1rem .2rem 0; }
+  .cap__n { color: var(--fuego); font-size: 1rem; }
+  .cap__nombre { font-size: 2rem; margin: .3rem 0 .6rem; }
+  .cap__info p { color: rgba(255,246,229,.72); font-size: .98rem; margin: 0 0 .8rem; }
+  .cap__precio { font-size: 1.4rem; color: var(--maiz); }
 </style>
