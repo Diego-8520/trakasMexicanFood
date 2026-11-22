@@ -1,0 +1,163 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import MenuGrid from '../components/MenuGrid.astro';
+import EstadoHorario from '../components/EstadoHorario.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import { trakas } from '../data/trakas';
+import { formatoPrecio } from '../lib/formato';
+import logo from '../assets/brand/logo/logo.png';
+import chile from '../assets/brand/mascota/chile-presentando-sticker-1024.webp';
+
+const { platos, proteinas, bebidas } = trakas.menu;
+const resenaLista = !trakas.googleResenaUrl.includes('[');
+---
+<Base
+  title="Menú — Trakas Mexican Food"
+  description="Menú de Trakas Mexican Food: tacos de birria, birria ramen, burritos, chilaquiles, gringas, volcanes y dorilocos. Pide por WhatsApp."
+>
+  <div class="picado" aria-hidden="true"></div>
+
+  <header class="cab">
+    <a href="/" class="cab__logo" aria-label="Trakas Mexican Food — inicio">
+      <Image src={logo} alt="" width={132} densities={[1, 2]} quality={70} loading="eager" fetchpriority="high" />
+    </a>
+    <EstadoHorario variante="chip" />
+  </header>
+
+  <section class="intro">
+    <div class="intro__texto">
+      <p class="label intro__kicker">Hecho al momento · {trakas.eslogan}</p>
+      <h1 class="display intro__titulo">El<br />Menú</h1>
+      <p class="intro__sub">Escoge tu plato, elige proteína y te lo llevamos a la mesa.</p>
+    </div>
+    <Image class="intro__chile" src={chile} alt="El Chile, mascota de Trakas, presentando el menú" width={156} densities={[1, 2]} quality={70} loading="eager" />
+  </section>
+
+  <nav class="tabs" aria-label="Secciones del menú">
+    <a href="#platos">Platos</a>
+    <a href="#proteinas">Proteínas</a>
+    <a href="#bebidas">Bebidas</a>
+  </nav>
+
+  <main class="contenido">
+    <section id="platos" class="seccion" aria-labelledby="t-platos">
+      <h2 id="t-platos" class="display seccion__titulo">Platos</h2>
+      <MenuGrid platos={platos} variante="compacta" />
+    </section>
+
+    <section id="proteinas" class="seccion" aria-labelledby="t-proteinas">
+      <h2 id="t-proteinas" class="display seccion__titulo">Elige tu proteína</h2>
+      <ul class="proteinas">
+        {proteinas.map((p) => (
+          <li><strong class="label">{p.nombre}</strong><span>{p.desc}</span></li>
+        ))}
+      </ul>
+    </section>
+
+    <section id="bebidas" class="seccion" aria-labelledby="t-bebidas">
+      <h2 id="t-bebidas" class="display seccion__titulo">Bebidas</h2>
+      <ul class="bebidas">
+        {bebidas.map((b) => (
+          <li><span>{b.nombre}</span><span class="bebidas__linea" aria-hidden="true"></span><span class="label">{formatoPrecio(b.precio)}</span></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="seccion seccion--horario" aria-labelledby="t-horario">
+      <h2 id="t-horario" class="display seccion__titulo">Horario</h2>
+      <EstadoHorario variante="completo" />
+    </section>
+
+    <footer class="pie">
+      {resenaLista ? <p>¿Te encantó? <a class="pie__link" href={trakas.googleResenaUrl} target="_blank" rel="noopener">Déjanos una reseña en Google</a></p> : <p>¿Te encantó? Cuéntaselo a tus amigos.</p>}
+      <a class="pie__link" href="/">Conoce Trakas →</a>
+    </footer>
+  </main>
+
+  <WhatsAppCTA fijo />
+</Base>
+
+<style>
+  :global(body) {
+    background-color: var(--comal);
+    background-image:
+      radial-gradient(120% 60% at 100% 0%, rgba(214,39,24,.22), transparent 60%),
+      radial-gradient(90% 50% at 0% 40%, rgba(242,106,27,.10), transparent 60%);
+    padding-bottom: 6.5rem;
+  }
+
+  /* Papel picado: banderines de colores con borde festoneado */
+  .picado {
+    height: 26px;
+    background: repeating-linear-gradient(90deg,
+      var(--chile) 0 56px, var(--maiz) 56px 112px, var(--nopal) 112px 168px, var(--fuego) 168px 224px);
+    -webkit-mask: radial-gradient(10px at 50% 100%, transparent 98%, #000) 0 0 / 28px 100%;
+            mask: radial-gradient(10px at 50% 100%, transparent 98%, #000) 0 0 / 28px 100%;
+  }
+
+  .cab {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: .9rem 1.1rem 0; max-width: 40rem; margin-inline: auto;
+  }
+  .cab__logo :global(img) { width: 132px; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
+
+  .intro {
+    position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end;
+    max-width: 40rem; margin: 1.2rem auto 0; padding: 0 1.1rem;
+  }
+  .intro__kicker { margin: 0 0 .4rem; color: var(--maiz); font-size: 1rem; }
+  .intro__titulo {
+    font-size: clamp(4.5rem, 24vw, 7rem); line-height: .82; color: var(--tortilla);
+    text-shadow: 4px 4px 0 var(--chile), 8px 8px 0 rgba(0,0,0,.35);
+  }
+  .intro__sub { margin: 1rem 0 0; color: var(--tortilla-dim); max-width: 18rem; }
+  .intro__chile {
+    width: 156px; height: auto; margin-right: -.6rem; margin-bottom: -.4rem;
+    transform-origin: 50% 100%;
+    animation: asoma .9s var(--ease-bounce) .1s both, flota 4s ease-in-out 1.1s infinite;
+    filter: drop-shadow(0 12px 18px rgba(0,0,0,.5));
+  }
+  @keyframes asoma { from { transform: translateY(40px) rotate(8deg) scale(.85); opacity: 0; } }
+  @keyframes flota { 50% { transform: translateY(-6px) rotate(-1.5deg); } }
+
+  .tabs {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: none;
+    max-width: 40rem; margin: 1.6rem auto 0; padding: .75rem 1.1rem;
+    background: rgba(20,17,16,.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,246,229,.08);
+  }
+  .tabs a {
+    flex: none; padding: .55rem 1rem .45rem; border-radius: 999px;
+    border: 1.5px solid rgba(255,246,229,.22); text-decoration: none;
+    font: 400 1.1rem/1 var(--f-label); letter-spacing: .06em; color: var(--tortilla);
+  }
+  .tabs a:first-child { background: var(--chile); border-color: var(--chile); }
+
+  .contenido { max-width: 40rem; margin-inline: auto; padding: 0 1.1rem; }
+  .seccion { padding-top: 2rem; scroll-margin-top: 3.8rem; }
+  .seccion__titulo {
+    font-size: 2.6rem; color: var(--maiz); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: .8rem;
+  }
+  .seccion__titulo::after { content: ''; flex: 1; height: 3px; background: repeating-linear-gradient(90deg, var(--fuego) 0 10px, transparent 10px 16px); }
+
+  .proteinas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .proteinas li {
+    display: grid; gap: .25rem; padding: .9rem; border-radius: var(--radius-sm);
+    background: var(--comal-2); border: 1px solid rgba(255,246,229,.08);
+  }
+  .proteinas strong { font-size: 1.45rem; color: var(--fuego); font-weight: 400; }
+  .proteinas span { font-size: .88rem; color: var(--tortilla-dim); line-height: 1.35; }
+
+  .bebidas { list-style: none; margin: 0; padding: 0; }
+  .bebidas li { display: flex; align-items: baseline; gap: .6rem; padding: .7rem 0; font-weight: 700; }
+  .bebidas__linea { flex: 1; border-bottom: 2px dotted rgba(255,246,229,.25); }
+  .bebidas .label { color: var(--maiz); font-size: 1.15rem; }
+
+  .pie { padding: 2.5rem 0 1rem; text-align: center; color: var(--tortilla-dim); font-size: .95rem; }
+  .pie__link { color: var(--maiz); font-weight: 700; }
+
+  @media (prefers-reduced-motion: reduce) { .intro__chile { animation: none; } }
+</style>

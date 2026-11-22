@@ -1,0 +1,49 @@
+---
+import { trakas } from '../data/trakas';
+interface Props { variante?: 'chip' | 'completo' }
+const { variante = 'chip' } = Astro.props;
+const DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+const orden = [1, 2, 3, 4, 5, 6, 0];
+const filas = orden.map((d) => ({ dia: DIAS[d], franja: trakas.horario.find((f) => f.dia === d) }));
+---
+<div class:list={['horario', `horario--${variante}`]}>
+  <p class="horario__estado" data-estado-wrap>
+    <span class="horario__dot" aria-hidden="true"></span>
+    <span data-estado>Miércoles a domingo desde las 12:00</span>
+  </p>
+  {variante === 'completo' && (
+    <ul class="horario__lista" data-horario>
+      {filas.map(({ dia, franja }) => (
+        <li class:list={{ cerrado: !franja }}><span>{dia}</span><span>{franja ? `${franja.abre} – ${franja.cierra}` : 'Cerrado'}</span></li>
+      ))}
+    </ul>
+  )}
+</div>
+
+<script>
+  import { estadoHorario } from '../lib/horario';
+  import { trakas } from '../data/trakas';
+  const pintar = () => {
+    const e = estadoHorario(new Date(), trakas.horario);
+    document.querySelectorAll<HTMLElement>('[data-estado]').forEach((el) => (el.textContent = e.texto));
+    document.querySelectorAll<HTMLElement>('[data-estado-wrap]').forEach((el) => el.classList.toggle('abierto', e.abierto));
+  };
+  pintar();
+  setInterval(pintar, 60_000);
+</script>
+
+<style>
+  .horario__estado {
+    display: inline-flex; align-items: center; gap: .55rem; margin: 0;
+    padding: .4rem .85rem; border-radius: 999px;
+    background: rgba(214,39,24,.16); border: 1px solid rgba(214,39,24,.5);
+    font: 700 .8rem/1.2 var(--f-body); color: var(--tortilla); white-space: nowrap;
+  }
+  .horario__dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--chile); flex: none; }
+  .horario__estado.abierto { background: rgba(31,122,53,.2); border-color: rgba(76,190,104,.55); }
+  .horario__estado.abierto .horario__dot { background: #4cbe68; box-shadow: 0 0 0 0 rgba(76,190,104,.7); animation: latido 2s infinite; }
+  @keyframes latido { 70% { box-shadow: 0 0 0 .5rem rgba(76,190,104,0); } 100% { box-shadow: 0 0 0 0 rgba(76,190,104,0); } }
+  .horario__lista { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .1rem; }
+  .horario__lista li { display: flex; justify-content: space-between; padding: .5rem 0; border-bottom: 1px dashed rgba(255,246,229,.15); font-variant-numeric: tabular-nums; }
+  .horario__lista li.cerrado { color: var(--tortilla-dim); opacity: .6; }
+</style>

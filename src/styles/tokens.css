@@ -18,7 +18,7 @@
 
   --f-display: "Trakas Brush", Impact, "Arial Black", sans-serif; /* mínimo 28 px */
   --f-label: "Bebas Neue", Impact, sans-serif;
-  --f-body: "Nunito Variable", "Nunito", system-ui, sans-serif;
+  --f-body: "Nunito", system-ui, sans-serif;
 
   --radius: 18px;
   --radius-sm: 10px;
