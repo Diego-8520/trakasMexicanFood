@@ -3,7 +3,7 @@
 // Mientras no hay videos, la tarjeta muestra el número y el nombre sobre el comal.
 import { trakas } from '../../data/trakas';
 import { formatoPrecio } from '../../lib/formato';
-const orden = ['birria', 'ramen', 'gringas', 'volcanes'];
+const orden = ['birria', 'ramen', 'volcanes', 'gringas'];
 const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!).filter(Boolean);
 ---
 <section id="menu" class="caps" aria-labelledby="caps-titulo">
@@ -19,8 +19,6 @@ const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!
       <li class="cap" data-capitulo={p.id}>
         <div class="cap__media" aria-hidden="true">
           <span class="cap__num label">{String(i + 1).padStart(2, '0')}</span>
-          <span class="cap__marca display">{p.nombre}</span>
-          {p.destacado && i === 0 && <span class="cap__sello label">★ Favorito</span>}
         </div>
         <div class="cap__info">
           <span class="label cap__n">Cap. {String(i + 1).padStart(2, '0')}</span>
@@ -46,9 +44,7 @@ const capitulos = orden.map((id) => trakas.menu.platos.find((p) => p.id === id)!
     background: radial-gradient(120% 70% at 80% 0%, rgba(242,106,27,.22), transparent 60%), linear-gradient(170deg, #2b201b, #141110);
     border: 1px solid rgba(255,246,229,.08); transition: transform .35s var(--ease-out); }
   .cap:hover .cap__media { transform: translateY(-6px); }
-  .cap__num { font-size: 4.5rem; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(255,246,229,.35); }
-  .cap__marca { font-size: 2.6rem; line-height: .95; color: rgba(255,246,229,.92); }
-  .cap__sello { position: absolute; top: 1.4rem; right: -.2rem; padding: .3rem .9rem .2rem .8rem; background: var(--maiz); color: var(--comal); font-size: 1rem; transform: rotate(4deg); }
+  .cap__num { font-size: 2rem; line-height: 1; color: rgba(255,246,229,.5); }
   .cap__info { padding: 1.1rem .2rem 0; }
   .cap__n { color: var(--fuego); font-size: 1rem; }
   .cap__nombre { font-size: 2rem; margin: .3rem 0 .6rem; }

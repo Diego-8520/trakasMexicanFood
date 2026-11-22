@@ -8,7 +8,7 @@
 }
 .btn:active { transform: scale(.98); }
 .btn--chico { min-height: 44px; padding-inline: 1.2rem; font-size: 1.1rem; }
-.btn--sol { background: var(--maiz); color: var(--comal); box-shadow: 0 6px 20px -6px rgba(255,194,26,.55); }
+.btn--sol { background: var(--maiz); color: var(--comal); }
 .btn--sol:hover { background: #ffd04a; }
 .btn--vidrio { background: rgba(255,246,229,.08); color: var(--tortilla); border: 1px solid rgba(255,246,229,.2);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.1); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
