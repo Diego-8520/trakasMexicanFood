@@ -9,6 +9,7 @@ test('el póster del hero es la imagen prioritaria (LCP), no un video', async ({
 
 test('la mascota es protagonista en la primera pantalla', async ({ page }) => {
   await page.goto('/');
+  await page.waitForTimeout(1500); // termina la animación de entrada
   const chile = page.locator('[data-mascota-hero]');
   await expect(chile).toBeVisible();
   const caja = (await chile.boundingBox())!;
@@ -91,7 +92,22 @@ test('un solo sello "Favorito" para no diluir el énfasis', async ({ page }) => 
   await expect(page.locator('#menu .cap__sello')).toHaveCount(1);
 });
 
+test('móvil: "Pedir por WhatsApp" se ve completo sin desplazar', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForTimeout(1500); // animaciones de entrada
+  const cta = page.locator('.hero .ctas a').first();
+  const caja = (await cta.boundingBox())!;
+  expect(caja.y + caja.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+});
+
 test.describe('escritorio', () => {
+  test('la mascota guía se oculta en la sección del Chile', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('#chile').scrollIntoViewIfNeeded();
+    await page.evaluate(() => document.querySelector('#chile')!.scrollIntoView({ block: 'center' }));
+    await page.waitForTimeout(700);
+    await expect(page.locator('.guia img:visible')).toHaveCount(0);
+  });
   test.use({ viewport: { width: 1440, height: 900 }, isMobile: false, hasTouch: false });
   test('enlaces del menú superior con objetivo de 44 px', async ({ page }) => {
     await page.goto('/');
