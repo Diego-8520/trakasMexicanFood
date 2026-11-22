@@ -1,0 +1,57 @@
+---
+// "La carta, por capítulos" (concepto B): tarjetas verticales con desplazamiento horizontal.
+// Mientras no hay fotos/videos de cada plato, la tarjeta es tipográfica (color de la paleta).
+import { trakas } from '../../data/trakas';
+import { formatoPrecio } from '../../lib/formato';
+const platos = [...trakas.menu.platos].sort((a, b) => Number(!!b.destacado) - Number(!!a.destacado));
+const tonos = ['chile', 'comal', 'nopal', 'fuego'];
+---
+<section id="menu" class="caps" aria-labelledby="caps-titulo">
+  <div class="caps__cab">
+    <div>
+      <p class="label kicker">La carta, por capítulos</p>
+      <h2 id="caps-titulo" class="display seccion-titulo">Siete razones<br />para volver</h2>
+    </div>
+    <a class="btn btn--vidrio label" href="/menu">Ver el menú completo</a>
+  </div>
+  <ol class="caps__pista">
+    {platos.map((p, i) => (
+      <li class:list={['cap', `cap--${tonos[i % tonos.length]}`]} data-capitulo={p.id}>
+        <span class="cap__n label" aria-hidden="true">Cap. {String(i + 1).padStart(2, '0')}</span>
+        {p.destacado && <span class="cap__sello label">★ Favorito</span>}
+        <div class="cap__info">
+          <h3 class="display cap__nombre">{p.nombre}</h3>
+          <p class="cap__desc">{p.desc}</p>
+          <p class="cap__precio label"><span class="sr-only">Precio: </span>{formatoPrecio(p.precio)}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .caps { padding: clamp(5rem, 9vw, 8rem) 0 5rem; }
+  .caps__cab { display: flex; align-items: end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    padding: 0 clamp(1.2rem, 5vw, 5rem); margin-bottom: 2.5rem; }
+  .caps__pista { list-style: none; margin: 0; display: grid; grid-auto-flow: column; grid-auto-columns: min(76vw, 320px); gap: 1.2rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: clamp(1.2rem, 5vw, 5rem);
+    padding: .5rem clamp(1.2rem, 5vw, 5rem) 1.5rem; scrollbar-width: thin; scrollbar-color: var(--ocre) transparent; }
+  .cap { position: relative; scroll-snap-align: start; aspect-ratio: 9 / 13.5; border-radius: 24px; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 1.4rem;
+    background: var(--tono); isolation: isolate; transition: transform .35s var(--ease-out); }
+  .cap:hover { transform: translateY(-6px); }
+  .cap::before { content: ''; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(120% 70% at 85% 0%, rgba(255,246,229,.22), transparent 60%),
+      repeating-linear-gradient(135deg, rgba(0,0,0,.06) 0 2px, transparent 2px 9px); }
+  .cap--chile { --tono: linear-gradient(170deg, #e2341f, #9e1a0f); }
+  .cap--comal { --tono: linear-gradient(170deg, #3a2a22, #1a1412); }
+  .cap--nopal { --tono: linear-gradient(170deg, #2a8d44, #13511f); }
+  .cap--fuego { --tono: linear-gradient(170deg, #f7832f, #b9480e); }
+  .cap__n { position: absolute; top: 1.2rem; left: 1.4rem; font-size: 3.4rem; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(255,246,229,.75); }
+  .cap__sello { position: absolute; top: 1.3rem; right: -.2rem; padding: .3rem .9rem .2rem .8rem; background: var(--maiz); color: var(--comal); font-size: 1rem; transform: rotate(4deg); box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+  .cap__nombre { font-size: 2.3rem; line-height: .95; color: var(--tortilla); text-shadow: 3px 3px 0 rgba(0,0,0,.25); }
+  .cap__desc { margin: .7rem 0 0; color: rgba(255,246,229,.88); font-size: .97rem; line-height: 1.45; }
+  .cap__precio { display: inline-block; margin: 1rem 0 0; padding: .3rem .9rem .15rem 1.2rem; font-size: 1.5rem; line-height: 1;
+    background: var(--maiz); color: var(--comal); clip-path: polygon(9px 0, 100% 0, 100% 100%, 9px 100%, 0 50%); transform: rotate(-2deg); }
+  .cap--fuego .cap__precio { background: var(--tortilla); }
+</style>

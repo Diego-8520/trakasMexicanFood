@@ -1,0 +1,21 @@
+/* Estilos compartidos de la portada (no se cargan en /menu) */
+/* Botones compartidos */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 52px; padding: .2rem 1.6rem 0; border-radius: 999px;
+  text-decoration: none; font-size: 1.2rem; cursor: pointer;
+  transition: transform .2s var(--ease-out), background .2s, box-shadow .2s;
+}
+.btn:active { transform: scale(.98); }
+.btn--chico { min-height: 44px; padding-inline: 1.2rem; font-size: 1.1rem; }
+.btn--sol { background: var(--maiz); color: var(--comal); box-shadow: 0 6px 20px -6px rgba(255,194,26,.55); }
+.btn--sol:hover { background: #ffd04a; }
+.btn--vidrio { background: rgba(255,246,229,.08); color: var(--tortilla); border: 1px solid rgba(255,246,229,.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.btn--vidrio:hover { background: rgba(255,246,229,.14); }
+.btn--nopal { background: var(--nopal); color: #fff; box-shadow: 0 6px 0 #0f4a1f; }
+
+/* Encabezado de sección (concepto B) */
+.kicker { display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem; color: var(--maiz); font-size: 1.05rem; }
+.kicker::before { content: ''; width: 2.5rem; height: 2px; background: currentColor; }
+.seccion-titulo { font-size: clamp(2.6rem, 5vw, 4.4rem); line-height: .95; color: var(--tortilla); }

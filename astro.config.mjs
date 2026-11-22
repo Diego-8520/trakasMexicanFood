@@ -7,6 +7,6 @@ export const SITE_URL = 'https://trakas-mexican-food.vercel.app';
 
 export default defineConfig({
   site: SITE_URL,
-  integrations: [sitemap({ filter: (page) => !page.includes('/qr-poster') && !page.includes('/conceptos') })],
+  integrations: [sitemap({ filter: (page) => !page.includes('/qr-poster') })],
   build: { inlineStylesheets: 'always' },
 });

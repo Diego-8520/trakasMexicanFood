@@ -1,0 +1,110 @@
+---
+// Hero cinematográfico (concepto B) con titular del concepto A y mascota protagonista sobre sol (concepto C).
+import { Image } from 'astro:assets';
+import VideoSection from '../VideoSection.astro';
+import { trakas } from '../../data/trakas';
+import { whatsappUrl } from '../../lib/formato';
+import poster from '../../assets/posters/hero-provisional.webp';
+import logo from '../../assets/brand/logo/logo-sticker.png';
+import chile from '../../assets/brand/mascota/chile-presentando.png';
+---
+<section class="hero" aria-labelledby="hero-titulo">
+  <VideoSection clip="hero" poster={poster} alt="" prioridad class="hero__fondo" />
+  <div class="hero__velo" aria-hidden="true"></div>
+  <div class="picado" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="/" aria-label="Trakas Mexican Food — inicio">
+      <Image src={logo} alt="" width={84} densities={[1, 2]} loading="eager" />
+    </a>
+    <nav class="nav__links label" aria-label="Principal">
+      <a href="#menu">Menú</a><a href="#chile">El Chile</a><a href="#nosotros">Nosotros</a><a href="#ubicacion">Visítanos</a>
+    </nav>
+    <a class="btn btn--sol btn--chico label" href={whatsappUrl()} target="_blank" rel="noopener">Pedir</a>
+  </header>
+
+  <div class="hero__cuerpo">
+    <div class="hero__texto">
+      <p class="label kicker">Taquería · Desde el comal</p>
+      <h1 id="hero-titulo" class="display titulo">
+        <span>Moja.</span>
+        <span class="titulo__maiz">Muerde.</span>
+        <span>Repite.</span>
+      </h1>
+      <p class="sub">Tacos de birria dorados en el comal, con consomé caliente para mojar. Res marinada en chiles y cocida lento hasta deshacerse.</p>
+      <div class="ctas">
+        <a class="btn btn--sol label" href={whatsappUrl()} target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn btn--vidrio label" href="/menu">Ver el menú</a>
+      </div>
+    </div>
+
+    <figure class="anfitrion">
+      <div class="sol" aria-hidden="true"></div>
+      <Image
+        data-mascota-hero class="anfitrion__chile" src={chile}
+        alt="El Chile, mascota de Trakas, dando la bienvenida"
+        widths={[320, 480, 720, 960]} sizes="(min-width: 900px) 40vw, 62vw"
+        loading="eager" quality={78}
+      />
+      <figcaption class="globo">¡Hola, soy el Chile! Pide la birria y me agradeces después.</figcaption>
+    </figure>
+  </div>
+  <p class="desliza label" aria-hidden="true">Desliza</p>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; isolation: isolate; }
+  :global(.hero__fondo) { position: absolute !important; inset: 0; z-index: -2; }
+  .hero__velo { position: absolute; inset: 0; z-index: -1; background:
+      linear-gradient(90deg, rgba(14,12,11,.9) 0%, rgba(14,12,11,.6) 42%, rgba(14,12,11,.1) 75%),
+      linear-gradient(0deg, var(--comal) 0%, transparent 28%); }
+  .picado { position: absolute; inset: 0 0 auto; height: 14px; opacity: .9;
+    background: repeating-linear-gradient(90deg, var(--chile) 0 48px, var(--maiz) 48px 96px, var(--nopal) 96px 144px, var(--fuego) 144px 192px);
+    -webkit-mask: radial-gradient(7px at 50% 100%, transparent 98%, #000) 0 0 / 24px 100%; mask: radial-gradient(7px at 50% 100%, transparent 98%, #000) 0 0 / 24px 100%; }
+
+  .nav { display: flex; align-items: center; gap: 2rem; padding: 1.6rem clamp(1.2rem, 4vw, 3.5rem) 0; }
+  .nav :global(img) { width: 84px; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
+  .nav__links { display: flex; gap: 2rem; margin-left: auto; font-size: 1.15rem; }
+  .nav__links a { text-decoration: none; color: var(--tortilla-dim); transition: color .2s; }
+  .nav__links a:hover { color: var(--maiz); }
+
+  .hero__cuerpo { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 2rem; padding: 0 clamp(1.2rem, 5vw, 5rem); }
+  .titulo { display: grid; font-size: clamp(3.4rem, 7.4vw, 7rem); line-height: .86; color: var(--tortilla); }
+  .titulo span { display: block; text-shadow: 5px 5px 0 var(--chile); animation: sube .8s var(--ease-out) both; }
+  .titulo span:nth-child(2) { animation-delay: .1s; padding-left: .35em; }
+  .titulo span:nth-child(3) { animation-delay: .2s; text-shadow: 5px 5px 0 var(--nopal); }
+  .titulo__maiz { color: var(--maiz); }
+  @keyframes sube { from { opacity: 0; transform: translateY(30px); } }
+  .sub { max-width: 33rem; margin: 1.5rem 0 0; color: rgba(255,246,229,.78); font-size: 1.12rem; line-height: 1.65; }
+  .ctas { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
+
+  .anfitrion { position: relative; margin: 0; justify-self: center; width: min(100%, 560px); aspect-ratio: 1; }
+  .sol { position: absolute; inset: 9%; border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #ffd65a, var(--maiz) 55%, #e8961a);
+    box-shadow: 0 0 0 16px rgba(255,194,26,.16), 0 0 0 38px rgba(255,194,26,.07), 0 30px 80px rgba(242,106,27,.35);
+    animation: aparece 1s var(--ease-out) both; }
+  :global(.anfitrion__chile) { position: absolute; width: 96%; height: auto; left: 2%; bottom: -1%;
+    filter: drop-shadow(0 28px 34px rgba(0,0,0,.55)); transform-origin: 50% 100%;
+    animation: salta 1s var(--ease-bounce) .25s both, flota 5s ease-in-out 1.4s infinite; }
+  @keyframes aparece { from { opacity: 0; transform: scale(.7); } }
+  @keyframes salta { from { opacity: 0; transform: translateY(70px) scale(.85); } }
+  @keyframes flota { 50% { transform: translateY(-10px) rotate(-1deg); } }
+  .globo { position: absolute; top: 4%; left: -6%; max-width: 15rem; padding: .85rem 1.1rem; border-radius: 18px 18px 18px 4px;
+    background: var(--tortilla); color: var(--comal); font-weight: 700; font-size: .98rem; line-height: 1.3;
+    box-shadow: 0 14px 30px rgba(0,0,0,.45); animation: aparece .6s var(--ease-bounce) 1.1s both; }
+
+  .desliza { justify-self: center; padding: 0 0 1.4rem; color: var(--tortilla-dim); font-size: .95rem; letter-spacing: .2em; }
+
+  @media (max-width: 899px) {
+    .nav { padding-top: 1.2rem; }
+    .nav__links { display: none; }
+    .nav .btn { margin-left: auto; }
+    .hero__velo { background: linear-gradient(0deg, var(--comal) 12%, rgba(14,12,11,.6) 55%, rgba(14,12,11,.25)); }
+    .hero__cuerpo { grid-template-columns: 1fr; gap: 0; padding-bottom: 1rem; }
+    .anfitrion { order: -1; width: min(84vw, 380px); margin: -.5rem 0 -1rem; justify-self: center; }
+    .globo { left: -4%; top: 0; max-width: 9.5rem; padding: .6rem .8rem; font-size: .8rem; }
+    .titulo { font-size: clamp(3.2rem, 15vw, 4.6rem); }
+    .sub { font-size: 1.02rem; }
+    .desliza { display: none; }
+  }
+</style>
