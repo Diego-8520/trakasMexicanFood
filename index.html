@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- [Ciudad]: reemplaza en title, description y og:* -->
+  <title>Trakas Mexican Food | Tacos de Birria y Comida Mexicana en [Ciudad]</title>
+  <meta name="description" content="Trakas Mexican Food (Traaakas Taquería): tacos de birria, birria ramen, burritos, chilaquiles, gringas y dorilocos en [Ciudad]. Domicilios por WhatsApp 320 317 2184. Abierto miércoles a domingo.">
+  <link rel="canonical" href="https://[TU-DOMINIO].com/">
+  <meta name="theme-color" content="#141110">
+
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:site_name" content="Trakas Mexican Food">
+  <meta property="og:title" content="Trakas Mexican Food — ¡Pica rico!">
+  <meta property="og:description" content="Tacos de birria y comida mexicana con corazón colombiano. Pide por WhatsApp.">
+  <meta property="og:image" content="https://[TU-DOMINIO].com/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/TrakasBrush.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#menu">Saltar al menú</a>
+
+  <!-- Papel picado decorativo -->
+  <div class="picado" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a href="#top" class="topbar__brand" aria-label="Trakas Mexican Food, inicio">
+      <img src="assets/icon-192.png" alt="" width="48" height="48">
+      <span>Trakas</span>
+    </a>
+    <nav class="topbar__nav" aria-label="Principal">
+      <a href="#menu">Menú</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#ubicacion">Ubicación</a>
+    </nav>
+    <a class="btn btn--wa btn--sm" data-wa="Hola Trakas! Quiero hacer un pedido 🌮" href="#">Pedir</a>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="status" id="status" aria-live="polite">Abierto miércoles a domingo</p>
+        <h1>
+          <span class="hero__brand">Trakas</span>
+          <span class="hero__sub">Mexican Food</span>
+        </h1>
+        <p class="hero__lead">Tacos de birria con sabor mexicano y corazón colombiano. <strong>¡Pica rico!</strong></p>
+        <div class="hero__cta">
+          <a class="btn btn--wa" data-wa="Hola Trakas! Quiero hacer un pedido 🌮" href="#">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-wa"/></svg> Pedir por WhatsApp
+          </a>
+          <a class="btn btn--ghost" href="#menu">Ver menú</a>
+        </div>
+        <img class="hero__sticker" src="assets/mascota-oficial/chile-presentando-sticker-480.webp" alt="La mascota de Trakas, un chile con sombrero y gafas, invitando a pedir" width="170" height="170">
+        <ul class="hero__chips">
+          <li>🛵 Domicilios</li>
+          <li>🇲🇽 + 🇨🇴</li>
+          <li>🔥 Birria de la casa</li>
+        </ul>
+      </div>
+      <div class="hero__logo">
+        <picture>
+          <source srcset="assets/logo-nuevo/logo-sticker-1024.webp" type="image/webp">
+          <img src="assets/logo-nuevo/logo-sticker.png" alt="Logo de Trakas Mexican Food: chile rojo con sombrero y gafas escupiendo fuego" width="420" height="420" fetchpriority="high">
+        </picture>
+      </div>
+    </section>
+
+    <div class="zigzag" aria-hidden="true"></div>
+
+    <!-- MENÚ -->
+    <section class="menu" id="menu" aria-labelledby="menu-title">
+      <header class="section-head">
+        <p class="kicker">Lo que nos hace famosos</p>
+        <h2 id="menu-title">Menú</h2>
+        <img class="section-head__mascot" src="assets/mascota-oficial/chile-taco-480.webp" alt="La mascota de Trakas comiéndose un taco" width="150" height="150" loading="lazy">
+      </header>
+
+      <div class="tabs" role="tablist" aria-label="Categorías del menú">
+        <button role="tab" aria-selected="true" aria-controls="tab-platos" id="t-platos">Platos</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-proteinas" id="t-proteinas">Proteínas</button>
+        <button role="tab" aria-selected="false" aria-controls="tab-bebidas" id="t-bebidas">Bebidas</button>
+      </div>
+
+      <div class="tabpanel" role="tabpanel" id="tab-platos" aria-labelledby="t-platos">
+        <ul class="dishes" id="dishes"></ul>
+      </div>
+      <div class="tabpanel" role="tabpanel" id="tab-proteinas" aria-labelledby="t-proteinas" hidden>
+        <p class="panel-note">Arma tu plato: elige la proteína para tu burrito, gringas, volcanes o dorilocos.</p>
+        <ul class="proteins" id="proteins"></ul>
+      </div>
+      <div class="tabpanel" role="tabpanel" id="tab-bebidas" aria-labelledby="t-bebidas" hidden>
+        <ul class="drinks" id="drinks"></ul>
+      </div>
+
+      <p class="menu__foot">Precios en pesos colombianos (COP). ¿Antojo? <a href="#" data-wa="Hola Trakas! Quiero hacer un pedido 🌮">Escríbenos y te lo llevamos</a>.</p>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section class="about" id="nosotros" aria-labelledby="about-title">
+      <div class="about__card">
+        <p class="kicker">Nuestra historia</p>
+        <h2 id="about-title">México en el sabor, Colombia en el corazón</h2>
+        <p>En Trakas preparamos la birria como se hace en México: res marinada en chiles, cocida a fuego lento y servida con su consomé para mojar. Le sumamos el cariño y la sazón de casa colombiana, y el resultado es un sabor que hace <strong>¡TRAKAS!</strong></p>
+        <p>Tacos dorados, birria ramen, gringas y dorilocos para compartir con los parceros. Ven, pide y disfruta.</p>
+      </div>
+      <figure class="about__menu">
+        <img src="assets/menu.jpg" alt="Menú impreso de la Taquería Mexicana Trakass con tacos de birria, burritos, chilaquiles, ramen, dorilocos, volcanes y gringas" loading="lazy" width="512" height="768" onerror="this.closest('figure').classList.add('is-empty')">
+        <figcaption>Nuestro menú en el local</figcaption>
+      </figure>
+    </section>
+
+    <!-- UBICACIÓN Y HORARIO -->
+    <section class="visit" id="ubicacion" aria-labelledby="visit-title">
+      <header class="section-head">
+        <p class="kicker">Ven a visitarnos</p>
+        <h2 id="visit-title">Ubicación y horario</h2>
+      </header>
+      <div class="visit__grid">
+        <div class="visit__info">
+          <address class="nap">
+            <strong>Trakas Mexican Food</strong><br>
+            <span data-bind="direccion"></span><br>
+            <a data-bind="telefono" href="#"></a>
+          </address>
+          <table class="hours" aria-label="Horario de atención">
+            <tbody id="hours"></tbody>
+          </table>
+          <div class="visit__cta">
+            <a class="btn btn--fire" data-bind="maps" href="#" target="_blank" rel="noopener">Cómo llegar</a>
+            <a class="btn btn--wa" data-wa="Hola Trakas! Quiero pedir a domicilio 🛵" href="#">Pedir a domicilio</a>
+          </div>
+          <img class="visit__moto" src="assets/mascota-oficial/chile-moto-480.webp" alt="La mascota de Trakas en moto llevando un domicilio" width="220" height="220" loading="lazy">
+        </div>
+        <div class="map" id="map">
+          <button class="map__load" type="button">
+            <span aria-hidden="true">📍</span> Ver mapa
+            <small>Se cargará Google Maps</small>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- REDES -->
+    <section class="social" aria-labelledby="social-title">
+      <img class="social__mascot" src="assets/mascota-oficial/chile-fuego-480.webp" alt="La mascota de Trakas escupiendo fuego" width="160" height="160" loading="lazy">
+      <h2 id="social-title">Síguenos y antójate</h2>
+      <p>Promos, platos nuevos y mucho picante en nuestras redes.</p>
+      <ul class="social__list" id="social"></ul>
+      <a class="review" data-bind="resena" href="#" target="_blank" rel="noopener">
+        ⭐⭐⭐⭐⭐ <span>¿Te gustó? Déjanos tu reseña en Google</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img class="footer__mascot" src="assets/mascota-oficial/chile-emblema-480.webp" alt="Emblema de la mascota de Trakas" width="150" height="150" loading="lazy">
+    <p><strong>Trakas Mexican Food</strong> · <span data-bind="direccion"></span> · <a data-bind="telefono" href="#"></a></p>
+    <p class="footer__small">Abierto miércoles a domingo · © <span id="year"></span> Trakas Mexican Food</p>
+  </footer>
+
+  <a class="wa-float" data-wa="Hola Trakas! Quiero hacer un pedido 🌮" href="#" aria-label="Pedir por WhatsApp">
+    <svg aria-hidden="true" viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+    <img class="wa-float__badge" src="assets/icon-192.png" alt="" width="34" height="34">
+  </a>
+
+  <!-- Iconos -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.93 9.93 0 0 0-8.5 15.07L2 22l5.05-1.5A9.94 9.94 0 1 0 12.04 2zm0 18.1a8.15 8.15 0 0 1-4.16-1.14l-.3-.18-3 .9.9-2.92-.2-.3a8.16 8.16 0 1 1 6.76 3.64zm4.47-6.1c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.25-.63.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.85 2.03 4.76 4.76 0 0 0 1 2.53 10.9 10.9 0 0 0 4.18 3.69c1.55.67 2.16.73 2.94.61.47-.07 1.45-.59 1.65-1.17.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><path fill="currentColor" d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM21.9 7.9a6 6 0 0 0-1.6-4.2A6 6 0 0 0 16.1 2C14.4 2 9.6 2 7.9 2a6 6 0 0 0-4.2 1.6A6 6 0 0 0 2 7.9C2 9.6 2 14.4 2 16.1a6 6 0 0 0 1.6 4.2A6 6 0 0 0 7.9 22c1.7.1 6.5.1 8.2 0a6 6 0 0 0 4.2-1.6 6 6 0 0 0 1.6-4.2c.1-1.7.1-6.5 0-8.3zm-2.2 10.1a3.3 3.3 0 0 1-1.8 1.8c-1.3.5-4.3.4-5.9.4s-4.6.1-5.9-.4a3.3 3.3 0 0 1-1.8-1.8C3.8 16.7 3.9 13.7 3.9 12s-.1-4.6.4-5.9a3.3 3.3 0 0 1 1.8-1.8c1.3-.5 4.3-.4 5.9-.4s4.6-.1 5.9.4a3.3 3.3 0 0 1 1.8 1.8c.5 1.3.4 4.3.4 5.9s.1 4.6-.4 5.9z"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></symbol>
+    <symbol id="i-tt" viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 1 1-1.81-2.47V9.79a5.68 5.68 0 1 0 4.9 5.61V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.28 4.28 0 0 1-3.24-1.48z"/></symbol>
+  </svg>
+
+  <script src="data/config.js"></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

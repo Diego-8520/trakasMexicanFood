@@ -1,0 +1,18 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+
+# Entorno / secretos
+.env
+.env.*
+.claude/settings.local.json
+
+# Dependencias y temporales
+node_modules/
+*.log
+*.tmp

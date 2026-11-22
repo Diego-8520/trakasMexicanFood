@@ -1,0 +1,339 @@
+<title>Propuesta Trakas Mexican Food</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>@font-face{font-family:"Trakas Brush";src:url("TrakasBrush.woff2") format("woff2");font-display:swap}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: pizarra negra de taquería; bandas de sección con zigzag del sombrero, tarjetas tipo sticker solo donde un elemento lo merece. Diseño de un solo tema (oscuro) por decisión de marca. */
+:root {
+  --chile: #D62718; --fuego: #F26A1B; --maiz: #FFC21A; --nopal: #1F7A35; --ocre: #B9782E;
+  --comal: #141110; --comal-2: #1F1A17; --comal-3: #2E2622; --tortilla: #FFF6E5; --dim: #D3C5B0;
+  --f-display: "Trakas Brush", "Bangers", Impact, "Arial Black", sans-serif;
+  --f-label: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+  --f-body: "Nunito", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--comal); color: var(--tortilla); font: 400 1.0625rem/1.65 var(--f-body); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--maiz); }
+h1, h2, h3 { text-wrap: balance; }
+.picado { height: 22px; background: linear-gradient(90deg, var(--nopal) 0 20%, var(--tortilla) 20% 40%, var(--chile) 40% 60%, var(--maiz) 60% 80%, var(--fuego) 80%); background-size: 400px 100%; -webkit-mask: linear-gradient(135deg, #000 50%, transparent 50%) 0 100%/20px 10px repeat-x, linear-gradient(225deg, #000 50%, transparent 50%) 0 100%/20px 10px repeat-x, linear-gradient(#000, #000) 0 0/100% 12px no-repeat; mask: linear-gradient(135deg, #000 50%, transparent 50%) 0 100%/20px 10px repeat-x, linear-gradient(225deg, #000 50%, transparent 50%) 0 100%/20px 10px repeat-x, linear-gradient(#000, #000) 0 0/100% 12px no-repeat; }
+.zig { height: 18px; background: linear-gradient(135deg, var(--chile) 25%, transparent 25%) -9px 0/18px 18px, linear-gradient(225deg, var(--chile) 25%, transparent 25%) -9px 0/18px 18px, linear-gradient(315deg, var(--tortilla) 25%, transparent 25%) 0 0/18px 18px, linear-gradient(45deg, var(--tortilla) 25%, var(--nopal) 25%) 0 0/18px 18px; }
+
+header.hero { padding-block: 48px 40px; background: radial-gradient(circle at 80% 20%, rgba(214,39,24,.28), transparent 50%), radial-gradient(circle at 0% 100%, rgba(31,122,53,.22), transparent 50%); }
+.eyebrow { font: 1.2rem/1 var(--f-label); letter-spacing: 3px; color: var(--maiz); margin: 0; }
+h1 { margin: 8px 0 12px; font: clamp(3.4rem, 11vw, 7rem)/.9 var(--f-display); letter-spacing: 2px; background: linear-gradient(180deg, var(--maiz), var(--fuego) 55%, var(--chile)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(4px 5px 0 #000); }
+.lead { font-size: 1.2rem; max-width: 62ch; color: var(--dim); margin: 0; }
+.process { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; padding: 0; list-style: none; }
+.process li { font: 1.15rem/1 var(--f-label); letter-spacing: 1px; padding: 10px 14px; border-radius: 10px; background: var(--comal-2); border: 1px solid var(--comal-3); }
+.process li b { color: var(--fuego); font-weight: 400; margin-right: 6px; }
+
+section { padding-block: 56px; }
+h2 { font: clamp(2.3rem, 6vw, 3.4rem)/1 var(--f-display); letter-spacing: 1.5px; margin: 6px 0 22px; text-shadow: 3px 3px 0 var(--chile); }
+h3 { font: 1.6rem/1.1 var(--f-label); letter-spacing: 1px; color: var(--fuego); margin: 0 0 8px; }
+p { max-width: 68ch; }
+
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.fact { background: var(--comal-2); border: 1px solid var(--comal-3); border-radius: 14px; padding: 20px; min-width: 0; }
+.fact p, .fact ul { margin: 0; color: var(--dim); }
+.fact ul { padding-left: 18px; }
+.gap { border-color: var(--ocre); border-style: dashed; }
+
+table.menu { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+table.menu th { text-align: left; font: 1rem/1 var(--f-label); letter-spacing: 2px; color: var(--maiz); padding: 8px 0; border-bottom: 2px solid var(--comal-3); }
+table.menu td { padding: 10px 0; border-bottom: 1px dashed var(--comal-3); }
+table.menu td:last-child, table.menu th:last-child { text-align: right; }
+.scroll { overflow-x: auto; }
+
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+.sw { border-radius: 14px; overflow: hidden; border: 1px solid var(--comal-3); background: var(--comal-2); }
+.sw i { display: block; height: 86px; }
+.sw div { padding: 10px 12px; }
+.sw b { display: block; font: 1.2rem/1 var(--f-label); letter-spacing: 1px; }
+.sw code { font-size: .85rem; color: var(--dim); }
+.sw small { display: block; color: var(--dim); font-size: .8rem; line-height: 1.35; margin-top: 4px; }
+
+.type { display: grid; gap: 14px; }
+.type > div { display: grid; grid-template-columns: 160px 1fr; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px dashed var(--comal-3); }
+.type span { font: .95rem/1.3 var(--f-body); color: var(--dim); }
+.t-d { font: 3rem/1 var(--f-display); color: var(--fuego); letter-spacing: 2px; }
+.t-l { font: 2.2rem/1 var(--f-label); color: var(--maiz); letter-spacing: 2px; }
+.t-b { font: 1.1rem/1.5 var(--f-body); }
+@media (max-width: 560px) { .type > div { grid-template-columns: 1fr; gap: 4px; } }
+
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.rule { padding: 18px; border-radius: 14px; background: var(--comal-2); border-top: 5px solid var(--nopal); }
+.rule.no { border-top-color: var(--chile); }
+.rule p { margin: 0; color: var(--dim); }
+
+.voice { display: flex; flex-wrap: wrap; gap: 12px; }
+.voice span { font: 1.6rem/1 var(--f-display); letter-spacing: 1px; padding: 12px 18px; border-radius: 12px; background: var(--tortilla); color: var(--comal); box-shadow: 4px 5px 0 var(--chile); transform: rotate(-1.5deg); }
+.voice span:nth-child(even) { transform: rotate(1.5deg); box-shadow: 4px 5px 0 var(--nopal); }
+
+.review { display: grid; gap: 14px; }
+.change { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--comal-3); }
+.change > div { padding: 16px 18px; min-width: 0; }
+.change .a { background: var(--comal-2); }
+.change .b { background: #1B2A1E; }
+.change h4 { margin: 0 0 6px; font: .95rem/1 var(--f-label); letter-spacing: 2px; }
+.change .a h4 { color: var(--dim); }
+.change .b h4 { color: #7FD68F; }
+.change p { margin: 0; }
+.area { font: 1.3rem/1 var(--f-label); letter-spacing: 1px; color: var(--maiz); margin: 18px 0 2px; }
+@media (max-width: 680px) { .change { grid-template-columns: 1fr; } }
+
+.previews { display: grid; grid-template-columns: 2.2fr 1fr; gap: 20px; align-items: start; }
+.previews figure { margin: 0; min-width: 0; }
+.previews img { width: 100%; border-radius: 12px; border: 4px solid var(--tortilla); display: block; }
+.previews .desk { max-height: 720px; overflow: hidden; border-radius: 12px; }
+.previews figcaption { color: var(--dim); font-size: .9rem; margin-top: 8px; }
+@media (max-width: 760px) { .previews { grid-template-columns: 1fr; } .previews .mob { max-width: 300px; margin: 0 auto; } }
+
+.todo { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.todo li { padding: 14px 16px 14px 48px; position: relative; background: var(--comal-2); border-radius: 12px; }
+.todo li::before { content: ""; position: absolute; left: 16px; top: 17px; width: 18px; height: 18px; border: 2px solid var(--maiz); border-radius: 5px; }
+footer { padding-block: 40px 60px; color: var(--dim); text-align: center; font-size: .9rem; border-top: 1px solid var(--comal-3); }
+.ba { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.ba figure { margin: 0; min-width: 0; }
+.ba img { width: 100%; height: auto; border-radius: 14px; display: block; }
+.ba .light img { background: #fff; }
+.ba figcaption { color: var(--dim); font-size: .9rem; margin-top: 8px; }
+.fix { width: 100%; border-collapse: collapse; }
+.fix th, .fix td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px dashed var(--comal-3); vertical-align: top; }
+.fix th { font: 1rem/1 var(--f-label); letter-spacing: 2px; color: var(--maiz); border-bottom: 2px solid var(--comal-3); }
+.fix td:first-child { color: var(--tortilla); font-weight: 800; white-space: nowrap; }
+.fix td { color: var(--dim); }
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin-top: 22px; }
+.mgrid figure { margin: 0; background: var(--comal-2); border-radius: 14px; padding: 10px; text-align: center; }
+.mgrid img { width: 100%; height: auto; display: block; }
+.mgrid figcaption { font-size: .85rem; color: var(--dim); margin-top: 6px; }
+.specimen { font: clamp(1.8rem, 5vw, 3rem)/1.15 var(--f-display); color: var(--tortilla); letter-spacing: 1px; max-width: none; }
+.specimen span { color: var(--fuego); }
+.kit { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 18px; }
+.kit img { width: 96px; height: 96px; }
+.kit p { margin: 0; color: var(--dim); max-width: 50ch; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="picado" aria-hidden="true"></div>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Propuesta de marca y sitio web</p>
+    <h1>Trakas Mexican Food</h1>
+    <p class="lead">Lo que encontramos en el logo, el menú y la tarjeta de domicilios; la identidad que proponemos a partir de ellos; y los cambios que hizo el equipo revisor antes de construir el sitio.</p>
+    <ul class="process">
+      <li><b>A</b>Análisis de imágenes</li>
+      <li><b>A</b>Propuesta de marca y sitio</li>
+      <li><b>B</b>Evaluación y mejoras</li>
+      <li><b>✓</b>Sitio construido</li>
+    </ul>
+  </div>
+</header>
+<div class="zig" aria-hidden="true"></div>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Equipo A · Análisis</p>
+    <h2>Lo que dicen las imágenes</h2>
+    <div class="facts">
+      <div class="fact"><h3>Mascota y logo</h3><p>Chile rojo con sombrero de zigzag verde, rojo y blanco, gafas oscuras y fuego saliendo de la boca. Texto "TRAAAKAS" en brocha rasgada naranja y "TAQUERIA" en amarillo. Contorno negro con borde blanco, como sticker.</p></div>
+      <div class="fact"><h3>Concepto</h3><p>Taquería mexicana en Colombia. Las banderas de México y Colombia aparecen juntas en las tres piezas: es una fusión, y es el diferencial de la marca.</p></div>
+      <div class="fact"><h3>Operación</h3><ul><li>Domicilios por WhatsApp: 320 317 2184</li><li>Abierto de miércoles a domingo</li><li>Fondo negro tipo pizarra en menú y tarjeta</li></ul></div>
+      <div class="fact gap"><h3>Lo que falta</h3><ul><li>Dirección y ciudad</li><li>Horas de apertura y cierre</li><li>Usuarios de redes sociales</li><li>Fotos reales de platos y local</li></ul></div>
+      <div class="fact gap"><h3>Nombre inconsistente</h3><p>Aparece como "Traaakas Taquería", "Taquería Mexicana Trakass" y "Trakas". Se unifica como <strong>Trakas Mexican Food</strong>; las otras formas quedan como nombres alternos para que Google relacione todas las búsquedas.</p></div>
+    </div>
+
+    <h3 style="margin-top:36px">Menú extraído</h3>
+    <div class="scroll">
+      <table class="menu">
+        <thead><tr><th>Plato</th><th>Precio (COP)</th></tr></thead>
+        <tbody>
+          <tr><td>Tacos de Birria</td><td>$25.000</td></tr>
+          <tr><td>Burrito Mexicano</td><td>$25.000</td></tr>
+          <tr><td>Chilaquiles</td><td>$20.000</td></tr>
+          <tr><td>Ramen (birria)</td><td>$20.000</td></tr>
+          <tr><td>Dorilocos</td><td>$20.000</td></tr>
+          <tr><td>Volcanes x3</td><td>$20.000</td></tr>
+          <tr><td>Gringas x3</td><td>$25.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--dim)">Proteínas: Birria, Pollo, Chorizo, Chanchullo. Bebidas sin precio en el menú: Agua de Jamaica, Micheladas, Agua con Gas, Coca-Cola Personal.</p>
+  </div>
+</section>
+
+<div class="zig" aria-hidden="true"></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Equipo A · Identidad</p>
+    <h2>Paleta tomada del logo</h2>
+    <p>Cada color sale de una parte de la mascota. El logo no se modifica; la paleta solo lo acompaña.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#D62718"></i><div><b>Rojo Chile</b><code>#D62718</code><small>Cuerpo del chile. Acentos y sombras de títulos.</small></div></div>
+      <div class="sw"><i style="background:#F26A1B"></i><div><b>Naranja Fuego</b><code>#F26A1B</code><small>Letras TRAAAKAS. Nombres de platos.</small></div></div>
+      <div class="sw"><i style="background:#FFC21A"></i><div><b>Amarillo Maíz</b><code>#FFC21A</code><small>"TAQUERIA". Precios y enlaces.</small></div></div>
+      <div class="sw"><i style="background:#1F7A35"></i><div><b>Verde Nopal</b><code>#1F7A35</code><small>Sombrero y aro. Detalles y divisores.</small></div></div>
+      <div class="sw"><i style="background:#B9782E"></i><div><b>Ocre Sombrero</b><code>#B9782E</code><small>Ala del sombrero. Bordes decorativos.</small></div></div>
+      <div class="sw"><i style="background:#141110;box-shadow:inset 0 0 0 1px #3a302a"></i><div><b>Negro Comal</b><code>#141110</code><small>Fondo de pizarra, como el menú impreso.</small></div></div>
+      <div class="sw"><i style="background:#FFF6E5"></i><div><b>Crema Tortilla</b><code>#FFF6E5</code><small>Texto sobre negro y tarjetas claras.</small></div></div>
+    </div>
+
+    <h2 style="margin-top:48px">Tipografía</h2>
+    <div class="type">
+      <div><span>Bangers · títulos</span><div class="t-d">¡Pica rico!</div></div>
+      <div><span>Bebas Neue · etiquetas, botones, precios</span><div class="t-l">DOMICILIOS · $25.000</div></div>
+      <div><span>Nunito · texto</span><div class="t-b">Tortilla dorada en consomé, birria desmechada, cebolla y cilantro.</div></div>
+    </div>
+    <p style="color:var(--dim)">Bangers recoge la energía de la brocha del logo sin imitarla. Bebas Neue es la misma familia condensada de la tarjeta de domicilios.</p>
+
+    <h2 style="margin-top:48px">Uso del logo</h2>
+    <div class="rules">
+      <div class="rule"><h3>Sí</h3><p>Sobre fondo negro o muy oscuro, con su borde blanco. Espacio libre alrededor igual al alto de la "T".</p></div>
+      <div class="rule"><h3>Sí</h3><p>Mascota sola (sin texto) para favicon, stickers y fotos de perfil.</p></div>
+      <div class="rule no"><h3>No</h3><p>Recolorear, estirar, rotar ni poner sobre fotos con mucho detalle.</p></div>
+      <div class="rule no"><h3>No</h3><p>Cambiar la tipografía del nombre ni quitar las banderas.</p></div>
+    </div>
+
+    <h2 style="margin-top:48px">Voz de marca</h2>
+    <p>Cercana, picante y con humor de barrio. Mezcla palabras mexicanas y colombianas.</p>
+    <div class="voice"><span>¡Pica rico!</span><span>Pide tu Trakas</span><span>Birria pa' los parceros</span><span>¿Antojo? Te lo llevamos</span></div>
+  </div>
+</section>
+
+<div class="zig" aria-hidden="true"></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Logo · Evaluación y ajustes</p>
+    <h2>El mismo logo, con el nombre correcto</h2>
+    <p>Se editó la imagen original píxel a píxel. La mascota, el sombrero, el fuego, los colores y la brocha de las letras son los del archivo original.</p>
+    <div class="ba">
+      <figure class="light"><img src="logo-antes.webp" alt="Logo original: TRAAAKAS Taqueria" loading="lazy" width="800" height="800"><figcaption>Antes: TRAAAKAS · TAQUERIA, fondo blanco</figcaption></figure>
+      <figure class="light"><img src="logo-despues.webp" alt="Logo ajustado: TRAKAS Mexican Food" loading="lazy" width="800" height="800"><figcaption>Después: TRAKAS · MEXICAN FOOD, fondo transparente</figcaption></figure>
+      <figure><img src="logo-oscuro.webp" alt="Logo ajustado con borde claro sobre fondo oscuro" loading="lazy" width="800" height="800"><figcaption>Versión para fondos oscuros (web y redes)</figcaption></figure>
+    </div>
+    <div class="scroll" style="margin-top:28px">
+      <table class="fix">
+        <thead><tr><th>Cambio</th><th>Cómo se hizo</th></tr></thead>
+        <tbody>
+          <tr><td>TRAAAKAS → TRAKAS</td><td>Cada letra se separó por el negro que hay entre ellas, así la R conserva su pata completa. La segunda A es la A original con dientes y vetas distintos para que no se note la copia.</td></tr>
+          <tr><td>MEXICAN FOOD</td><td>Misma línea, inclinación y bloque negro que TAQUERIA, en amarillo con un degradado leve. Es más estrecha que TRAKAS para que el nombre mande.</td></tr>
+          <tr><td>Banderas</td><td>Redibujadas completas, ondeando en el estilo del chile: 2 tonos, contorno negro, filete crema. El escudo de México viene del original.</td></tr>
+          <tr><td>Sombrero</td><td>Se limpió la punta derecha del ala y el aro verde ahora nace por debajo, con un remate redondo.</td></tr>
+          <tr><td>Fuego</td><td>Rehecho al estilo del chile: contorno negro, 4 tonos con degradado suave, brillos crema y un borde inferior limpio.</td></tr>
+          <tr><td>Fondo y placa</td><td>Fondo transparente y placa negra con un contorno continuo, apta como línea de corte de sticker.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="zig" aria-hidden="true"></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Mascota</p>
+    <h2>El chile Trakas</h2>
+    <p>El cuerpo, el sombrero y las gafas salen del logo; lo nuevo se dibujó siguiendo esta ficha de estilo.</p>
+    <ul class="process" style="flex-direction:column;align-items:flex-start">
+      <li><b>·</b>Contorno negro grueso y continuo, y un borde exterior tipo sticker.</li>
+      <li><b>·</b>Rojo en 3–4 valores con transición suave; la luz viene de arriba a la izquierda.</li>
+      <li><b>·</b>Franja de brillo blanca de borde duro en el lado de la luz.</li>
+      <li><b>·</b>Gafas wayfarer siempre puestas: la expresión la llevan las cejas y la boca.</li>
+      <li><b>·</b>Actitud chula y pícara. Todo lo que se añada lleva contorno negro y brillo crema.</li>
+    </ul>
+    <div class="mgrid">
+      <figure><img src="mascota/01-con-fuego.webp" alt="Con fuego · hero" loading="lazy" width="480" height="480"><figcaption>Con fuego · hero</figcaption></figure>
+      <figure><img src="mascota/02-sin-fuego.webp" alt="Sin fuego" loading="lazy" width="480" height="480"><figcaption>Sin fuego</figcaption></figure>
+      <figure><img src="mascota/03-avatar.webp" alt="Avatar de redes" loading="lazy" width="480" height="480"><figcaption>Avatar de redes</figcaption></figure>
+      <figure><img src="mascota/04-una-tinta.webp" alt="Una tinta · sellos" loading="lazy" width="480" height="480"><figcaption>Una tinta · sellos</figcaption></figure>
+      <figure><img src="mascota/05-sonriendo.webp" alt="Sonriendo" loading="lazy" width="480" height="480"><figcaption>Sonriendo</figcaption></figure>
+      <figure><img src="mascota/06-guino.webp" alt="Guiño" loading="lazy" width="480" height="480"><figcaption>Guiño</figcaption></figure>
+      <figure><img src="mascota/07-sorprendido.webp" alt="Sorprendido" loading="lazy" width="480" height="480"><figcaption>Sorprendido</figcaption></figure>
+      <figure><img src="mascota/08-saboreando.webp" alt="Saboreando · platos picantes" loading="lazy" width="480" height="480"><figcaption>Saboreando · platos picantes</figcaption></figure>
+      <figure><img src="mascota/09-pulgar-arriba.webp" alt="Pulgar arriba" loading="lazy" width="480" height="480"><figcaption>Pulgar arriba</figcaption></figure>
+      <figure><img src="mascota/10-con-taco.webp" alt="Con taco · menú" loading="lazy" width="480" height="480"><figcaption>Con taco · menú</figcaption></figure>
+      <figure><img src="mascota/11-con-celular.webp" alt="Con celular · redes" loading="lazy" width="480" height="480"><figcaption>Con celular · redes</figcaption></figure>
+      <figure><img src="mascota/12-en-moto.webp" alt="En moto · domicilios" loading="lazy" width="480" height="480"><figcaption>En moto · domicilios</figcaption></figure>
+      <figure><img src="mascota/13-sticker-pide-ya.webp" alt="Sticker ¡Pide ya!" loading="lazy" width="480" height="480"><figcaption>Sticker ¡Pide ya!</figcaption></figure>
+      <figure><img src="mascota/14-sticker-domicilios.webp" alt="Sticker Domicilios" loading="lazy" width="480" height="480"><figcaption>Sticker Domicilios</figcaption></figure>
+      <figure><img src="mascota/15-sticker-cerrado.webp" alt="Sticker Cerrado" loading="lazy" width="480" height="480"><figcaption>Sticker Cerrado</figcaption></figure>
+      <figure><img src="mascota/16-sticker-gracias.webp" alt="Sticker ¡Gracias!" loading="lazy" width="480" height="480"><figcaption>Sticker ¡Gracias!</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<div class="zig" aria-hidden="true"></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Tipografía propia</p>
+    <h2>Trakas Brush</h2>
+    <p>No existe una fuente libre igual a la del logo, así que se creó una. T, R, A, K y S son las letras del logo vectorizadas; el resto sigue sus proporciones, grosor y rasgado. Cada letra tiene una alternativa que se activa sola para que las letras repetidas no salgan idénticas.</p>
+    <p class="specimen">ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>0123456789 ¡!¿?$&amp;<br><span>TACOS DE BIRRIA · ¡PIDE YA!</span></p>
+    <p style="color:var(--dim)">Úsala solo en titulares de 28 px o más; el texto corrido va en Nunito. Licencia: glifos derivados de Passion One (SIL Open Font License 1.1).</p>
+  </div>
+</section>
+
+<div class="zig" aria-hidden="true"></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Equipo de diseño</p>
+    <h2>Cómo se revisó</h2>
+    <p>Cada pieza pasó por cuatro revisores (dirección de arte, ilustración, tipografía y marca/web), que puntuaron cada parte del 1 al 10. Solo se dio por buena con 8 o más.</p>
+    <div class="scroll"><table class="fix">
+      <thead><tr><th>Pieza</th><th>Rondas</th><th>Resultado final</th></tr></thead>
+      <tbody>
+        <tr><td>Logo</td><td>3</td><td>Aprobado por los 4: TRAKAS 9, MEXICAN FOOD 8,5, banderas 8,5, fuego 8, sombrero 8,5</td></tr>
+        <tr><td>Fuente Trakas Brush</td><td>2</td><td>Aprobada: coherencia con el logo 8, parecido de TRAKAS 8, legibilidad en titulares 8</td></tr>
+        <tr><td>Mascota (17 piezas)</td><td>3</td><td>Set aprobado: todas las variantes con 8 o más</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<div class="zig" aria-hidden="true"></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Equipo B · Evaluación</p>
+    <h2>Qué cambió tras la revisión</h2>
+    <div class="review">
+      <p class="area">SEO local y Google Maps</p>
+      <div class="change"><div class="a"><h4>Propuesta A</h4><p>Página con nombre, menú y dirección en texto.</p></div><div class="b"><h4>Mejora B</h4><p>Datos estructurados de restaurante (Schema.org) con menú, precios en COP, horario, coordenadas, redes y nombres alternos. Título y descripción con "tacos de birria" + ciudad. Sitemap, robots y guía para el Perfil de Empresa de Google con nombre, dirección y teléfono idénticos.</p></div></div>
+
+      <p class="area">Pedidos</p>
+      <div class="change"><div class="a"><h4>Propuesta A</h4><p>Un botón de WhatsApp en la cabecera.</p></div><div class="b"><h4>Mejora B</h4><p>WhatsApp en la cabecera, en el hero, en cada plato con el mensaje ya escrito ("Quiero pedir: Tacos de Birria") y flotante. Indicador "Abierto ahora / Cerrado · abrimos mañana a las 12:00".</p></div></div>
+
+      <p class="area">Legibilidad</p>
+      <div class="change"><div class="a"><h4>Propuesta A</h4><p>Naranja y amarillo sobre fondo crema, fuente de brocha en varios textos.</p></div><div class="b"><h4>Mejora B</h4><p>Naranja y amarillo solo sobre negro (contraste suficiente). Brocha solo en títulos grandes. Foco visible para teclado, textos alternativos y animaciones que se apagan si el usuario lo pide.</p></div></div>
+
+      <p class="area">Velocidad</p>
+      <div class="change"><div class="a"><h4>Propuesta A</h4><p>Mapa de Google incrustado al cargar.</p></div><div class="b"><h4>Mejora B</h4><p>El mapa carga solo al tocar "Ver mapa". Sitio sin librerías, imágenes diferidas. Pensado para datos móviles.</p></div></div>
+
+      <p class="area">Contenido</p>
+      <div class="change"><div class="a"><h4>Propuesta A</h4><p>Menú copiado tal cual: nombre y precio.</p></div><div class="b"><h4>Mejora B</h4><p>"Ramen" pasa a "Birria Ramen". Cada plato lleva una descripción apetitosa. Pestaña de proteínas para armar el plato. Llamado a dejar reseña en Google.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="zig" aria-hidden="true"></div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Resultado</p>
+    <h2>El sitio construido</h2>
+    <p>Una sola página: inicio, menú por pestañas, historia, ubicación con horario, redes y pie con los datos del negocio. Ya usa el logo ajustado, la fuente Trakas Brush y la mascota en cada sección.</p>
+    <div class="previews">
+      <figure><div class="desk"><img src="preview-desktop.jpg" alt="Captura del sitio de Trakas en escritorio: hero, menú con tarjetas de platos y precios, historia y ubicación" loading="lazy"></div><figcaption>Escritorio</figcaption></figure>
+      <figure class="mob"><img src="preview-movil.jpg" alt="Captura del sitio de Trakas en celular" loading="lazy"><figcaption>Celular</figcaption></figure>
+    </div>
+
+    <h2 style="margin-top:48px">Pendiente para publicar</h2>
+    <ul class="todo">
+      <li>Copiar la imagen del menú como <code>menu.jpg</code> en la carpeta <code>assets/</code>.</li>
+      <li>Completar dirección, ciudad, coordenadas, horas y redes en <code>data/config.js</code>.</li>
+      <li>Crear o reclamar el Perfil de Empresa de Google con los mismos datos.</li>
+      <li>Tomar 10 o más fotos reales de platos y del local para el sitio y Google.</li>
+      <li>Publicar gratis en Netlify o Vercel y conectar un dominio.</li>
+    </ul>
+  </div>
+</section>
+
+<footer><div class="wrap">Trakas Mexican Food · WhatsApp 320 317 2184 · Abierto de miércoles a domingo</div></footer>
