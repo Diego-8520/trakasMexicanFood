@@ -1,0 +1,29 @@
+/* Trakas Mexican Food — tokens de marca (fuente: prototipo/css/styles.css) */
+@font-face {
+  font-family: "Trakas Brush";
+  src: url("/fonts/TrakasBrush.woff2") format("woff2");
+  font-display: swap;
+}
+:root {
+  --chile: #D62718;      /* Rojo Chile */
+  --fuego: #F26A1B;      /* Naranja Fuego */
+  --maiz: #FFC21A;       /* Amarillo Maíz */
+  --nopal: #1F7A35;      /* Verde Nopal */
+  --ocre: #B9782E;       /* Ocre Sombrero */
+  --comal: #141110;      /* Negro Comal */
+  --comal-2: #1F1A17;
+  --comal-3: #2A2320;
+  --tortilla: #FFF6E5;   /* Crema Tortilla */
+  --tortilla-dim: #D9CCB8;
+
+  --f-display: "Trakas Brush", Impact, "Arial Black", sans-serif; /* mínimo 28 px */
+  --f-label: "Bebas Neue", Impact, sans-serif;
+  --f-body: "Nunito Variable", "Nunito", system-ui, sans-serif;
+
+  --radius: 18px;
+  --radius-sm: 10px;
+  --shadow: 0 10px 30px rgba(0,0,0,.45);
+  --wrap: 1180px;
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --ease-bounce: cubic-bezier(.34,1.56,.64,1);
+}

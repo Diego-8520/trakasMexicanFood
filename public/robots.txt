@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /qr-poster
+
+Sitemap: https://trakas-mexican-food.vercel.app/sitemap-index.xml

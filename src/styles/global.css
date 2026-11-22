@@ -1,0 +1,25 @@
+@import "@fontsource/bebas-neue/latin-400.css";
+@import "@fontsource-variable/nunito/wght.css";
+@import "./tokens.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--comal);
+  color: var(--tortilla);
+  font: 400 1.0625rem/1.6 var(--f-body);
+  overflow-x: clip;
+}
+img, video, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; line-height: 1; }
+.display { font-family: var(--f-display); font-weight: 400; letter-spacing: .01em; }
+.label { font-family: var(--f-label); letter-spacing: .06em; text-transform: uppercase; }
+.wrap { width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--maiz); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
