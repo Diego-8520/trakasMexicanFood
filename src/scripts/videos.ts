@@ -5,7 +5,9 @@ const sinVideo = () =>
   matchMedia('(prefers-reduced-motion: reduce)').matches ||
   (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
 
-const resolucion = () => (Math.min(innerWidth, innerHeight) * Math.min(devicePixelRatio, 2) > 1100 && innerWidth >= 900 ? 1080 : 720);
+// Escritorio (≥ 900 px): el video ocupa buena parte del ancho y con 720 se ve blando → 1080 si el ancho
+// en píxeles reales supera 1100. En celular y tableta vertical se queda en 720 para ahorrar datos.
+const resolucion = () => (innerWidth >= 900 && innerWidth * Math.min(devicePixelRatio, 2) > 1100 ? 1080 : 720);
 
 function cargar(v: HTMLVideoElement) {
   if (v.dataset.cargado) return;
