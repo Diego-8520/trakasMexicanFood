@@ -40,7 +40,7 @@ export const trakas: Negocio = {
     codigoPostal: '[000000]',
     pais: 'CO',
   },
-  geo: { lat: 4.711, lng: -74.0721 },
+  geo: { lat: 4.711, lng: -74.0721 }, // [CONFIRMAR] se publica junto con la dirección real
   googleMapsUrl: 'https://maps.google.com/?q=Trakas+Mexican+Food',
   googleResenaUrl: 'https://g.page/r/[TU-ID]/review',
 

@@ -11,6 +11,7 @@ const item = (nombre: string, precio: number | null, desc?: string) => ({
 
 export function restaurantSchema(n: Negocio, url?: string): object {
   const sameAs = Object.values(n.redes).filter((u) => u && !u.includes('['));
+  const direccionReal = !Object.values(n.direccion).some((v) => v.includes('['));
   return {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
@@ -20,15 +21,18 @@ export function restaurantSchema(n: Negocio, url?: string): object {
     telephone: `+${n.whatsapp}`,
     servesCuisine: ['Mexicana', 'Tacos', 'Birria'],
     priceRange: '$$',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: n.direccion.calle,
-      addressLocality: n.direccion.ciudad,
-      addressRegion: n.direccion.departamento,
-      postalCode: n.direccion.codigoPostal,
-      addressCountry: n.direccion.pais,
-    },
-    geo: { '@type': 'GeoCoordinates', latitude: n.geo.lat, longitude: n.geo.lng },
+    // Dirección y coordenadas solo cuando son reales (sin [marcadores])
+    ...(direccionReal ? {
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: n.direccion.calle,
+        addressLocality: n.direccion.ciudad,
+        addressRegion: n.direccion.departamento,
+        postalCode: n.direccion.codigoPostal,
+        addressCountry: n.direccion.pais,
+      },
+      geo: { '@type': 'GeoCoordinates', latitude: n.geo.lat, longitude: n.geo.lng },
+    } : {}),
     openingHoursSpecification: n.horario.map((f) => ({
       '@type': 'OpeningHoursSpecification', dayOfWeek: DIAS_EN[f.dia], opens: f.abre, closes: f.cierra,
     })),

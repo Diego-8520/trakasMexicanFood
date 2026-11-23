@@ -9,6 +9,6 @@ describe('media', () => {
     expect(posterDe('no-existe')).toBeUndefined();
   });
   it('fotoDe devuelve undefined si la foto aún no existe', () => {
-    expect(fotoDe('birria')).toBeUndefined();
+    expect(fotoDe('no-existe-xyz')).toBeUndefined();
   });
 });
