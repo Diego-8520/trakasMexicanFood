@@ -1,13 +1,16 @@
 ---
 import { whatsappUrl } from '../lib/formato';
-interface Props { mensaje?: string; texto?: string; fijo?: boolean }
-const { mensaje = '¡Hola Trakas! Quiero hacer un pedido 🌮', texto = 'Pedir por WhatsApp', fijo = false } = Astro.props;
+import { marca } from '../data/trakas';
+// oculto: el botón fijo aparece solo cuando el hero (con sus propios botones) sale de pantalla
+interface Props { mensaje?: string; texto?: string; fijo?: boolean; oculto?: boolean }
+const { mensaje = marca.whatsapp.pedido, texto = 'Pedir por WhatsApp', fijo = false, oculto = false } = Astro.props;
 ---
 <a
-  class:list={['wa', { 'wa--fijo': fijo }]}
+  class:list={['wa', { 'wa--fijo': fijo, 'wa--oculto': oculto }]}
   href={whatsappUrl(mensaje)}
   target="_blank" rel="noopener"
   {...(fijo ? { 'data-whatsapp-fijo': '' } : {})}
+  {...(oculto ? { 'data-wa-diferido': '' } : {})}
 >
   <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>
   <span>{texto}</span>
@@ -28,4 +31,24 @@ const { mensaje = '¡Hola Trakas! Quiero hacer un pedido 🌮', texto = 'Pedir p
     bottom: calc(1rem + env(safe-area-inset-bottom));
     max-width: 28rem; margin-inline: auto;
   }
+  .wa--oculto { transition: opacity .25s var(--ease-out), transform .25s var(--ease-out); }
+  .wa--oculto:not(.visible) { opacity: 0; transform: translateY(150%); pointer-events: none; }
+  @media (min-width: 900px) { .wa--fijo.wa--oculto { left: auto; right: 1.5rem; } }
+  @media (prefers-reduced-motion: reduce) { .wa--oculto { transition: none; } }
 </style>
+
+{oculto && (
+  <script>
+    const wa = document.querySelector<HTMLElement>('[data-wa-diferido]');
+    const hero = document.querySelector('.hero');
+    if (wa && hero) {
+      const obs = new IntersectionObserver(([e]) => {
+        const visible = !e.isIntersecting;
+        wa.classList.toggle('visible', visible);
+        wa.toggleAttribute('inert', !visible);
+      }, { rootMargin: '-40% 0px 0px 0px' }); // aparece cuando el hero ya va de salida
+      obs.observe(hero);
+      wa.setAttribute('inert', '');
+    }
+  </script>
+)}

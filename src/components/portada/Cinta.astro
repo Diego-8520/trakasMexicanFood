@@ -1,6 +1,10 @@
 ---
 // Cinta roja en movimiento (toque del concepto A). Decorativa.
-const frase = '¡Pica rico! ★ Birria en consomé ★ Domicilios por WhatsApp ★ Birria ramen ★ Miércoles a domingo ★ ';
+import { trakas, marca } from '../../data/trakas';
+import { resumenHorario } from '../../lib/horario';
+// Frases desde los datos de marca + días de atención reales
+const dias = resumenHorario(trakas.horario).replace(/ desde.*$/, '');
+const frase = [...marca.cinta, dias].map((f) => `${f} ★ `).join('');
 ---
 <div class="cinta-marco" aria-hidden="true">
   <div class="cinta"><div class="cinta__pista label"><span>{frase}</span><span>{frase}</span></div></div>

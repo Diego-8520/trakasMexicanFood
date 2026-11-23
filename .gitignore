@@ -27,3 +27,7 @@ playwright-report/
 
 # Tomas crudas del cliente (pesadas, no se suben)
 media-original/
+
+# graphify: caché y respaldos automáticos
+memoria/graphify-out/cache/
+memoria/graphify-out/20*/

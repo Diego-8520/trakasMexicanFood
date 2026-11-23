@@ -1,6 +1,7 @@
 ---
 import EstadoHorario from '../EstadoHorario.astro';
-import { trakas } from '../../data/trakas';
+import { trakas, marca } from '../../data/trakas';
+import { whatsappUrl } from '../../lib/formato';
 const d = trakas.direccion;
 const direccionLista = ![d.calle, d.ciudad].some((v) => v.includes('['));
 const resenaLista = !trakas.googleResenaUrl.includes('[');
@@ -15,7 +16,9 @@ const resenaLista = !trakas.googleResenaUrl.includes('[');
         : <>Pregúntanos la dirección por WhatsApp</>}
     </address>
     <div class="vis__acciones">
-      <a class="btn btn--sol label" href={trakas.googleMapsUrl} target="_blank" rel="noopener">Cómo llegar</a>
+      {direccionLista
+        ? <a class="btn btn--sol label" href={trakas.googleMapsUrl} target="_blank" rel="noopener">Cómo llegar</a>
+        : <a class="btn btn--sol label" href={whatsappUrl(marca.whatsapp.direccion)} target="_blank" rel="noopener">Pedir la dirección</a>}
       {resenaLista && <a class="btn btn--vidrio label" href={trakas.googleResenaUrl} target="_blank" rel="noopener">Déjanos una reseña</a>}
     </div>
   </div>
