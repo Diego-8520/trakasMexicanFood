@@ -3,10 +3,10 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import MenuGrid from '../components/MenuGrid.astro';
 import EstadoHorario from '../components/EstadoHorario.astro';
+import BarraNav from '../components/BarraNav.astro';
 import WhatsAppCTA from '../components/WhatsAppCTA.astro';
 import { trakas } from '../data/trakas';
 import { formatoPrecio } from '../lib/formato';
-import logo from '../assets/brand/logo/logo.png';
 import chile from '../assets/brand/mascota/chile-presentando-sticker.webp';
 
 const { platos, proteinas, bebidas } = trakas.menu;
@@ -18,14 +18,12 @@ const listaNatural = (l: string[]) => l.length > 1 ? `${l.slice(0, -1).join(', '
   title="Menú — Trakas Mexican Food"
   description={`Menú de Trakas Mexican Food: tacos de birria en tortilla artesanal, birria ramen, burritos, chilaquiles, gringas, volcanes y dorilocos. Pide por WhatsApp ${trakas.telefonoVisible}.`}
 >
+  <BarraNav pagina="menu" />
   <div class="picado" aria-hidden="true"></div>
 
-  <header class="cab">
-    <a href="/" class="cab__logo" aria-label="Trakas Mexican Food — inicio">
-      <Image src={logo} alt="" width={96} densities={[1, 2]} quality={60} loading="eager" fetchpriority="high" />
-    </a>
+  <div class="cab">
     <EstadoHorario variante="chip" />
-  </header>
+  </div>
 
   <section class="intro">
     <div class="intro__texto">
@@ -113,14 +111,13 @@ const listaNatural = (l: string[]) => l.length > 1 ? `${l.slice(0, -1).join(', '
   }
 
   .cab {
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    padding: .9rem 1.1rem 0; max-width: 40rem; margin-inline: auto;
+    display: flex; align-items: center; gap: 1rem;
+    padding: .7rem 1.1rem 0; max-width: 40rem; margin-inline: auto;
   }
-  .cab__logo :global(img) { width: 96px; height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
 
   .intro {
     position: relative; display: grid; grid-template-columns: 1fr auto; align-items: end;
-    max-width: 40rem; margin: 1.2rem auto 0; padding: 0 1.1rem;
+    max-width: 40rem; margin: .8rem auto 0; padding: 0 1.1rem;
   }
   .intro__kicker { margin: 0 0 .4rem; color: var(--maiz); font-size: 1rem; }
   .intro__titulo {
@@ -138,7 +135,7 @@ const listaNatural = (l: string[]) => l.length > 1 ? `${l.slice(0, -1).join(', '
   @keyframes flota { 50% { transform: translateY(-6px) rotate(-1.5deg); } }
 
   .tabs {
-    position: sticky; top: 0; z-index: 40;
+    position: sticky; top: var(--nav-h); z-index: 40;
     display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: none;
     max-width: 40rem; margin: 1rem auto 0; padding: .6rem 1.1rem;
     background: rgba(20,17,16,.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);

@@ -1,0 +1,60 @@
+---
+// Barra de navegación fija, con color sólido, compartida por la portada y /menu.
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo/logo-sticker.png';
+
+interface Props { pagina: 'portada' | 'menu' }
+const { pagina } = Astro.props;
+const enMenu = pagina === 'menu';
+// En la portada los enlaces son anclas; desde /menu vuelven a las secciones de la portada.
+const base = enMenu ? '/' : '';
+---
+<header class="nav">
+  <a class="nav__logo" href="/" aria-label="Trakas Mexican Food — inicio">
+    <Image src={logo} alt="" width={58} densities={[1, 2]} quality={60} loading="eager" />
+  </a>
+  <nav class="nav__links" aria-label="Principal">
+    {enMenu
+      ? <a href="/menu" aria-current="page">Menú</a>
+      : <a href="#menu">Menú</a>}
+    <a href={`${base}#nosotros`}>Historia</a>
+    <a href={`${base}#ubicacion`}>Visítanos</a>
+  </nav>
+  {enMenu
+    ? <a class="nav__boton" href="/">Inicio</a>
+    : <a class="nav__boton" href="/menu">Menú</a>}
+</header>
+
+<style>
+  :global(:root) { --nav-h: 76px; }
+  :global(html) { scroll-padding-top: var(--nav-h); }
+  :global(body) { padding-top: var(--nav-h); }
+
+  .nav {
+    position: fixed; z-index: 60; top: 0; left: 0; right: 0; height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0 clamp(1.2rem, 6vw, 6rem); /* mismo margen que el texto de las secciones */
+    background: var(--comal); border-bottom: 3px solid var(--chile); box-shadow: 0 6px 20px rgba(0,0,0,.35);
+    font-family: var(--f-label); letter-spacing: .06em; text-transform: uppercase;
+  }
+  .nav__logo { display: inline-flex; min-height: 44px; align-items: center; }
+  .nav__logo :global(img) { width: 58px; height: auto; }
+  .nav__links { display: flex; gap: 2.2rem; font-size: 1.1rem; }
+  .nav__links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--tortilla); transition: color .2s; }
+  .nav__links a { position: relative; }
+  .nav__links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: .55rem; height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: right; transition: transform .3s var(--ease-out); }
+  .nav__links a:hover::after, .nav__links a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+  .nav__links a:hover, .nav__links a[aria-current="page"] { color: var(--maiz); }
+  .nav__boton {
+    display: none; align-items: center; justify-content: center; min-height: 44px; padding: .2rem 1.2rem 0;
+    border-radius: 999px; text-decoration: none; font-size: 1.1rem; color: var(--tortilla);
+    background: rgba(255,246,229,.08); border: 1px solid rgba(255,246,229,.2);
+  }
+  .nav__boton:hover { background: rgba(255,246,229,.14); }
+
+  @media (max-width: 767px) {
+    .nav__links { display: none; }
+    .nav__boton { display: inline-flex; }
+  }
+</style>

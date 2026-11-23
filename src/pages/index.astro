@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import '../styles/portada.css';
+import BarraNav from '../components/BarraNav.astro';
 import Hero from '../components/portada/Hero.astro';
 import Cinta from '../components/portada/Cinta.astro';
 import Capitulos from '../components/portada/Capitulos.astro';
@@ -20,6 +21,7 @@ const schema = JSON.stringify(restaurantSchema(trakas, Astro.site?.href));
   description={`Tacos de birria con consomé en tortilla artesanal, birria ramen, burritos, gringas y dorilocos. Pide por WhatsApp ${trakas.telefonoVisible}. ${resumenHorario(trakas.horario)}.`}
 >
   <script slot="head" type="application/ld+json" set:html={schema} />
+  <BarraNav pagina="portada" />
   <Hero />
   <Cinta />
   <main>
