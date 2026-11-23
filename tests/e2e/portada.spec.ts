@@ -44,7 +44,7 @@ test('platos estrella vienen de los datos (destacados primero)', async ({ page }
   await page.goto('/');
   const caps = page.locator('#menu [data-capitulo]');
   await expect(caps.first()).toContainText('Tacos de Birria');
-  await expect(caps.nth(1)).toContainText('Birria Ramen');
+  await expect(caps.nth(1)).toContainText('Ramen');
 });
 
 test('sin desplazamiento horizontal en móvil', async ({ page }) => {

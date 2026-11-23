@@ -48,7 +48,7 @@ El número del capítulo va arriba a la izquierda: deja esa esquina más limpia.
 | 5–7 s | Primer plano del taco mojado: brillo, cebolla y cilantro cayendo. |
 | 7–8 s | Vuelve al plato completo (cierre del bucle). |
 
-### `ramen.mp4` — Cap. 02 · Birria Ramen
+### `ramen.mp4` — Cap. 02 · Ramen
 | Tiempo | Escena |
 |---|---|
 | 0–2 s | Tazón humeante visto desde arriba: caldo rojo, carne, huevo partido a la mitad. |

@@ -68,7 +68,7 @@ export const trakas: Negocio = {
         desc: 'Tortilla de harina gigante rellena de tu proteína favorita, queso fundido y salsa de la casa.' },
       { id: 'chilaquiles', nombre: 'Chilaquiles', precio: 20000,
         desc: 'Totopos bañados en salsa roja, crema, queso y cilantro. El clásico mexicano.' },
-      { id: 'ramen', nombre: 'Birria Ramen', precio: 20000, destacado: true,
+      { id: 'ramen', nombre: 'Ramen', precio: 20000, destacado: true,
         desc: 'Fideos en consomé de birria, carne desmechada y huevo. Fusión que enamora.' },
       { id: 'dorilocos', nombre: 'Dorilocos', precio: 20000,
         desc: 'Bolsa de Doritos cargada con proteína, queso, salsas y toppings locos.' },
