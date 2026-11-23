@@ -2,17 +2,17 @@
 import { Image } from 'astro:assets';
 import WhatsAppCTA from '../WhatsAppCTA.astro';
 import EstadoHorario from '../EstadoHorario.astro';
-import { trakas } from '../../data/trakas';
+import { trakas, marca } from '../../data/trakas';
 import moto from '../../assets/brand/mascota/chile-moto.png';
 ---
 <section id="domicilios" class="dom" aria-labelledby="dom-titulo">
   <div class="dom__texto">
     <p class="label kicker">Domicilios</p>
     <h2 id="dom-titulo" class="display seccion-titulo">Te lo llevamos<br /><span>volando</span></h2>
-    <p>Escríbenos por WhatsApp, elige tu plato y tu proteína, y el Chile sale en moto con tu pedido caliente.</p>
+    <p>Escríbenos por WhatsApp, elige plato y proteína, y el Chile sale en moto con tu pedido recién salido del comal.</p>
     <div class="dom__acciones">
-      <WhatsAppCTA mensaje="¡Hola Trakas! Quiero un domicilio" />
-      <span class="dom__tel label">{trakas.telefonoVisible}</span>
+      <WhatsAppCTA mensaje={marca.whatsapp.domicilio} />
+      <a class="dom__tel label" href={`tel:+${trakas.whatsapp}`}>{trakas.telefonoVisible}</a>
     </div>
     <EstadoHorario variante="chip" />
   </div>
@@ -28,7 +28,7 @@ import moto from '../../assets/brand/mascota/chile-moto.png';
   .seccion-titulo span { color: var(--maiz); }
   .dom__texto > p { max-width: 32rem; color: rgba(255,246,229,.78); font-size: 1.08rem; line-height: 1.65; margin: 1.4rem 0 1.8rem; }
   .dom__acciones { display: flex; align-items: center; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 1.4rem; }
-  .dom__tel { font-size: 1.5rem; color: var(--tortilla); }
+  .dom__tel { font-size: 1.5rem; color: var(--tortilla); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
   .dom__arte { position: relative; }
   .dom__vel { position: absolute; inset: 40% 30% 30% -20%; background: repeating-linear-gradient(0deg, transparent 0 18px, rgba(255,194,26,.35) 18px 22px); -webkit-mask: linear-gradient(90deg, transparent, #000); mask: linear-gradient(90deg, transparent, #000); }
   :global(.dom__moto) { position: relative; width: 100%; max-width: 560px; height: auto; filter: drop-shadow(0 26px 30px rgba(0,0,0,.5)); }

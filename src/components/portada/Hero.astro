@@ -6,6 +6,7 @@ import VideoSection from '../VideoSection.astro';
 import { whatsappUrl } from '../../lib/formato';
 import provisional from '../../assets/posters/hero-provisional.webp';
 import { posterDe } from '../../lib/media';
+import { marca } from '../../data/trakas';
 import logo from '../../assets/brand/logo/logo-sticker.png';
 import chile from '../../assets/brand/mascota/chile-presentando-sticker.webp';
 // Video de fondo: media-original/hero.mp4 → npm run media
@@ -26,11 +27,11 @@ const poster = posterDe('hero') ?? provisional;
   </header>
 
   <div class="hero__texto">
-    <p class="label kicker">Taquería · Desde el comal</p>
+    <p class="label kicker">Taquería · Tortillas artesanales</p>
     <h1 id="hero-titulo" class="display titulo"><span>Birria que se moja</span> <span>en consomé.</span></h1>
-    <p class="sub">Res marinada en chiles y cocida lento hasta deshacerse. Tortilla dorada, cebolla, cilantro y un consomé que pide otra ronda.</p>
+    <p class="sub">Res marinada en chiles y cocida lento, en tortilla artesanal dorada al comal. Cebolla, cilantro y un consomé que pide otra ronda.</p>
     <div class="ctas">
-      <a class="btn btn--sol label" href={whatsappUrl()} target="_blank" rel="noopener">Pedir por WhatsApp</a>
+      <a class="btn btn--sol label" href={whatsappUrl(marca.whatsapp.pedido)} target="_blank" rel="noopener">Pedir por WhatsApp</a>
       <a class="btn btn--vidrio label" href="/menu">Ver el menú</a>
     </div>
   </div>

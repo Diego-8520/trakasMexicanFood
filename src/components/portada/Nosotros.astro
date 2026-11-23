@@ -1,10 +1,7 @@
 ---
-// Nosotros: qué hace distinta a Trakas. [Historia real del negocio pendiente del cliente]
-const pilares = [
-  { n: '01', titulo: 'Cocción lenta', texto: 'La birria se marina en chiles y se cocina con paciencia, hasta que la carne se deshace sola.' },
-  { n: '02', titulo: 'Hecho al momento', texto: 'Cada taco pasa por el comal cuando lo pides. Dorado por fuera, jugoso por dentro.' },
-  { n: '03', titulo: 'México y Colombia', texto: 'Recetas mexicanas con el corazón de casa. Por eso las dos banderas viven en nuestro logo.' },
-];
+// Nosotros: qué hace distinta a Trakas (textos en marca.pilares). [Historia real del negocio pendiente del cliente]
+import { marca } from '../../data/trakas';
+const pilares = marca.pilares.map((p, i) => ({ ...p, n: String(i + 1).padStart(2, '0') }));
 ---
 <section id="nosotros" class="nos" aria-labelledby="nos-titulo">
   <div class="nos__cab">

@@ -9,13 +9,15 @@ import Nosotros from '../components/portada/Nosotros.astro';
 import Domicilios from '../components/portada/Domicilios.astro';
 import Visitanos from '../components/portada/Visitanos.astro';
 import Pie from '../components/portada/Pie.astro';
-import { trakas } from '../data/trakas';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import { trakas, marca } from '../data/trakas';
+import { resumenHorario } from '../lib/horario';
 import { restaurantSchema } from '../lib/schema';
 const schema = JSON.stringify(restaurantSchema(trakas, Astro.site?.href));
 ---
 <Base
-  title="Trakas Mexican Food — Tacos de birria con consomé"
-  description="Tacos de birria con consomé para mojar, birria ramen, burritos, gringas y dorilocos. Pide por WhatsApp 320 317 2184. Abierto miércoles a domingo."
+  title="Trakas Mexican Food — Birria en consomé y tortillas artesanales"
+  description={`Tacos de birria con consomé en tortilla artesanal, birria ramen, burritos, gringas y dorilocos. Pide por WhatsApp ${trakas.telefonoVisible}. ${resumenHorario(trakas.horario)}.`}
 >
   <script slot="head" type="application/ld+json" set:html={schema} />
   <Hero />
@@ -28,4 +30,5 @@ const schema = JSON.stringify(restaurantSchema(trakas, Astro.site?.href));
     <Visitanos />
   </main>
   <Pie />
+  <WhatsAppCTA fijo oculto />
 </Base>

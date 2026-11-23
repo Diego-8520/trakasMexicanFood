@@ -49,6 +49,7 @@ docs/                     Plan, guion visual de videos (GUIA-VIDEOS.md), captura
 
 ## Dónde se cambia cada cosa
 - **Datos del negocio, menú y precios:** `src/data/trakas.ts`. Lo que tenga `[corchetes]` no se muestra al público hasta completarlo.
+- **Mensaje de marca** (promesa, pilares de Nosotros, frases de la cinta, mensajes de WhatsApp): bloque `marca` en `src/data/trakas.ts`. Idea central: *birria en consomé y tortillas artesanales, al comal cuando pides*.
 - **Dominio:** `SITE_URL` en `astro.config.mjs`; después `npm run qr`.
 - **Colores y tipografías:** `src/styles/tokens.css`.
 
@@ -66,4 +67,4 @@ Ver el guion visual en [`docs/GUIA-VIDEOS.md`](docs/GUIA-VIDEOS.md). Copiar los 
 Los videos se descargan solo cuando su sección aparece en pantalla, y nunca con ahorro de datos o movimiento reducido. Lo que falte se ve como ahora, sin huecos ni errores.
 
 ## Publicación
-Pendiente: Vercel conectado a este repositorio (cada push a `main` publica).
+Vercel conectado a este repositorio: cada push a `main` publica en https://trakas-mexican-food.vercel.app.
