@@ -6,6 +6,7 @@
 // El Chile, en la esquina inferior derecha, habla con su globo de diálogo a su lado.
 import { Image } from 'astro:assets';
 import VideoSection from '../VideoSection.astro';
+import EstadoHorario from '../EstadoHorario.astro';
 import { whatsappUrl } from '../../lib/formato';
 import provisional from '../../assets/posters/hero-provisional.webp';
 import { posterDe } from '../../lib/media';
@@ -24,8 +25,15 @@ const poster = posterDe('hero') ?? provisional;
     <h1 id="hero-titulo" class="display titulo"><span>Birria que se moja</span> <span>en consomé.</span></h1>
     <p class="sub">Res marinada en chiles y cocida lento, en tortilla artesanal dorada al comal. Cebolla, cilantro y un consomé que pide otra ronda.</p>
     <div class="ctas">
-      <a class="btn btn--sol label" href={whatsappUrl(marca.whatsapp.pedido)} target="_blank" rel="noopener">Pedir por WhatsApp</a>
-      <a class="btn btn--vidrio label" href="/menu">Ver el menú</a>
+      <a class="btn btn--sol label cta-principal" href={whatsappUrl(marca.whatsapp.pedido)} target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>
+        Pedir por WhatsApp
+      </a>
+      <a class="btn label cta-secundario" href="/menu">Ver el menú <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="hero__meta">
+      <EstadoHorario variante="chip" />
+      <span class="hero__meta-txt">Domicilios por WhatsApp</span>
     </div>
   </div>
 
@@ -50,8 +58,28 @@ const poster = posterDe('hero') ?? provisional;
   .titulo span { display: block; white-space: nowrap; animation: sube .8s var(--ease-out) both; }
   .titulo span + span { animation-delay: .1s; }
   @keyframes sube { from { opacity: 0; transform: translateY(24px); } }
-  .sub { max-width: 34rem; margin: 1.6rem 0 0; color: rgba(255,246,229,.82); font-size: 1.1rem; line-height: 1.65; }
+  .hero__texto :global(.kicker) { letter-spacing: .16em; font-size: .95rem; }
+  .titulo { text-shadow: 0 2px 24px rgba(0,0,0,.35); }
+  .sub { max-width: 34rem; margin: 1.5rem 0 0; color: rgba(255,246,229,.78); font-size: 1.1rem; line-height: 1.7; }
   .ctas { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2.2rem; }
+  .cta-principal { box-shadow: 0 12px 32px -10px rgba(255,194,26,.55), inset 0 -2px 0 rgba(0,0,0,.12); }
+  .cta-principal svg { margin-top: -.15rem; }
+  .cta-secundario { color: var(--tortilla); border: 1px solid rgba(255,246,229,.28); background: rgba(14,12,11,.35);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .cta-secundario span { display: inline-block; transition: transform .25s var(--ease-out); }
+  .cta-principal:hover, .cta-secundario:hover { transform: translateY(-2px); }
+  .cta-secundario:hover { border-color: var(--maiz); color: var(--maiz); }
+  .cta-secundario:hover span { transform: translateX(4px); }
+  .hero__meta { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: 1.6rem; }
+  .hero__meta-txt { color: var(--tortilla-dim); font-size: .9rem; }
+  .hero__meta-txt::before { content: '·'; margin-right: 1rem; color: rgba(255,246,229,.35); }
+  @media (max-width: 1023px) { .hero__meta-txt { display: none; } }
+
+  /* Grano de película muy sutil sobre todo el hero */
+  .hero::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"); }
+  /* Gradación cálida del video */
+  :global(.hero__fondo .vs__poster), :global(.hero__fondo .vs__video) { filter: saturate(1.08) contrast(1.06) brightness(.96); }
 
   /* El Chile en la esquina inferior derecha */
   .hero { --chile-w: clamp(170px, 17vw, 250px); --chile-der: clamp(1rem, 3vw, 3rem); }
@@ -70,7 +98,7 @@ const poster = posterDe('hero') ?? provisional;
     border-radius: 18px 18px 4px 18px;
     background: var(--tortilla); color: var(--comal);
     font-weight: 700; font-size: .92rem; line-height: 1.3;
-    box-shadow: 0 10px 26px rgba(0,0,0,.45);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 12px 30px -6px rgba(0,0,0,.55);
     transform-origin: 100% 100%; animation: habla .5s var(--ease-bounce) .9s both;
   }
   .globo::after { content: ''; position: absolute; right: -12px; bottom: 0; width: 16px; height: 14px;
@@ -85,9 +113,11 @@ const poster = posterDe('hero') ?? provisional;
       background: radial-gradient(70% 90% at 85% 55%, rgba(242,106,27,.10), transparent 70%), #0e0c0b; }
     :global(.hero__fondo) {
       inset: 0 0 0 auto !important; width: var(--video-w);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 42%), linear-gradient(0deg, transparent 0%, #000 22%, #000 88%, transparent 100%);
+      --fade-x: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.06) 9%, rgba(0,0,0,.2) 18%, rgba(0,0,0,.42) 27%, rgba(0,0,0,.68) 36%, rgba(0,0,0,.88) 45%, #000 55%);
+      --fade-y: linear-gradient(0deg, transparent 0%, rgba(0,0,0,.35) 8%, rgba(0,0,0,.8) 17%, #000 26%, #000 86%, rgba(0,0,0,.6) 94%, transparent 100%);
+      -webkit-mask-image: var(--fade-x), var(--fade-y);
       -webkit-mask-composite: source-in;
-              mask-image: linear-gradient(90deg, transparent 0%, #000 42%), linear-gradient(0deg, transparent 0%, #000 22%, #000 88%, transparent 100%);
+              mask-image: var(--fade-x), var(--fade-y);
               mask-composite: intersect;
       animation: aparece 1.4s var(--ease-out) both;
     }
@@ -105,6 +135,7 @@ const poster = posterDe('hero') ?? provisional;
     .titulo span { white-space: normal; }
     .anfitrion { bottom: 1rem; }
     .globo { font-size: .85rem; max-width: 10.5rem; padding: .55rem .75rem; }
+    .hero__meta { display: none; }
     .desliza { display: none; }
   }
   @media (prefers-reduced-motion: reduce) { .anfitrion, .globo { animation: none; } }
