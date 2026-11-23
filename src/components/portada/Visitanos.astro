@@ -1,0 +1,35 @@
+---
+import EstadoHorario from '../EstadoHorario.astro';
+import { trakas } from '../../data/trakas';
+const d = trakas.direccion;
+const direccionLista = ![d.calle, d.ciudad].some((v) => v.includes('['));
+const resenaLista = !trakas.googleResenaUrl.includes('[');
+---
+<section id="ubicacion" class="vis" aria-labelledby="vis-titulo">
+  <div>
+    <p class="label kicker">Visítanos</p>
+    <h2 id="vis-titulo" class="display seccion-titulo">Te esperamos<br />en el comal</h2>
+    <address class="vis__dir">
+      {direccionLista
+        ? <>{d.calle}{d.barrio && !d.barrio.includes('[') ? `, ${d.barrio}` : ''}<br />{d.ciudad}</>
+        : <>Pregúntanos la dirección por WhatsApp</>}
+    </address>
+    <div class="vis__acciones">
+      <a class="btn btn--sol label" href={trakas.googleMapsUrl} target="_blank" rel="noopener">Cómo llegar</a>
+      {resenaLista && <a class="btn btn--vidrio label" href={trakas.googleResenaUrl} target="_blank" rel="noopener">Déjanos una reseña</a>}
+    </div>
+  </div>
+  <div class="vis__horario">
+    <h3 class="label vis__sub">Horario</h3>
+    <EstadoHorario variante="completo" />
+  </div>
+</section>
+<style>
+  .vis { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start;
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.2rem, 5vw, 5rem); }
+  .vis__dir { font-style: normal; font-size: 1.25rem; line-height: 1.5; margin: 1.6rem 0 1.8rem; color: var(--tortilla); }
+  .vis__acciones { display: flex; flex-wrap: wrap; gap: .9rem; }
+  .vis__horario { padding: 1.8rem; border-radius: 24px; background: var(--comal-2); border: 1px solid rgba(255,246,229,.08); }
+  .vis__sub { margin: 0 0 1rem; font-size: 1.4rem; color: var(--maiz); font-weight: 400; }
+  @media (max-width: 899px) { .vis { grid-template-columns: 1fr; } }
+</style>

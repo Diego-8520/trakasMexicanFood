@@ -1,0 +1,57 @@
+---
+// "Conoce al Chile": sección propia de la mascota, con su video (concepto B).
+import { Image } from 'astro:assets';
+import VideoSection from '../VideoSection.astro';
+import { posterDe } from '../../lib/media';
+// Video propio del Chile: media-original/chile.mp4; mientras tanto, el clip de muestra
+const clip = posterDe('chile') ? 'chile' : 'chile-zoom';
+const poster = posterDe(clip)!;
+import taco from '../../assets/brand/mascota/chile-taco-sticker.webp';
+import fuego from '../../assets/brand/mascota/chile-fuego-sticker.webp';
+import moto from '../../assets/brand/mascota/chile-moto-sticker.webp';
+const poses = [
+  { img: taco, titulo: 'Fan número uno de la birria', texto: 'Si no sabes qué pedir, él ya decidió por ti.' },
+  { img: fuego, titulo: 'Pica, pero rico', texto: 'Nuestras salsas tienen carácter. Avisa si eres valiente.' },
+  { img: moto, titulo: 'Reparte volando', texto: 'Escríbele por WhatsApp y llega con el pedido caliente.' },
+];
+---
+<section id="chile" class="chile" aria-labelledby="chile-titulo">
+  <div class="chile__video">
+    <VideoSection clip={clip} poster={poster} alt="El Chile, mascota de Trakas, saludando" class="chile__vs" />
+  </div>
+  <div class="chile__texto">
+    <p class="label kicker">El Chile</p>
+    <h2 id="chile-titulo" class="display seccion-titulo">El que le pone<br /><span>el picante</span></h2>
+    <p class="chile__intro">Gafas oscuras, sombrero de fiesta y cero miedo al picante. El Chile es la cara de Trakas: te recibe en la puerta, te recomienda la birria y sale en moto con tu pedido.</p>
+    <ul class="poses">
+      {poses.map((p) => (
+        <li class="pose">
+          <Image src={p.img} alt="" width={150} densities={[1, 2]} quality={70} class="pose__img" />
+          <div><h3 class="label pose__titulo">{p.titulo}</h3><p>{p.texto}</p></div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .chile { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center;
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.2rem, 5vw, 5rem);
+ }
+  .chile__video { position: relative; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden;
+    border: 1px solid rgba(255,246,229,.08); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+  :global(.chile__vs) { position: absolute !important; inset: 0; }
+  .seccion-titulo span { color: var(--maiz); }
+  .chile__intro { max-width: 34rem; margin: 1.4rem 0 2rem; color: rgba(255,246,229,.78); font-size: 1.08rem; line-height: 1.65; }
+  .poses { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+  .pose { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1rem; padding: .6rem 1rem .6rem .4rem;
+    border-radius: 18px; background: rgba(255,246,229,.04); border: 1px solid rgba(255,246,229,.08); }
+  :global(.pose__img) { width: 88px; height: auto; transition: transform .3s var(--ease-bounce); }
+  .pose:hover :global(.pose__img) { transform: rotate(-6deg) scale(1.08); }
+  .pose__titulo { margin: 0; font-size: 1.35rem; color: var(--fuego); font-weight: 400; }
+  .pose p { margin: .15rem 0 0; color: var(--tortilla-dim); font-size: .95rem; }
+  @media (max-width: 899px) {
+    .chile { grid-template-columns: 1fr; }
+    .chile__video { aspect-ratio: 1; }
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import { getImage } from 'astro:assets';
+import '../styles/global.css';
+import { fotoDe } from '../lib/media';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noIndex?: boolean;
+}
+const { title, description, image, noIndex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+// Imagen para compartir: media-original/compartir.jpg (npm run media) o, si no existe, la provisional
+const compartir = fotoDe('compartir');
+const ogSrc = image
+  ?? (compartir ? (await getImage({ src: compartir, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src : '/og-image.jpg');
+const ogImage = new URL(ogSrc, Astro.site);
+---
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noIndex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#141110" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:site_name" content="Trakas Mexican Food" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/TrakasBrush.woff2" as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

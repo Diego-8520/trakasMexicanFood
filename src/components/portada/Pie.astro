@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import { trakas, redesActivas } from '../../data/trakas';
+import emblema from '../../assets/brand/mascota/chile-emblema-sticker.webp';
+const redes = redesActivas();
+const nombres = { instagram: 'Instagram', facebook: 'Facebook', tiktok: 'TikTok' } as const;
+---
+<footer class="pie">
+  <Image src={emblema} alt="" width={120} densities={[1, 2]} quality={70} class="pie__emblema" />
+  <div>
+    <p class="display pie__lema">{trakas.eslogan}</p>
+    <p class="pie__txt">{trakas.nombre} · WhatsApp {trakas.telefonoVisible}</p>
+    <nav class="pie__links label" aria-label="Pie de página">
+      <a href="/menu">Menú</a><a href="#chile">El Chile</a><a href="#domicilios">Domicilios</a><a href="#ubicacion">Visítanos</a>
+      {redes.map(([red, url]) => <a href={url} target="_blank" rel="noopener">{nombres[red]}</a>)}
+    </nav>
+  </div>
+  <p class="pie__copy">© {new Date().getFullYear()} {trakas.nombre}</p>
+</footer>
+<style>
+  .pie { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2rem;
+    padding: 3rem clamp(1.2rem, 5vw, 5rem) 3.5rem; border-top: 1px solid rgba(255,246,229,.08); background: #0e0c0b; }
+  :global(.pie__emblema) { width: 120px; height: auto; }
+  .pie__lema { font-size: 2.4rem; color: var(--maiz); margin: 0; }
+  .pie__txt { margin: .3rem 0 .8rem; color: var(--tortilla-dim); }
+  .pie__links { display: flex; flex-wrap: wrap; gap: 1.4rem; font-size: 1.1rem; }
+  .pie__links a { text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+  .pie__copy { align-self: end; margin: 0; color: var(--tortilla-dim); font-size: .85rem; }
+  @media (max-width: 899px) { .pie { grid-template-columns: 1fr; text-align: left; } }
+</style>

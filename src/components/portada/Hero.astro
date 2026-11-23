@@ -1,0 +1,90 @@
+---
+// Hero del concepto B "Cine de comal": video a pantalla completa, texto a la izquierda,
+// el Chile como anfitrión abajo a la derecha con su globo de diálogo.
+import { Image } from 'astro:assets';
+import VideoSection from '../VideoSection.astro';
+import { whatsappUrl } from '../../lib/formato';
+import provisional from '../../assets/posters/hero-provisional.webp';
+import { posterDe } from '../../lib/media';
+import logo from '../../assets/brand/logo/logo-sticker.png';
+import chile from '../../assets/brand/mascota/chile-presentando-sticker.webp';
+// Video de fondo: media-original/hero.mp4 → npm run media
+const poster = posterDe('hero') ?? provisional;
+---
+<section class="hero" aria-labelledby="hero-titulo">
+  <VideoSection clip="hero" poster={poster} alt="" prioridad class="hero__fondo" />
+  <div class="hero__velo" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="/" aria-label="Trakas Mexican Food — inicio">
+      <Image src={logo} alt="" width={84} densities={[1, 2]} loading="eager" />
+    </a>
+    <nav class="nav__links label" aria-label="Principal">
+      <a href="#menu">Menú</a><a href="#nosotros">Historia</a><a href="#ubicacion">Visítanos</a>
+    </nav>
+    <a class="btn btn--vidrio btn--chico label nav__menu" href="/menu">Menú</a>
+  </header>
+
+  <div class="hero__texto">
+    <p class="label kicker">Taquería · Desde el comal</p>
+    <h1 id="hero-titulo" class="display titulo"><span>Birria que se moja</span> <span>en consomé.</span></h1>
+    <p class="sub">Res marinada en chiles y cocida lento hasta deshacerse. Tortilla dorada, cebolla, cilantro y un consomé que pide otra ronda.</p>
+    <div class="ctas">
+      <a class="btn btn--sol label" href={whatsappUrl()} target="_blank" rel="noopener">Pedir por WhatsApp</a>
+      <a class="btn btn--vidrio label" href="/menu">Ver el menú</a>
+    </div>
+  </div>
+
+  <figure class="anfitrion">
+    <figcaption class="globo">¡Bienvenido! Yo te recomiendo la birria.</figcaption>
+    <Image data-mascota-hero src={chile} alt="El Chile, anfitrión de Trakas"
+      widths={[160, 240, 340, 480, 680]} sizes="(min-width: 768px) clamp(220px, 24vw, 340px), 150px"
+      loading="eager" quality={78} />
+  </figure>
+  <p class="desliza label" aria-hidden="true">Desliza</p>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; isolation: isolate; background: #0e0c0b; }
+  :global(.hero__fondo) { position: absolute !important; inset: 0; z-index: -2; }
+  .hero__velo { position: absolute; inset: 0; z-index: -1; background:
+      linear-gradient(90deg, rgba(14,12,11,.92) 0%, rgba(14,12,11,.65) 45%, rgba(14,12,11,0) 75%),
+      linear-gradient(0deg, #0e0c0b 0%, transparent 30%); }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.4rem clamp(1.2rem, 4vw, 3.5rem); }
+  .nav :global(img) { width: 84px; height: auto; }
+  .nav__links { display: flex; gap: 2.2rem; font-size: 1.1rem; }
+  .nav__links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--tortilla-dim); transition: color .2s; }
+  .nav__links a:hover { color: var(--maiz); }
+  .nav__menu { display: none !important; }
+
+  .hero__texto { align-self: center; padding: 0 clamp(1.2rem, 6vw, 6rem); max-width: 52rem; }
+  .titulo { font-size: clamp(3rem, 5.4vw, 5.2rem); line-height: .92; color: var(--tortilla); }
+  .titulo span { display: block; white-space: nowrap; animation: sube .8s var(--ease-out) both; }
+  .titulo span + span { animation-delay: .1s; }
+  @keyframes sube { from { opacity: 0; transform: translateY(24px); } }
+  .sub { max-width: 34rem; margin: 1.6rem 0 0; color: rgba(255,246,229,.82); font-size: 1.1rem; line-height: 1.65; }
+  .ctas { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2.2rem; }
+
+  .anfitrion { position: absolute; z-index: 3; right: clamp(1rem, 5vw, 5rem); bottom: 2.5rem; margin: 0;
+    display: flex; align-items: flex-end; gap: .4rem; animation: flota 4.5s ease-in-out infinite; }
+  .anfitrion :global(img) { width: clamp(220px, 24vw, 340px); height: auto; filter: drop-shadow(0 20px 30px rgba(0,0,0,.6)); }
+  .globo { margin: 0 0 15rem; max-width: 13rem; padding: .8rem 1rem; border-radius: 16px 16px 4px 16px;
+    background: var(--tortilla); color: var(--comal); font-weight: 700; font-size: .95rem; line-height: 1.3; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  @keyframes flota { 50% { transform: translateY(-8px); } }
+  .desliza { justify-self: center; padding-bottom: 1.4rem; color: var(--tortilla-dim); font-size: .85rem; letter-spacing: .06em; }
+
+  @media (max-width: 767px) {
+    .nav__links { display: none; }
+    .nav__menu { display: inline-flex !important; }
+    .hero__velo { background: linear-gradient(0deg, #0e0c0b 15%, rgba(14,12,11,.55) 60%, rgba(14,12,11,.3)); }
+    .hero__texto { align-self: end; padding-bottom: 15rem; }
+    .titulo { font-size: 2.6rem; }
+    .titulo span { white-space: normal; }
+    .anfitrion { right: .5rem; bottom: 1rem; }
+    .anfitrion :global(img) { width: 150px; }
+    .globo { display: none; }
+    .desliza { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .anfitrion { animation: none; } }
+</style>

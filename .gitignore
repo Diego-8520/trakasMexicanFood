@@ -16,3 +16,14 @@ desktop.ini
 node_modules/
 *.log
 *.tmp
+.superpowers/
+
+# Astro / build
+dist/
+.astro/
+.vercel/
+test-results/
+playwright-report/
+
+# Tomas crudas del cliente (pesadas, no se suben)
+media-original/

@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/portada.css';
+import Hero from '../components/portada/Hero.astro';
+import Cinta from '../components/portada/Cinta.astro';
+import Capitulos from '../components/portada/Capitulos.astro';
+import ConoceAlChile from '../components/portada/ConoceAlChile.astro';
+import Nosotros from '../components/portada/Nosotros.astro';
+import Domicilios from '../components/portada/Domicilios.astro';
+import Visitanos from '../components/portada/Visitanos.astro';
+import Pie from '../components/portada/Pie.astro';
+import { trakas } from '../data/trakas';
+import { restaurantSchema } from '../lib/schema';
+const schema = JSON.stringify(restaurantSchema(trakas, Astro.site?.href));
+---
+<Base
+  title="Trakas Mexican Food — Tacos de birria con consomé"
+  description="Tacos de birria con consomé para mojar, birria ramen, burritos, gringas y dorilocos. Pide por WhatsApp 320 317 2184. Abierto miércoles a domingo."
+>
+  <script slot="head" type="application/ld+json" set:html={schema} />
+  <Hero />
+  <Cinta />
+  <main>
+    <Capitulos />
+    <ConoceAlChile />
+    <Nosotros />
+    <Domicilios />
+    <Visitanos />
+  </main>
+  <Pie />
+</Base>

@@ -1,0 +1,74 @@
+---
+// Tarjeta de mesa A6 (105 × 148 mm) con el QR del menú. Abrir y usar "Imprimir" (márgenes: ninguno).
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { trakas } from '../data/trakas';
+import logo from '../assets/brand/logo/logo.png';
+import chile from '../assets/brand/mascota/chile-presentando-sticker.webp';
+
+const urlCorta = new URL('/menu', Astro.site).host + '/menu';
+---
+<Base title="Tarjeta QR — Trakas Mexican Food" description="Tarjeta de mesa con el QR del menú." noIndex>
+  <div class="hoja">
+    <article class="tarjeta">
+      <div class="picado" aria-hidden="true"></div>
+      <Image class="logo" src={logo} alt="Trakas Mexican Food" width={420} />
+      <h1 class="display titulo">Escanea<br />y mira<br />el menú</h1>
+      <div class="qr-zona">
+        <img class="qr" src="/qr/menu-qr.svg" alt={`Código QR: ${urlCorta}`} width="220" height="220" />
+        <Image class="chile" src={chile} alt="" width={360} />
+      </div>
+      <p class="pasos label">Abre la cámara · apunta · ¡listo!</p>
+      <p class="url">{urlCorta}</p>
+      <p class="wa label">Domicilios WhatsApp {trakas.telefonoVisible}</p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  @page { size: 105mm 148mm; margin: 0; }
+  :global(body) { background: #3a3330; }
+  .hoja { min-height: 100vh; display: grid; place-items: center; padding: 2rem 1rem; }
+  .tarjeta {
+    position: relative; overflow: hidden;
+    width: 105mm; height: 148mm; padding: 9mm 7mm 6mm;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    background:
+      radial-gradient(90% 55% at 50% 0%, rgba(214,39,24,.35), transparent 70%),
+      var(--comal);
+    color: var(--tortilla);
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .picado {
+    position: absolute; inset: 0 0 auto; height: 5mm;
+    background: repeating-linear-gradient(90deg, var(--chile) 0 13mm, var(--maiz) 13mm 26mm, var(--nopal) 26mm 39mm, var(--fuego) 39mm 52mm);
+    -webkit-mask: radial-gradient(2.2mm at 50% 100%, transparent 98%, #000) 0 0 / 6.5mm 100%;
+            mask: radial-gradient(2.2mm at 50% 100%, transparent 98%, #000) 0 0 / 6.5mm 100%;
+  }
+  .logo { width: 30mm; height: auto; margin-top: 0; }
+  .titulo {
+    font-size: 25pt; line-height: 1; margin-top: 1.5mm; color: var(--tortilla);
+    text-shadow: 1.2mm 1.2mm 0 var(--chile);
+  }
+  .qr-zona { position: relative; margin-top: 4mm; }
+  .qr {
+    width: 50mm; height: 50mm; display: block;
+    background: #fff; border-radius: 3mm; padding: 1mm;
+    outline: 1.2mm solid var(--maiz); outline-offset: 0;
+  }
+  .chile {
+    position: absolute; width: 30mm; height: auto;
+    right: -27mm; bottom: -3mm; transform: rotate(6deg);
+    filter: drop-shadow(0 2mm 3mm rgba(0,0,0,.5));
+  }
+  .pasos { margin: 4mm 0 0; color: var(--maiz); font-size: 12pt; }
+  .url { margin: 1mm 0 0; font-size: 8.5pt; color: var(--tortilla); }
+  .wa { margin: 3mm 0 0; font-size: 10pt; color: var(--tortilla); letter-spacing: .08em; }
+
+  @media print {
+    :global(body) { background: none; }
+    .hoja { padding: 0; min-height: 0; display: block; }
+    .tarjeta { box-shadow: none; }
+  }
+</style>

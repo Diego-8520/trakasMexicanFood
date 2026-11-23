@@ -14,9 +14,11 @@ Aprendizajes del historial del proyecto (ver `memoria/historial-proyecto.md` y e
 - Para personajes, pedir o usar referencias visuales pronto; generar personajes por código rinde peor que su ilustración.
 - Revisar al 100 % antes de presentar: el cliente detecta defectos finos (letras, bordes, halos de recorte, restos).
 - Todo diseño pasa por el equipo de revisión (director de arte, ilustrador, tipógrafo, marca/web). Se aprueba con 8/10 o más por parte.
-- No sobrescribir trabajo aprobado: guardar versiones (`assets/source/*-master*.png`).
+- No sobrescribir trabajo aprobado: guardar versiones (`marca/`, p. ej. `marca/logo/*-master*.png`, `marca/mascota/v1-con-huecos/`).
 
 ## Estado de las piezas
-- **Logo vigente:** `assets/logo-nuevo/` (master en `assets/source/logo-trakas-master-v2.png`), hecho con la mascota oficial.
-- **Mascota oficial:** `assets/mascota-oficial/` (originales del cliente en `assets/source/`).
-- **Fuente de titulares:** `fonts/TrakasBrush.woff2` (mínimo 28 px).
+- **Sitio:** Astro 5 en la raíz (plan: `docs/superpowers/plans/2026-11-22-sitio-final-astro.md`). Portada concepto B "Cine de comal" + cinta roja: **aprobada** ("está perfecta"). `/menu` y tarjeta QR aprobadas.
+- **Logo vigente:** `marca/logo/logo-trakas-master-v2.png` (copias del sitio en `src/assets/brand/logo/`).
+- **Mascota oficial:** `marca/mascota/` (huecos blancos ya transparentes; recortes anteriores en `marca/mascota/v1-con-huecos/`; originales del cliente en `marca/originales-cliente/`). Copias del sitio en `src/assets/brand/mascota/`.
+- **Fuente de titulares:** `marca/fuente/` · servida desde `public/fonts/TrakasBrush.woff2` (mínimo 28 px).
+- **Videos y fotos:** el cliente los está produciendo según `docs/GUIA-VIDEOS.md`; se integran con `npm run media`.

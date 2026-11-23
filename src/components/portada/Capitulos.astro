@@ -1,0 +1,61 @@
+---
+// "La carta, por capítulos" (concepto B): tarjeta vertical (aquí irá el clip de cada plato) y datos debajo.
+// Sin video usa la foto del plato; sin foto, el número sobre el comal.
+import { trakas } from '../../data/trakas';
+import { formatoPrecio } from '../../lib/formato';
+import { posterDe, fotoDe } from '../../lib/media';
+import VideoSection from '../VideoSection.astro';
+// Clip vertical de cada plato: media-original/{id}.mp4 · foto: media-original/{id}.jpg → npm run media
+const orden = ['birria', 'ramen', 'volcanes', 'gringas'];
+const capitulos = orden
+  .map((id) => trakas.menu.platos.find((p) => p.id === id))
+  .filter((p) => p !== undefined)
+  .map((p) => ({ ...p, poster: posterDe(p.id) ?? fotoDe(p.id) }));
+---
+<section id="menu" class="caps" aria-labelledby="caps-titulo">
+  <div class="caps__cab">
+    <div>
+      <p class="label kicker">La carta, por capítulos</p>
+      <h2 id="caps-titulo" class="display seccion-titulo">Cuatro razones<br />para volver</h2>
+    </div>
+    <a class="btn btn--vidrio label" href="/menu">Ver el menú completo</a>
+  </div>
+  <ol class="caps__pista" tabindex="0" aria-label="Platos, desliza para ver más">
+    {capitulos.map((p, i) => (
+      <li class="cap" data-capitulo={p.id}>
+        <div class="cap__media" aria-hidden="true">
+          {p.poster && <VideoSection clip={p.id} poster={p.poster} alt="" class="cap__vs" />}
+          <span class="cap__num label">{String(i + 1).padStart(2, '0')}</span>
+        </div>
+        <div class="cap__info">
+          <span class="label cap__n">Cap. {String(i + 1).padStart(2, '0')}</span>
+          <h3 class="display cap__nombre">{p.nombre}</h3>
+          <p>{p.desc}</p>
+          <span class="label cap__precio"><span class="sr-only">Precio: </span>{formatoPrecio(p.precio)}</span>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .caps { padding: 7rem 0 6rem; }
+  .caps__cab { display: flex; align-items: end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    padding: 0 clamp(1.2rem, 6vw, 6rem); margin-bottom: 3rem; }
+  .caps__pista { list-style: none; margin: 0; display: grid; grid-auto-flow: column; grid-auto-columns: min(78vw, 340px); gap: 1.4rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: clamp(1.2rem, 6vw, 6rem);
+    padding: 0 clamp(1.2rem, 6vw, 6rem) 1rem; scrollbar-width: none; }
+  .cap { position: relative; scroll-snap-align: start; }
+  .cap__media { position: relative; aspect-ratio: 9 / 14; border-radius: 22px; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 1.4rem;
+    background: radial-gradient(120% 70% at 80% 0%, rgba(242,106,27,.22), transparent 60%), linear-gradient(170deg, #2b201b, #141110);
+    border: 1px solid rgba(255,246,229,.08); transition: transform .35s var(--ease-out); }
+  .cap:hover .cap__media { transform: translateY(-6px); }
+  .cap__num { position: relative; font-size: 2rem; line-height: 1; color: rgba(255,246,229,.7); text-shadow: 0 2px 8px rgba(0,0,0,.6); }
+  :global(.cap__vs) { position: absolute !important; inset: 0; }
+  .cap__info { padding: 1.1rem .2rem 0; }
+  .cap__n { color: var(--fuego); font-size: 1rem; }
+  .cap__nombre { font-size: 2rem; margin: .3rem 0 .6rem; }
+  .cap__info p { color: rgba(255,246,229,.72); font-size: .98rem; margin: 0 0 .8rem; }
+  .cap__precio { font-size: 1.4rem; color: var(--maiz); }
+</style>

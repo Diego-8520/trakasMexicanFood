@@ -1,35 +1,69 @@
 # Trakas Mexican Food — sitio web
 
-Sitio estático (HTML + CSS + JS, sin dependencias). Para verlo con la fuente propia, ábrelo desde un servidor (por ejemplo `python3 -m http.server` en esta carpeta); con doble clic también funciona, pero algunos navegadores bloquean la fuente en archivos locales.
+Sitio en **Astro 5**: HTML estático, casi sin JavaScript (≈3 KB en la portada), pensado para cargar rápido con videos cortos.
+Diseño aprobado: concepto **B "Cine de comal"** con la cinta roja en movimiento.
 
-## 1. Lo que ya incluye
-- `assets/logo.png`, `logo-1024.webp`: logo TRAKAS Mexican Food (transparente). `logo-sticker*`: versión con borde crema para fondos oscuros.
-- `assets/source/`: logo original sin tocar y el máster corregido (2000 px).
-- `assets/mascota/`: 17 piezas de la mascota (PNG y WebP de 1024 px; `web/` con WebP de 480 px para el sitio).
-- `fonts/TrakasBrush.woff2` / `.ttf`: tipografía propia para titulares (mínimo 28 px). Licencia OFL (base Passion One).
-- Íconos: `favicon-32/48.png`, `icon-192/512.png`, `apple-touch-icon.png`; imagen para compartir: `og-image.jpg`.
+## Comandos
+```bash
+npm install          # una vez
+npm run dev          # servidor local en http://localhost:4321
+npm run build        # genera dist/
+npm run preview      # sirve dist/
+npm test             # pruebas de lógica y de procesamiento de medios (Vitest)
+npm run test:e2e     # construye y prueba en navegador móvil (Playwright)
+npm run media        # procesa videos y fotos de media-original/
+npm run qr           # genera el QR del menú en public/qr/
+```
+Requisitos: Node 20+ y ffmpeg (`winget install Gyan.FFmpeg`) para `npm run media`.
 
-Falta solo copiar la imagen del menú impreso como `assets/menu.jpg`.
+## Páginas
+| Ruta | Qué es |
+|---|---|
+| `/` | Portada: hero con video, carta por capítulos, El Chile, Nosotros, Domicilios, Visítanos |
+| `/menu` | Menú ligero (< 100 KB) que abre el QR de las mesas |
+| `/qr-poster` | Tarjeta de mesa A6 imprimible con el QR (no indexada) |
 
-## 2. Completa tus datos (un solo archivo)
-Edita `data/config.js` y reemplaza todo lo que esté entre `[CORCHETES]`:
-dirección, ciudad, coordenadas, horas de apertura, redes sociales, enlace de Google Maps y de reseñas.
-El menú y los precios también se cambian ahí. Todo el sitio y los datos para Google se actualizan solos.
+## Estructura
+```
+marca/                    Archivos maestros de la marca (no se publican)
+  originales-cliente/     Imágenes originales entregadas por el cliente
+  logo/                   Masters del logo (logo-trakas-master-v2.png es el vigente)
+  mascota/                Chile en sus 5 poses, con los huecos ya transparentes
+    v1-con-huecos/        Recortes anteriores (historial)
+  fuente/                 Trakas Brush (TTF y WOFF2)
+media-original/           Videos y fotos crudos del cliente (no se suben a GitHub)
+public/                   Archivos servidos tal cual: íconos, fuente, QR, videos procesados
+src/
+  assets/brand/           Copias exactas de la marca que usa la página
+  assets/posters/         Pósters de video (generados por npm run media)
+  assets/fotos/           Fotos procesadas (generadas por npm run media)
+  components/             Componentes compartidos (menú, horario, WhatsApp, video)
+  components/portada/     Secciones de la portada
+  data/trakas.ts          Datos del negocio y menú (fuente única)
+  lib/                    Lógica: horario, precios, Schema.org, medios
+  layouts/ pages/ scripts/ styles/
+scripts/                  procesar-media, generar-qr, limpiar-huecos
+tests/                    Vitest (lógica) y tests/e2e (Playwright)
+docs/                     Plan, guion visual de videos (GUIA-VIDEOS.md), capturas
+```
 
-En `index.html`, `robots.txt` y `sitemap.xml` cambia `[Ciudad]` y `[TU-DOMINIO]`.
+## Dónde se cambia cada cosa
+- **Datos del negocio, menú y precios:** `src/data/trakas.ts`. Lo que tenga `[corchetes]` no se muestra al público hasta completarlo.
+- **Dominio:** `SITE_URL` en `astro.config.mjs`; después `npm run qr`.
+- **Colores y tipografías:** `src/styles/tokens.css`.
 
-## 3. Publicar gratis
-- **Vercel / Netlify:** arrastra la carpeta completa en app.netlify.com/drop o crea un proyecto en Vercel. Luego conecta tu dominio.
+## Videos y fotos
+Ver el guion visual en [`docs/GUIA-VIDEOS.md`](docs/GUIA-VIDEOS.md). Copiar los archivos en `media-original/` con su nombre y ejecutar `npm run media`:
 
-## 4. Google Maps (Perfil de Empresa)
-1. Entra a business.google.com y crea/reclama "Trakas Mexican Food".
-2. Categoría principal: *Restaurante mexicano*; secundarias: *Taquería*, *Servicio de entrega de comida*.
-3. Usa **exactamente** el mismo nombre, dirección y teléfono que en `config.js` (consistencia NAP).
-4. Horario: miércoles a domingo. Agrega la URL del sitio y el enlace de WhatsApp como "Pedidos".
-5. Sube 10+ fotos reales (platos, fachada, interior) y el menú con precios.
-6. Copia el enlace "Pedir reseñas" en `googleResenaUrl` y pídelas a cada cliente feliz.
-7. Usa el mismo nombre y enlace al sitio en Instagram, Facebook y TikTok.
-8. Valida los datos estructurados en search.google.com/test/rich-results.
+| Archivo | Aparece en |
+|---|---|
+| `hero.mp4` | Fondo de la portada |
+| `birria.mp4`, `ramen.mp4`, `volcanes.mp4`, `gringas.mp4` | Tarjetas de la carta |
+| `chile.mp4` | Sección El Chile (reemplaza el clip de muestra) |
+| `{id}.jpg` (birria, burrito, chilaquiles, ramen, dorilocos, volcanes, gringas) | Miniatura en `/menu` y respaldo de la tarjeta |
+| `compartir.jpg` | Imagen al compartir el enlace (si no existe se usa `public/og-image.jpg`) |
 
-## Guía de marca
-Abre `brand/guia-de-marca.html`.
+Los videos se descargan solo cuando su sección aparece en pantalla, y nunca con ahorro de datos o movimiento reducido. Lo que falte se ve como ahora, sin huecos ni errores.
+
+## Publicación
+Pendiente: Vercel conectado a este repositorio (cada push a `main` publica).

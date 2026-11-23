@@ -57,3 +57,11 @@ Registro de la colaboración entre el dueño del restaurante (cliente) y Claude,
 - No sobrescribir trabajo aprobado: guardar versiones (logo-trakas-master.png → master-v2).
 - Presentar siempre comparaciones antes y después y hojas de contacto.
 - Un límite de uso cortó a los subagentes a mitad de una ronda; se reanudaron con SendMessage.
+
+## 7. Sitio final en Astro (2026-11-22)
+- Se migró el prototipo a **Astro 5** (estático, casi sin JS) con datos únicos en `src/data/trakas.ts`.
+- **Menú QR** (`/menu`, < 100 KB) y **tarjeta de mesa A6** con QR: aprobados en la fase 2.
+- Portada: se presentaron 3 conceptos (A cartel, B cine de comal, C fiesta de maíz). El cliente primero pidió "B con toques de A y C" y luego corrigió: **"quiero que se vea el B, con la cinta roja en movimiento"**. Lección: cuando el cliente elige un concepto, respetarlo literal; no mezclar recomendaciones del equipo sin preguntar.
+- El cliente detectó un **hueco blanco en el brazo del Chile** (recorte de JPG con fondo blanco). Se corrigió en todas las poses con `scripts/limpiar-huecos.mjs`. Lección: revisar recortes sobre fondo de color, no solo sobre oscuro.
+- Portada B aprobada: "está perfecta". Los videos se están produciendo aparte; la página los integra por nombre de archivo (`docs/GUIA-VIDEOS.md`, escrita como guion visual por escena, a pedido del cliente).
+- Se ordenó el proyecto: `marca/` para masters, se eliminó `prototipo/`.

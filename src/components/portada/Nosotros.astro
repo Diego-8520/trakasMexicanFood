@@ -1,0 +1,34 @@
+---
+// Nosotros: qué hace distinta a Trakas. [Historia real del negocio pendiente del cliente]
+const pilares = [
+  { n: '01', titulo: 'Cocción lenta', texto: 'La birria se marina en chiles y se cocina con paciencia, hasta que la carne se deshace sola.' },
+  { n: '02', titulo: 'Hecho al momento', texto: 'Cada taco pasa por el comal cuando lo pides. Dorado por fuera, jugoso por dentro.' },
+  { n: '03', titulo: 'México y Colombia', texto: 'Recetas mexicanas con el corazón de casa. Por eso las dos banderas viven en nuestro logo.' },
+];
+---
+<section id="nosotros" class="nos" aria-labelledby="nos-titulo">
+  <div class="nos__cab">
+    <p class="label kicker">Nosotros</p>
+    <h2 id="nos-titulo" class="display seccion-titulo">Mexican food<br />con corazón colombiano</h2>
+  </div>
+  <ol class="pilares">
+    {pilares.map((p) => (
+      <li class="pilar">
+        <span class="pilar__n label" aria-hidden="true">{p.n}</span>
+        <h3 class="display pilar__titulo">{p.titulo}</h3>
+        <p>{p.texto}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+<style>
+  .nos { padding: clamp(4rem, 8vw, 7rem) clamp(1.2rem, 5vw, 5rem); border-top: 1px solid rgba(255,246,229,.08); }
+  .nos__cab { margin-bottom: 3rem; }
+  .pilares { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: clamp(1.5rem, 3vw, 3rem); }
+  .pilar { border-top: 3px solid var(--fuego); padding-top: 1.2rem; }
+  .pilar:first-child { border-color: var(--maiz); }
+  .pilar__n { font-size: 1.1rem; color: var(--fuego); }
+  .pilar__titulo { font-size: 2rem; margin: .4rem 0 .7rem; }
+  .pilar p { margin: 0; color: var(--tortilla-dim); line-height: 1.6; max-width: 30rem; }
+  @media (max-width: 899px) { .pilares { grid-template-columns: 1fr; } }
+</style>

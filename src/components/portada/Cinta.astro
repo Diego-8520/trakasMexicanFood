@@ -1,0 +1,14 @@
+---
+// Cinta roja en movimiento (toque del concepto A). Decorativa.
+const frase = '¡Pica rico! ★ Birria en consomé ★ Domicilios por WhatsApp ★ Birria ramen ★ Miércoles a domingo ★ ';
+---
+<div class="cinta-marco" aria-hidden="true">
+  <div class="cinta"><div class="cinta__pista label"><span>{frase}</span><span>{frase}</span></div></div>
+</div>
+<style>
+  .cinta-marco { overflow: hidden; padding: 1.4rem 0; margin-block: -1.4rem; position: relative; z-index: 2; }
+  .cinta { background: var(--chile); transform: rotate(-1.6deg); width: 104%; margin-left: -2%; padding: .75rem 0; box-shadow: 0 12px 30px rgba(0,0,0,.4); }
+  .cinta__pista { display: flex; width: max-content; font-size: clamp(1.3rem, 2.4vw, 2rem); color: var(--tortilla); white-space: pre; animation: corre 30s linear infinite; }
+  @keyframes corre { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .cinta__pista { animation: none; } }
+</style>
