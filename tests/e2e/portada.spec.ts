@@ -113,6 +113,23 @@ test.describe('escritorio', () => {
       expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     }
   });
+  test('carrusel de platos: las flechas llevan hasta la última tarjeta', async ({ page }) => {
+    await page.goto('/');
+    const pista = page.locator('#menu .caps__pista');
+    const siguiente = page.getByRole('button', { name: 'Plato siguiente' });
+    const anterior = page.getByRole('button', { name: 'Plato anterior' });
+    await expect(siguiente).toBeVisible();
+    await expect(anterior).toBeDisabled();
+    for (let i = 0; i < 4 && await siguiente.isEnabled(); i++) {
+      await siguiente.click();
+      await page.waitForTimeout(500);
+    }
+    await expect(siguiente).toBeDisabled();
+    // la última tarjeta queda completa dentro de la pista
+    const ultima = (await page.locator('#menu [data-capitulo]').last().boundingBox())!;
+    const caja = (await pista.boundingBox())!;
+    expect(ultima.x + ultima.width).toBeLessThanOrEqual(caja.x + caja.width + 1);
+  });
   test('sin desplazamiento horizontal', async ({ page }) => {
     await page.goto('/', { waitUntil: 'networkidle' });
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);

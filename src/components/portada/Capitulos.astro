@@ -18,9 +18,20 @@ const capitulos = orden
       <p class="label kicker">La carta, por capítulos</p>
       <h2 id="caps-titulo" class="display seccion-titulo">Cuatro razones<br />para volver</h2>
     </div>
-    <a class="btn btn--vidrio label" href="/menu">Ver el menú completo</a>
+    <div class="caps__acciones">
+      <!-- Flechas: aparecen solo si las tarjetas no caben (las muestra el script) -->
+      <div class="caps__flechas" data-flechas hidden>
+        <button type="button" class="btn btn--vidrio caps__flecha" data-dir="-1" aria-controls="caps-pista" aria-label="Plato anterior">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="btn btn--vidrio caps__flecha" data-dir="1" aria-controls="caps-pista" aria-label="Plato siguiente">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <a class="btn btn--vidrio label" href="/menu">Ver el menú completo</a>
+    </div>
   </div>
-  <ol class="caps__pista" tabindex="0" aria-label="Platos, desliza para ver más">
+  <ol id="caps-pista" class="caps__pista" tabindex="0" aria-label="Platos, desliza para ver más">
     {capitulos.map((p, i) => (
       <li class="cap" data-capitulo={p.id}>
         <div class="cap__media" aria-hidden="true">
@@ -38,10 +49,53 @@ const capitulos = orden
   </ol>
 </section>
 
+<script>
+  // Carrusel de capítulos: flechas anterior/siguiente y desvanecido en el borde mientras queden tarjetas por ver
+  const pista = document.querySelector<HTMLElement>('.caps__pista');
+  const flechas = document.querySelector<HTMLElement>('[data-flechas]');
+  if (pista && flechas) {
+    const [prev, next] = flechas.querySelectorAll<HTMLButtonElement>('button');
+    const suave = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    const paso = () => {
+      const cap = pista.querySelector<HTMLElement>('.cap');
+      return (cap?.offsetWidth ?? pista.clientWidth) + parseFloat(getComputedStyle(pista).columnGap || '0');
+    };
+    const actualizar = () => {
+      const max = pista.scrollWidth - pista.clientWidth;
+      const x = pista.scrollLeft;
+      flechas.hidden = max <= 2;
+      prev.disabled = x <= 2;
+      next.disabled = x >= max - 2;
+      pista.classList.toggle('hay-antes', x > 2);
+      pista.classList.toggle('hay-despues', x < max - 2);
+    };
+    flechas.addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLButtonElement>('button[data-dir]');
+      if (b) pista.scrollBy({ left: Number(b.dataset.dir) * paso(), behavior: suave });
+    });
+    pista.addEventListener('scroll', actualizar, { passive: true });
+    new ResizeObserver(actualizar).observe(pista);
+    actualizar();
+  }
+</script>
+
 <style>
   .caps { padding: 7rem 0 6rem; }
   .caps__cab { display: flex; align-items: end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
     padding: 0 clamp(1.2rem, 6vw, 6rem); margin-bottom: 3rem; }
+  .caps__acciones { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+  .caps__flechas { display: flex; gap: .6rem; }
+  .caps__flechas[hidden] { display: none; }
+  .caps__flechas .caps__flecha { width: 52px; padding: 0; } /* gana a .btn global */
+  /* En pantallas táctiles se desliza con el dedo: las flechas solo con mouse */
+  @media (hover: none) and (pointer: coarse) { .caps__flechas { display: none; } }
+  .caps__flecha:disabled { opacity: .35; cursor: default; }
+  .caps__flecha:focus-visible, .caps__pista:focus-visible { outline: 3px solid var(--maiz); outline-offset: 3px; }
+  /* Desvanecido en los bordes: indica que hay más tarjetas a los lados */
+  .caps__pista.hay-despues { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 7rem), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 7rem), transparent); }
+  .caps__pista.hay-antes { -webkit-mask-image: linear-gradient(90deg, transparent, #000 7rem); mask-image: linear-gradient(90deg, transparent, #000 7rem); }
+  .caps__pista.hay-antes.hay-despues { -webkit-mask-image: linear-gradient(90deg, transparent, #000 7rem, #000 calc(100% - 7rem), transparent); mask-image: linear-gradient(90deg, transparent, #000 7rem, #000 calc(100% - 7rem), transparent); }
+  .caps__pista { overscroll-behavior-x: contain; }
   .caps__pista { list-style: none; margin: 0; display: grid; grid-auto-flow: column; grid-auto-columns: min(78vw, 340px); gap: 1.4rem;
     overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: clamp(1.2rem, 6vw, 6rem);
     padding: 0 clamp(1.2rem, 6vw, 6rem) 1rem; scrollbar-width: none; }

@@ -67,11 +67,20 @@ const poster = posterDe('hero') ?? provisional;
   .sub { max-width: 34rem; margin: 1.6rem 0 0; color: rgba(255,246,229,.82); font-size: 1.1rem; line-height: 1.65; }
   .ctas { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2.2rem; }
 
-  .anfitrion { position: absolute; z-index: 3; right: clamp(1rem, 5vw, 5rem); bottom: 2.5rem; margin: 0;
-    display: flex; align-items: flex-end; gap: .4rem; animation: flota 4.5s ease-in-out infinite; }
-  .anfitrion :global(img) { width: clamp(220px, 24vw, 340px); height: auto; filter: drop-shadow(0 20px 30px rgba(0,0,0,.6)); }
-  .globo { margin: 0 0 15rem; max-width: 13rem; padding: .8rem 1rem; border-radius: 16px 16px 4px 16px;
+  /* Ancho del Chile y espacio que ocupa el anfitrión (Chile + globo) a la derecha: el texto no entra ahí */
+  .hero { --chile-w: clamp(220px, 24vw, 340px); --chile-der: clamp(1rem, 5vw, 5rem); }
+  @media (min-width: 768px) {
+    .hero__texto { max-width: min(52rem, calc(100% - var(--chile-w) - var(--chile-der) - 7rem)); }
+  }
+  .anfitrion { position: absolute; z-index: 3; right: var(--chile-der); bottom: 2.5rem; margin: 0;
+    animation: flota 4.5s ease-in-out infinite; }
+  .anfitrion :global(img) { display: block; width: var(--chile-w); height: auto; filter: drop-shadow(0 20px 30px rgba(0,0,0,.6)); }
+  /* Globo pegado al Chile: su esquina con cola apunta a la cara */
+  .globo { position: absolute; right: 64%; bottom: 60%; width: max-content; max-width: 11.5rem; margin: 0;
+    padding: .7rem .95rem; border-radius: 16px 16px 4px 16px;
     background: var(--tortilla); color: var(--comal); font-weight: 700; font-size: .95rem; line-height: 1.3; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  .globo::after { content: ''; position: absolute; right: -11px; bottom: 0; width: 14px; height: 14px;
+    background: inherit; clip-path: polygon(0 0, 0 100%, 100% 100%); }
   @keyframes flota { 50% { transform: translateY(-8px); } }
   .desliza { justify-self: center; padding-bottom: 1.4rem; color: var(--tortilla-dim); font-size: .85rem; letter-spacing: .06em; }
 
