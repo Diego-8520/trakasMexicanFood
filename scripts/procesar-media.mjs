@@ -44,29 +44,44 @@ export const slug = (archivo) => basename(archivo, extname(archivo))
   .normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
+// Duración máxima por clip (segundos); null = sin recorte. El hero se usa completo (petición del cliente).
+const DURACION_POR_CLIP = { hero: null };
+// Segundo del póster por clip (por defecto 0.3 s). En el hero, 0.3 s sale movido.
+const POSTER_SEG = { hero: 15.5 };
+
+// HDR (HLG/PQ del iPhone) → SDR bt709; sin esto los colores salen grises/lavados en el navegador.
+const SDR = 'zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,';
+const COLOR_709 = ['-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709'];
+async function esHdr(entrada) {
+  const { stdout } = await run(FFPROBE, ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=color_transfer', '-of', 'csv=p=0', entrada]);
+  return /arib-std-b67|smpte2084/.test(stdout);
+}
+
 // Lado corto a `lado` px (sirve para tomas horizontales y verticales), dimensiones pares, máx. 30 fps
-const filtro = (lado) =>
-  `scale='if(gt(iw,ih),-2,${lado})':'if(gt(iw,ih),${lado},-2)':flags=lanczos,fps='min(30,source_fps)',format=yuv420p`;
+const filtro = (lado, hdr = false) =>
+  `${hdr ? SDR : ''}scale='if(gt(iw,ih),-2,${lado})':'if(gt(iw,ih),${lado},-2)':flags=lanczos,fps='min(30,source_fps)',format=yuv420p`;
 
 export async function procesarVideo(entrada, salida, { salidaPoster = salida } = {}) {
   await mkdir(salida, { recursive: true });
   await mkdir(salidaPoster, { recursive: true });
   const nombre = slug(entrada);
-  const comunes = ['-y', '-hide_banner', '-loglevel', 'error', '-i', entrada, '-t', String(DURACION_MAX), '-an', '-map_metadata', '-1'];
+  const hdr = await esHdr(entrada);
+  const max = nombre in DURACION_POR_CLIP ? DURACION_POR_CLIP[nombre] : DURACION_MAX;
+  const comunes = ['-y', '-hide_banner', '-loglevel', 'error', '-i', entrada, ...(max ? ['-t', String(max)] : []), '-an', '-map_metadata', '-1', ...COLOR_709];
 
   for (const [lado, p] of Object.entries(PERFILES)) {
-    await run(FFMPEG, [...comunes, '-vf', filtro(lado),
+    await run(FFMPEG, [...comunes, '-vf', filtro(lado, hdr),
       '-c:v', 'libx264', '-preset', 'slow', '-profile:v', 'high', '-crf', String(p.crf264),
       '-maxrate', p.max264, '-bufsize', String(parseInt(p.max264) * 2) + 'k',
       '-movflags', '+faststart', join(salida, `${nombre}-${lado}.mp4`)]);
-    await run(FFMPEG, [...comunes, '-vf', filtro(lado),
+    await run(FFMPEG, [...comunes, '-vf', filtro(lado, hdr),
       '-c:v', 'libsvtav1', '-preset', '6', '-crf', String(p.crfAv1), '-svtav1-params', `mbr=${p.maxAv1}`,
       join(salida, `${nombre}-${lado}.webm`)]);
   }
 
   // Póster: primer fotograma nítido (0.3 s) a 1080 px de lado corto
   const png = join(salidaPoster, `${nombre}-poster.tmp.png`);
-  await run(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-ss', '0.3', '-i', entrada, '-frames:v', '1', '-vf', filtro(1080), png]);
+  await run(FFMPEG, ['-y', '-hide_banner', '-loglevel', 'error', '-ss', String(POSTER_SEG[nombre] ?? 0.3), '-i', entrada, '-frames:v', '1', '-vf', filtro(1080, hdr), png]);
   await sharp(png).webp({ quality: 80 }).toFile(join(salidaPoster, `${nombre}-poster.webp`));
   await rm(png);
   return nombre;
