@@ -41,9 +41,9 @@ const poster = posterDe('hero') ?? provisional;
     <Image data-mascota-hero src={chile} alt="El Chile, anfitrión de Trakas"
       widths={[150, 240, 340, 480]} sizes="(min-width: 768px) clamp(170px, 17vw, 250px), 130px"
       loading="eager" quality={78} />
-    <figcaption class="globo">¡Bienvenido! Yo te recomiendo la birria.</figcaption>
+    <figcaption class="globo"><span class="globo__quien label">El Chile</span>¡Bienvenido! Yo te recomiendo la birria.</figcaption>
   </figure>
-  <p class="desliza label" aria-hidden="true">Desliza</p>
+  <p class="desliza label" aria-hidden="true"><span class="desliza__linea"></span>Desliza</p>
 </section>
 
 <style>
@@ -55,9 +55,16 @@ const poster = posterDe('hero') ?? provisional;
 
   .hero__texto { align-self: center; padding: 0 clamp(1.2rem, 6vw, 6rem); max-width: 52rem; }
   .titulo { font-size: clamp(3rem, 5.4vw, 5.2rem); line-height: .92; color: var(--tortilla); }
-  .titulo span { display: block; white-space: nowrap; animation: sube .8s var(--ease-out) both; }
-  .titulo span + span { animation-delay: .1s; }
-  @keyframes sube { from { opacity: 0; transform: translateY(24px); } }
+  .titulo span { display: block; white-space: nowrap; }
+  /* Entrada escalonada: cada pieza sube y aparece en orden de lectura */
+  .hero__texto > *, .titulo span { animation: sube .9s var(--ease-out) both; }
+  .hero__texto > .titulo { animation: none; }
+  .titulo span { animation-delay: .12s; }
+  .titulo span + span { animation-delay: .22s; }
+  .hero__texto > .sub { animation-delay: .34s; }
+  .hero__texto > .ctas { animation-delay: .44s; }
+  .hero__texto > .hero__meta { animation-delay: .54s; }
+  @keyframes sube { from { opacity: 0; transform: translateY(18px); } }
   .hero__texto :global(.kicker) { letter-spacing: .16em; font-size: .95rem; }
   .titulo { text-shadow: 0 2px 24px rgba(0,0,0,.35); }
   .sub { max-width: 34rem; margin: 1.5rem 0 0; color: rgba(255,246,229,.78); font-size: 1.1rem; line-height: 1.7; }
@@ -79,7 +86,9 @@ const poster = posterDe('hero') ?? provisional;
   .hero::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"); }
   /* Gradación cálida del video */
-  :global(.hero__fondo .vs__poster), :global(.hero__fondo .vs__video) { filter: saturate(1.08) contrast(1.06) brightness(.96); }
+  :global(.hero__fondo .vs__poster), :global(.hero__fondo .vs__video) { filter: saturate(1.08) contrast(1.06) brightness(.96);
+    transform-origin: 60% 50%; animation: acerca 22s ease-in-out infinite alternate; }
+  @keyframes acerca { to { transform: scale(1.07); } }
 
   /* El Chile en la esquina inferior derecha */
   .hero { --chile-w: clamp(170px, 17vw, 250px); --chile-der: clamp(1rem, 3vw, 3rem); }
@@ -101,15 +110,21 @@ const poster = posterDe('hero') ?? provisional;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 12px 30px -6px rgba(0,0,0,.55);
     transform-origin: 100% 100%; animation: habla .5s var(--ease-bounce) .9s both;
   }
+  .globo__quien { display: block; margin-bottom: .15rem; color: var(--chile); font-size: .78rem; letter-spacing: .14em; font-weight: 400; }
   .globo::after { content: ''; position: absolute; right: -12px; bottom: 0; width: 16px; height: 14px;
     background: inherit; clip-path: polygon(0 0, 100% 100%, 0 100%); }
   @keyframes habla { from { opacity: 0; transform: scale(.6); } }
 
-  .desliza { justify-self: center; padding-bottom: 1.4rem; color: var(--tortilla-dim); font-size: .85rem; letter-spacing: .06em; }
+  .desliza { justify-self: start; display: flex; align-items: center; gap: .8rem; margin: 0; padding: 0 clamp(1.2rem, 6vw, 6rem) 1.8rem;
+    color: var(--tortilla-dim); font-size: .8rem; letter-spacing: .24em; }
+  .desliza__linea { position: relative; width: 3rem; height: 1px; overflow: hidden; background: rgba(255,246,229,.2); }
+  .desliza__linea::after { content: ''; position: absolute; inset: 0; background: var(--maiz); transform: translateX(-100%); animation: recorre 2.4s var(--ease-out) 1.2s infinite; }
+  @keyframes recorre { 60%, 100% { transform: translateX(100%); } }
 
   /* Escritorio: el video 3:4 a la derecha, a toda la altura, desvanecido hacia el comal */
   @media (min-width: 1024px) {
-    .hero { --video-w: min(calc((100dvh - var(--nav-h)) * .75), 58vw);
+    .hero { --chile-der: clamp(1.2rem, 6vw, 6rem); /* alineado con el borde derecho del menú */
+      --video-w: min(calc((100dvh - var(--nav-h)) * .75), 58vw);
       background: radial-gradient(70% 90% at 85% 55%, rgba(242,106,27,.10), transparent 70%), #0e0c0b; }
     :global(.hero__fondo) {
       inset: 0 0 0 auto !important; width: var(--video-w);
@@ -123,7 +138,6 @@ const poster = posterDe('hero') ?? provisional;
     }
     .hero__velo { background: linear-gradient(0deg, #0e0c0b 0%, transparent 14%); }
     .hero__texto { max-width: min(46rem, calc(100% - var(--video-w) * .62)); }
-    .desliza { display: none; }
   }
   @keyframes aparece { from { transform: scale(1.04); } }
 
@@ -138,5 +152,5 @@ const poster = posterDe('hero') ?? provisional;
     .hero__meta { display: none; }
     .desliza { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .anfitrion, .globo { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .anfitrion, .globo, .desliza__linea::after { animation: none; } }
 </style>
