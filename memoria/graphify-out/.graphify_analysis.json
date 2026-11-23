@@ -1,1 +1,238 @@
-{"communities": {"0": ["historial_proyecto_approval_threshold", "historial_proyecto_comm_professional_process", "historial_proyecto_expert_team_process", "historial_proyecto_graphify", "historial_proyecto_lesson_review_100", "historial_proyecto_lesson_team_catches", "historial_proyecto_lesson_usage_limit", "historial_proyecto_req_design_team", "historial_proyecto_review_team", "historial_proyecto_role_art_director", "historial_proyecto_role_brand_web", "historial_proyecto_role_illustrator", "historial_proyecto_role_typographer"], "1": ["historial_proyecto_brand_guide", "historial_proyecto_color_palette", "historial_proyecto_lesson_attachments", "historial_proyecto_lesson_code_vs_illustration", "historial_proyecto_mascot_variants", "historial_proyecto_original_logo", "historial_proyecto_schema_org", "historial_proyecto_trakas_brush", "historial_proyecto_website_v1", "historial_proyecto_whatsapp"], "2": ["historial_proyecto_comm_approval_then_next", "historial_proyecto_comm_phased", "historial_proyecto_comm_short_rejections", "historial_proyecto_comm_spanish_short", "historial_proyecto_comm_specific_defects", "historial_proyecto_comm_style", "historial_proyecto_fb_body_incomplete", "historial_proyecto_fb_polish_logo", "historial_proyecto_fb_specific_defects", "historial_proyecto_mascot_long_tip"], "3": ["historial_proyecto_comm_fidelity", "historial_proyecto_fb_perfect", "historial_proyecto_fb_too_many_changes", "historial_proyecto_final_logo", "historial_proyecto_lesson_no_redraw", "historial_proyecto_lesson_versioning", "historial_proyecto_logo_pixel_edit", "historial_proyecto_logo_svg_redraw", "historial_proyecto_logo_v5"], "4": ["historial_proyecto_comm_own_images", "historial_proyecto_comm_prefers_images", "historial_proyecto_lesson_before_after", "historial_proyecto_lesson_visual_refs", "historial_proyecto_mascot_poses", "historial_proyecto_official_mascot", "historial_proyecto_ref_collage", "historial_proyecto_ref_green_chile"], "5": ["historial_proyecto_claude", "historial_proyecto_client", "historial_proyecto_client_decisions", "historial_proyecto_doc", "historial_proyecto_project"]}, "cohesion": {"0": 0.1794871794871795, "1": 0.2, "2": 0.24444444444444444, "3": 0.2777777777777778, "4": 0.2857142857142857, "5": 0.6}, "gods": [{"id": "historial_proyecto_review_team", "label": "Equipo de revisión (subagentes)", "degree": 12}, {"id": "historial_proyecto_comm_style", "label": "Estilo de comunicación del cliente", "degree": 10}, {"id": "historial_proyecto_project", "label": "Trakas Mexican Food (proyecto)", "degree": 9}, {"id": "historial_proyecto_official_mascot", "label": "Mascota oficial (ilustración final del cliente)", "degree": 7}, {"id": "historial_proyecto_website_v1", "label": "Sitio web v1", "degree": 5}, {"id": "historial_proyecto_original_logo", "label": "Logo original (logo 1.webp)", "degree": 5}, {"id": "historial_proyecto_fb_body_incomplete", "label": "Rechazo: 'el cuerpo se ve incompleto'", "degree": 5}, {"id": "historial_proyecto_final_logo", "label": "Logo final con la mascota oficial", "degree": 5}, {"id": "historial_proyecto_client", "label": "Cliente (dueño del restaurante)", "degree": 4}, {"id": "historial_proyecto_fb_too_many_changes", "label": "Rechazo: 'demasiados cambios en el estilo'", "degree": 4}], "surprises": [{"source": "Equipo de revisión (subagentes)", "target": "Fuente 'Trakas Brush'", "source_files": ["historial-proyecto.md", "historial-proyecto.md"], "confidence": "INFERRED", "relation": "conceptually_related_to", "note": "Bridges community 0 → community 1"}, {"source": "Rechazo: 'el cuerpo se ve incompleto'", "target": "Lección: pedir referencias visuales pronto para personajes", "source_files": ["historial-proyecto.md", "historial-proyecto.md"], "confidence": "INFERRED", "relation": "rationale_for", "note": "Bridges community 2 → community 4"}, {"source": "Historial del proyecto Trakas Mexican Food", "target": "Estilo de comunicación del cliente", "source_files": ["historial-proyecto.md", "historial-proyecto.md"], "confidence": "EXTRACTED", "relation": "references", "note": "Bridges community 5 → community 2"}, {"source": "Trakas Mexican Food (proyecto)", "target": "Logo final con la mascota oficial", "source_files": ["historial-proyecto.md", "historial-proyecto.md"], "confidence": "EXTRACTED", "relation": "references", "note": "Bridges community 5 → community 3"}, {"source": "Trakas Mexican Food (proyecto)", "target": "Mascota oficial (ilustración final del cliente)", "source_files": ["historial-proyecto.md", "historial-proyecto.md"], "confidence": "EXTRACTED", "relation": "references", "note": "Bridges community 5 → community 4"}]}
+{
+  "communities": {
+    "0": [
+      "historial_proyecto_approval_threshold",
+      "historial_proyecto_comm_professional_process",
+      "historial_proyecto_expert_team_process",
+      "historial_proyecto_graphify",
+      "historial_proyecto_lesson_review_100",
+      "historial_proyecto_lesson_team_catches",
+      "historial_proyecto_lesson_usage_limit",
+      "historial_proyecto_req_design_team",
+      "historial_proyecto_review_team",
+      "historial_proyecto_role_art_director",
+      "historial_proyecto_role_brand_web",
+      "historial_proyecto_role_illustrator",
+      "historial_proyecto_role_typographer"
+    ],
+    "1": [
+      "historial_proyecto_brand_guide",
+      "historial_proyecto_color_palette",
+      "historial_proyecto_lesson_attachments",
+      "historial_proyecto_lesson_code_vs_illustration",
+      "historial_proyecto_mascot_variants",
+      "historial_proyecto_original_logo",
+      "historial_proyecto_schema_org",
+      "historial_proyecto_trakas_brush",
+      "historial_proyecto_website_v1",
+      "historial_proyecto_whatsapp"
+    ],
+    "2": [
+      "historial_proyecto_comm_approval_then_next",
+      "historial_proyecto_comm_phased",
+      "historial_proyecto_comm_short_rejections",
+      "historial_proyecto_comm_spanish_short",
+      "historial_proyecto_comm_specific_defects",
+      "historial_proyecto_comm_style",
+      "historial_proyecto_fb_body_incomplete",
+      "historial_proyecto_fb_polish_logo",
+      "historial_proyecto_fb_specific_defects",
+      "historial_proyecto_mascot_long_tip"
+    ],
+    "3": [
+      "historial_proyecto_comm_fidelity",
+      "historial_proyecto_fb_perfect",
+      "historial_proyecto_fb_too_many_changes",
+      "historial_proyecto_final_logo",
+      "historial_proyecto_lesson_no_redraw",
+      "historial_proyecto_lesson_versioning",
+      "historial_proyecto_logo_pixel_edit",
+      "historial_proyecto_logo_svg_redraw",
+      "historial_proyecto_logo_v5"
+    ],
+    "4": [
+      "historial_proyecto_comm_own_images",
+      "historial_proyecto_comm_prefers_images",
+      "historial_proyecto_lesson_before_after",
+      "historial_proyecto_lesson_visual_refs",
+      "historial_proyecto_mascot_poses",
+      "historial_proyecto_official_mascot",
+      "historial_proyecto_ref_collage",
+      "historial_proyecto_ref_green_chile"
+    ],
+    "5": [
+      "historial_proyecto_carrusel_capitulos",
+      "historial_proyecto_claude",
+      "historial_proyecto_client",
+      "historial_proyecto_client_decisions",
+      "historial_proyecto_concepto_b",
+      "historial_proyecto_doc",
+      "historial_proyecto_globo_chile",
+      "historial_proyecto_hueco_brazo",
+      "historial_proyecto_lesson_literal_concept",
+      "historial_proyecto_project"
+    ],
+    "6": [
+      "historial_proyecto_armonia_marca",
+      "historial_proyecto_astro_site",
+      "historial_proyecto_bloque_marca",
+      "historial_proyecto_guia_videos",
+      "historial_proyecto_lesson_e2e_menu",
+      "historial_proyecto_mejoras_ux",
+      "historial_proyecto_menu_qr",
+      "historial_proyecto_pendientes_cliente",
+      "historial_proyecto_promesa_marca",
+      "historial_proyecto_tortillas_artesanales"
+    ]
+  },
+  "cohesion": {
+    "0": 0.1794871794871795,
+    "1": 0.2,
+    "2": 0.24444444444444444,
+    "3": 0.2777777777777778,
+    "4": 0.2857142857142857,
+    "5": 0.28888888888888886,
+    "6": 0.2
+  },
+  "gods": [
+    {
+      "id": "historial_proyecto_review_team",
+      "label": "Equipo de revisión (subagentes)",
+      "degree": 12
+    },
+    {
+      "id": "historial_proyecto_comm_style",
+      "label": "Estilo de comunicación del cliente",
+      "degree": 11
+    },
+    {
+      "id": "historial_proyecto_project",
+      "label": "Trakas Mexican Food (proyecto)",
+      "degree": 10
+    },
+    {
+      "id": "historial_proyecto_official_mascot",
+      "label": "Mascota oficial (ilustración final del cliente)",
+      "degree": 7
+    },
+    {
+      "id": "historial_proyecto_client",
+      "label": "Cliente (dueño del restaurante)",
+      "degree": 7
+    },
+    {
+      "id": "historial_proyecto_astro_site",
+      "label": "Sitio final en Astro 5",
+      "degree": 7
+    },
+    {
+      "id": "historial_proyecto_website_v1",
+      "label": "Sitio web v1",
+      "degree": 6
+    },
+    {
+      "id": "historial_proyecto_original_logo",
+      "label": "Logo original (logo 1.webp)",
+      "degree": 5
+    },
+    {
+      "id": "historial_proyecto_fb_body_incomplete",
+      "label": "Rechazo: 'el cuerpo se ve incompleto'",
+      "degree": 5
+    },
+    {
+      "id": "historial_proyecto_final_logo",
+      "label": "Logo final con la mascota oficial",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Equipo de revisión (subagentes)",
+      "target": "Fuente 'Trakas Brush'",
+      "source_files": [
+        "historial-proyecto.md",
+        "historial-proyecto.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "note": "Bridges community 0 → community 1"
+    },
+    {
+      "source": "Rechazo: 'el cuerpo se ve incompleto'",
+      "target": "Lección: pedir referencias visuales pronto para personajes",
+      "source_files": [
+        "historial-proyecto.md",
+        "historial-proyecto.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "rationale_for",
+      "note": "Bridges community 2 → community 4"
+    },
+    {
+      "source": "Armonía de marca y copys (2026-11-22)",
+      "target": "Estilo de comunicación del cliente",
+      "source_files": [
+        "historial-proyecto.md",
+        "historial-proyecto.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "note": "Bridges community 2 → community 6"
+    },
+    {
+      "source": "Equipo de revisión (subagentes)",
+      "target": "Logo v5 (aprobado tras 3 rondas)",
+      "source_files": [
+        "historial-proyecto.md",
+        "historial-proyecto.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "conceptually_related_to",
+      "note": "Bridges community 0 → community 3"
+    },
+    {
+      "source": "Estilo de comunicación del cliente",
+      "target": "Quiere un proceso profesional (expertos, evaluación por pares, skills)",
+      "source_files": [
+        "historial-proyecto.md",
+        "historial-proyecto.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "note": "Bridges community 0 → community 2"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `Trakas Mexican Food (proyecto)` connect `Trakas Mexican Food (proyecto)` to `Logo original (logo 1.webp)`, `Logo final con la mascota oficial`, `Mascota oficial (ilustración final del cliente)`, `Sitio final en Astro 5`?",
+      "why": "High betweenness centrality (0.308) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Equipo de revisión (subagentes)` connect `Equipo de revisión (subagentes)` to `Logo original (logo 1.webp)`, `Logo final con la mascota oficial`?",
+      "why": "High betweenness centrality (0.257) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Estilo de comunicación del cliente` connect `Estilo de comunicación del cliente` to `Equipo de revisión (subagentes)`, `Logo final con la mascota oficial`, `Mascota oficial (ilustración final del cliente)`, `Trakas Mexican Food (proyecto)`, `Sitio final en Astro 5`?",
+      "why": "High betweenness centrality (0.246) - this node is a cross-community bridge."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 4 inferred relationships involving `Equipo de revisión (subagentes)` (e.g. with `Proceso 'equipo de expertos' (propone / evalúa / presenta)` and `Lección: la revisión del equipo detecta defectos ocultos`) actually correct?",
+      "why": "`Equipo de revisión (subagentes)` has 4 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 3 inferred relationships involving `Mascota oficial (ilustración final del cliente)` (e.g. with `Aporta sus propias imágenes y espera que se usen tal cual` and `Collage 'mal hecho' del cliente (cuerpo rechoncho, mano en cadera, zapatillas verdes)`) actually correct?",
+      "why": "`Mascota oficial (ilustración final del cliente)` has 3 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `graphify`, `Director de arte`, `Especialista en marca/web` to the rest of the system?",
+      "why": "19 weakly-connected nodes found - possible documentation gaps or missing edges."
+    }
+  ]
+}

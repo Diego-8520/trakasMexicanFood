@@ -65,3 +65,13 @@ Registro de la colaboración entre el dueño del restaurante (cliente) y Claude,
 - El cliente detectó un **hueco blanco en el brazo del Chile** (recorte de JPG con fondo blanco). Se corrigió en todas las poses con `scripts/limpiar-huecos.mjs`. Lección: revisar recortes sobre fondo de color, no solo sobre oscuro.
 - Portada B aprobada: "está perfecta". Los videos se están produciendo aparte; la página los integra por nombre de archivo (`docs/GUIA-VIDEOS.md`, escrita como guion visual por escena, a pedido del cliente).
 - Se ordenó el proyecto: `marca/` para masters, se eliminó `prototipo/`.
+
+## 8. Armonía de marca, copys y ajustes de uso (2026-11-22)
+- El cliente pidió organizar toda la información para que "todo sea armónico y apunte a lo mismo", revisar UI/UX y mejorar copys. Dato nuevo: **las tortillas son artesanales**.
+- Idea central única: **"Birria en consomé y tortillas artesanales, al comal cuando pides."** Vive en el bloque `marca` de `src/data/trakas.ts` (promesa, pilares, cinta, mensajes de WhatsApp) y lo leen portada, `/menu`, cinta, pie y meta.
+- Se escribió "tortilla artesanal" sin afirmar que se hacen en casa (pendiente confirmar).
+- Mejoras: botón fijo de WhatsApp en la portada al salir del hero; "Pedir la dirección" mientras falte la dirección real; `/menu` indica qué platos llevan proteína; teléfono con enlace.
+- El cliente pidió **pegar el globo de diálogo al Chile** y que no tape el texto del hero: el globo quedó anclado a la figura con cola hacia la cara y el texto reserva su espacio.
+- El cliente pidió que **la carta por capítulos se mueva en horizontal**: flechas anterior/siguiente (solo con mouse), desvanecido en los bordes; en táctil se desliza con el dedo.
+- Lección: la prueba e2e del menú vigila que el precio del plato 01 no quede bajo el botón fijo; textos más largos en el encabezado de `/menu` la rompen (medir en Pixel 7, 412 px).
+- Pendientes del cliente: dirección real, enlace de reseñas, redes, si las gringas llevan proteína a elegir.
