@@ -1,8 +1,9 @@
 ---
 // Hero del concepto B "Cine de comal".
 // Móvil y tableta: video 3:4 a pantalla completa bajo un velo oscuro.
-// Escritorio (≥1024 px): el video va entero en una "pantalla" vertical a la derecha, con un
-// resplandor cálido detrás; texto a la izquierda y el Chile asomado al borde de la pantalla.
+// Escritorio (≥1024 px): el video 3:4 ocupa el lado derecho a toda la altura y se desvanece
+// hacia el comal por la izquierda, arriba y abajo (sin marco). El texto queda a la izquierda.
+// El Chile, en la esquina inferior derecha, habla con su globo de diálogo a su lado.
 import { Image } from 'astro:assets';
 import VideoSection from '../VideoSection.astro';
 import { whatsappUrl } from '../../lib/formato';
@@ -15,9 +16,7 @@ const poster = posterDe('hero') ?? provisional;
 ---
 <section class="hero" aria-labelledby="hero-titulo">
   <VideoSection clip="hero" poster={poster} alt="" prioridad class="hero__fondo"
-    sizes="(min-width: 1024px) 44vw, 100vw">
-    <span class="hero__sello label" aria-hidden="true">Directo del comal</span>
-  </VideoSection>
+    sizes="(min-width: 1024px) 60vw, 100vw" />
   <div class="hero__velo" aria-hidden="true"></div>
 
   <div class="hero__texto">
@@ -31,10 +30,10 @@ const poster = posterDe('hero') ?? provisional;
   </div>
 
   <figure class="anfitrion">
-    <figcaption class="globo">¡Bienvenido! Yo te recomiendo la birria.</figcaption>
     <Image data-mascota-hero src={chile} alt="El Chile, anfitrión de Trakas"
-      widths={[160, 240, 340, 480, 680]} sizes="(min-width: 768px) clamp(220px, 24vw, 340px), 150px"
+      widths={[150, 240, 340, 480]} sizes="(min-width: 768px) clamp(170px, 17vw, 250px), 130px"
       loading="eager" quality={78} />
+    <figcaption class="globo">¡Bienvenido! Yo te recomiendo la birria.</figcaption>
   </figure>
   <p class="desliza label" aria-hidden="true">Desliza</p>
 </section>
@@ -42,7 +41,6 @@ const poster = posterDe('hero') ?? provisional;
 <style>
   .hero { position: relative; min-height: calc(100dvh - var(--nav-h)); display: grid; grid-template-rows: 1fr auto; overflow: hidden; isolation: isolate; background: #0e0c0b; }
   :global(.hero__fondo) { position: absolute !important; inset: 0; z-index: -2; }
-  .hero__sello { display: none; }
   .hero__velo { position: absolute; inset: 0; z-index: -1; background:
       linear-gradient(90deg, rgba(14,12,11,.92) 0%, rgba(14,12,11,.65) 45%, rgba(14,12,11,0) 75%),
       linear-gradient(0deg, #0e0c0b 0%, transparent 30%); }
@@ -55,73 +53,59 @@ const poster = posterDe('hero') ?? provisional;
   .sub { max-width: 34rem; margin: 1.6rem 0 0; color: rgba(255,246,229,.82); font-size: 1.1rem; line-height: 1.65; }
   .ctas { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2.2rem; }
 
-  /* Ancho del Chile y espacio que ocupa el anfitrión (Chile + globo) a la derecha: el texto no entra ahí */
-  .hero { --chile-w: clamp(220px, 24vw, 340px); --chile-der: clamp(1rem, 5vw, 5rem); }
+  /* El Chile en la esquina inferior derecha */
+  .hero { --chile-w: clamp(170px, 17vw, 250px); --chile-der: clamp(1rem, 3vw, 3rem); }
   @media (min-width: 768px) {
     .hero__texto { max-width: min(52rem, calc(100% - var(--chile-w) - var(--chile-der) - 7rem)); }
   }
-  .anfitrion { position: absolute; z-index: 3; right: var(--chile-der); bottom: 2.5rem; margin: 0;
-    animation: flota 4.5s ease-in-out infinite; }
-  .anfitrion :global(img) { display: block; width: var(--chile-w); height: auto; filter: drop-shadow(0 20px 30px rgba(0,0,0,.6)); }
-  /* Globo pegado al Chile: su esquina con cola apunta a la cara */
-  .globo { position: absolute; right: 64%; bottom: 60%; width: max-content; max-width: 11.5rem; margin: 0;
-    padding: .7rem .95rem; border-radius: 16px 16px 4px 16px;
-    background: var(--tortilla); color: var(--comal); font-weight: 700; font-size: .95rem; line-height: 1.3; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
-  .globo::after { content: ''; position: absolute; right: -11px; bottom: 0; width: 14px; height: 14px;
-    background: inherit; clip-path: polygon(0 0, 0 100%, 100% 100%); }
-  @keyframes flota { 50% { transform: translateY(-8px); } }
+  .anfitrion { position: absolute; z-index: 3; right: var(--chile-der); bottom: 1.5rem; margin: 0;
+    width: var(--chile-w); animation: flota 4.5s ease-in-out infinite; }
+  .anfitrion :global(img) { display: block; width: 100%; height: auto; filter: drop-shadow(0 16px 24px rgba(0,0,0,.6)); }
+  @keyframes flota { 50% { transform: translateY(-6px); } }
+
+  /* Globo de diálogo: al lado izquierdo del Chile, por delante de él, con la cola apuntando a su boca */
+  .globo {
+    position: absolute; z-index: 1; right: 80%; bottom: 57%;
+    width: max-content; max-width: 11rem; margin: 0; padding: .65rem .9rem;
+    border-radius: 18px 18px 4px 18px;
+    background: var(--tortilla); color: var(--comal);
+    font-weight: 700; font-size: .92rem; line-height: 1.3;
+    box-shadow: 0 10px 26px rgba(0,0,0,.45);
+    transform-origin: 100% 100%; animation: habla .5s var(--ease-bounce) .9s both;
+  }
+  .globo::after { content: ''; position: absolute; right: -12px; bottom: 0; width: 16px; height: 14px;
+    background: inherit; clip-path: polygon(0 0, 100% 100%, 0 100%); }
+  @keyframes habla { from { opacity: 0; transform: scale(.6); } }
+
   .desliza { justify-self: center; padding-bottom: 1.4rem; color: var(--tortilla-dim); font-size: .85rem; letter-spacing: .06em; }
 
-  /* Escritorio: el video 3:4 entero en una pantalla vertical a la derecha */
+  /* Escritorio: el video 3:4 a la derecha, a toda la altura, desvanecido hacia el comal */
   @media (min-width: 1024px) {
-    .hero {
-      --panel-der: clamp(2rem, 5vw, 5rem);
-      --panel-h: min(calc(100dvh - var(--nav-h) - 5rem), 44vw * 4 / 3);
-      --panel-w: calc(var(--panel-h) * .75);
-    }
-    /* Resplandor de brasa detrás de la pantalla */
-    .hero { background:
-      radial-gradient(calc(var(--panel-w) * 1.05) calc(var(--panel-h) * .7) at calc(100% - var(--panel-der) - var(--panel-w) / 2) 50%,
-        rgba(242,106,27,.22), rgba(214,39,24,.08) 55%, transparent 100%),
-      #0e0c0b; }
+    .hero { --video-w: min(calc((100dvh - var(--nav-h)) * .75), 58vw);
+      background: radial-gradient(70% 90% at 85% 55%, rgba(242,106,27,.10), transparent 70%), #0e0c0b; }
     :global(.hero__fondo) {
-      inset: auto !important; top: 50% !important; right: var(--panel-der) !important;
-      width: var(--panel-w); height: var(--panel-h); transform: translateY(-50%);
-      border-radius: 24px;
-      box-shadow: 0 0 0 1px rgba(255,246,229,.12), 0 40px 80px -20px rgba(0,0,0,.8);
-      animation: pantalla 1s var(--ease-out) .15s both;
+      inset: 0 0 0 auto !important; width: var(--video-w);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 42%), linear-gradient(0deg, transparent 0%, #000 22%, #000 88%, transparent 100%);
+      -webkit-mask-composite: source-in;
+              mask-image: linear-gradient(90deg, transparent 0%, #000 42%), linear-gradient(0deg, transparent 0%, #000 22%, #000 88%, transparent 100%);
+              mask-composite: intersect;
+      animation: aparece 1.4s var(--ease-out) both;
     }
-    /* Viñeta interior: funde el borde del video con el comal */
-    :global(.hero__fondo)::after {
-      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
-      box-shadow: inset 0 0 60px rgba(14,12,11,.55);
-      background: linear-gradient(0deg, rgba(14,12,11,.45) 0%, transparent 28%);
-    }
-    .hero__sello {
-      display: inline-block; position: absolute; top: 1.2rem; left: 1.2rem;
-      padding: .35rem .8rem .2rem; background: var(--chile); color: var(--tortilla);
-      font-size: 1rem; transform: rotate(-3deg); box-shadow: 0 6px 14px rgba(0,0,0,.4);
-    }
-    .hero__velo { background: linear-gradient(0deg, #0e0c0b 0%, transparent 18%); }
-    .hero__texto { max-width: min(46rem, calc(100% - var(--panel-w) - var(--panel-der) - 4rem)); padding-right: 0; }
-    /* El Chile se asoma por el borde izquierdo de la pantalla */
-    .anfitrion { right: calc(var(--panel-der) + var(--panel-w) - var(--chile-w) * .45); bottom: 1.5rem; }
-    /* El globo sube sobre la cabeza del Chile, hacia la pantalla: nunca tapa el texto */
-    .globo { z-index: 1; right: auto; left: 46%; bottom: calc(100% + .4rem); border-radius: 16px 16px 16px 4px; }
-    .globo::after { right: auto; left: 0; bottom: -11px; clip-path: polygon(0 0, 100% 0, 0 100%); }
+    .hero__velo { background: linear-gradient(0deg, #0e0c0b 0%, transparent 14%); }
+    .hero__texto { max-width: min(46rem, calc(100% - var(--video-w) * .62)); }
     .desliza { display: none; }
   }
-  @keyframes pantalla { from { transform: translateY(calc(-50% + 28px)) scale(.97); } }
+  @keyframes aparece { from { transform: scale(1.04); } }
 
   @media (max-width: 767px) {
+    .hero { --chile-w: 130px; --chile-der: .6rem; }
     .hero__velo { background: linear-gradient(0deg, #0e0c0b 15%, rgba(14,12,11,.55) 60%, rgba(14,12,11,.3)); }
-    .hero__texto { align-self: end; padding-bottom: 15rem; }
+    .hero__texto { align-self: end; padding-bottom: 14rem; }
     .titulo { font-size: 2.6rem; }
     .titulo span { white-space: normal; }
-    .anfitrion { right: .5rem; bottom: 1rem; }
-    .anfitrion :global(img) { width: 150px; }
-    .globo { display: none; }
+    .anfitrion { bottom: 1rem; }
+    .globo { font-size: .85rem; max-width: 10.5rem; padding: .55rem .75rem; }
     .desliza { display: none; }
   }
-  @media (prefers-reduced-motion: reduce) { .anfitrion { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .anfitrion, .globo { animation: none; } }
 </style>
