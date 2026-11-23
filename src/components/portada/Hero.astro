@@ -1,29 +1,23 @@
 ---
-// Hero del concepto B "Cine de comal": video a pantalla completa, texto a la izquierda,
-// el Chile como anfitrión abajo a la derecha con su globo de diálogo.
+// Hero del concepto B "Cine de comal".
+// Móvil y tableta: video 3:4 a pantalla completa bajo un velo oscuro.
+// Escritorio (≥1024 px): el video va entero en una "pantalla" vertical a la derecha, con un
+// resplandor cálido detrás; texto a la izquierda y el Chile asomado al borde de la pantalla.
 import { Image } from 'astro:assets';
 import VideoSection from '../VideoSection.astro';
 import { whatsappUrl } from '../../lib/formato';
 import provisional from '../../assets/posters/hero-provisional.webp';
 import { posterDe } from '../../lib/media';
 import { marca } from '../../data/trakas';
-import logo from '../../assets/brand/logo/logo-sticker.png';
 import chile from '../../assets/brand/mascota/chile-presentando-sticker.webp';
-// Video de fondo: media-original/hero.mp4 → npm run media
+// Video de fondo (vertical 3:4): media-original/hero.mp4 → npm run media
 const poster = posterDe('hero') ?? provisional;
 ---
-<header class="nav">
-  <a href="/" aria-label="Trakas Mexican Food — inicio">
-    <Image src={logo} alt="" width={84} densities={[1, 2]} loading="eager" />
-  </a>
-  <nav class="nav__links label" aria-label="Principal">
-    <a href="#menu">Menú</a><a href="#nosotros">Historia</a><a href="#ubicacion">Visítanos</a>
-  </nav>
-  <a class="btn btn--vidrio btn--chico label nav__menu" href="/menu">Menú</a>
-</header>
-
 <section class="hero" aria-labelledby="hero-titulo">
-  <VideoSection clip="hero" poster={poster} alt="" prioridad class="hero__fondo" />
+  <VideoSection clip="hero" poster={poster} alt="" prioridad class="hero__fondo"
+    sizes="(min-width: 1024px) 44vw, 100vw">
+    <span class="hero__sello label" aria-hidden="true">Directo del comal</span>
+  </VideoSection>
   <div class="hero__velo" aria-hidden="true"></div>
 
   <div class="hero__texto">
@@ -46,22 +40,12 @@ const poster = posterDe('hero') ?? provisional;
 </section>
 
 <style>
-  .hero { position: relative; min-height: 100dvh; display: grid; grid-template-rows: 1fr auto; overflow: hidden; isolation: isolate; background: #0e0c0b; }
+  .hero { position: relative; min-height: calc(100dvh - var(--nav-h)); display: grid; grid-template-rows: 1fr auto; overflow: hidden; isolation: isolate; background: #0e0c0b; }
   :global(.hero__fondo) { position: absolute !important; inset: 0; z-index: -2; }
+  .hero__sello { display: none; }
   .hero__velo { position: absolute; inset: 0; z-index: -1; background:
       linear-gradient(90deg, rgba(14,12,11,.92) 0%, rgba(14,12,11,.65) 45%, rgba(14,12,11,0) 75%),
       linear-gradient(0deg, #0e0c0b 0%, transparent 30%); }
-
-  /* Barra fija: color sólido y siempre visible al hacer scroll */
-  .hero { padding-top: var(--nav-h); }
-  .nav { position: fixed; z-index: 60; top: 0; left: 0; right: 0; height: var(--nav-h);
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 clamp(1.2rem, 4vw, 3.5rem);
-    background: var(--comal); border-bottom: 3px solid var(--chile); box-shadow: 0 6px 20px rgba(0,0,0,.35); }
-  .nav :global(img) { width: 58px; height: auto; }
-  .nav__links { display: flex; gap: 2.2rem; font-size: 1.1rem; }
-  .nav__links a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--tortilla); transition: color .2s; }
-  .nav__links a:hover { color: var(--maiz); }
-  .nav__menu { display: none !important; }
 
   .hero__texto { align-self: center; padding: 0 clamp(1.2rem, 6vw, 6rem); max-width: 52rem; }
   .titulo { font-size: clamp(3rem, 5.4vw, 5.2rem); line-height: .92; color: var(--tortilla); }
@@ -88,9 +72,48 @@ const poster = posterDe('hero') ?? provisional;
   @keyframes flota { 50% { transform: translateY(-8px); } }
   .desliza { justify-self: center; padding-bottom: 1.4rem; color: var(--tortilla-dim); font-size: .85rem; letter-spacing: .06em; }
 
+  /* Escritorio: el video 3:4 entero en una pantalla vertical a la derecha */
+  @media (min-width: 1024px) {
+    .hero {
+      --panel-der: clamp(2rem, 5vw, 5rem);
+      --panel-h: min(calc(100dvh - var(--nav-h) - 5rem), 44vw * 4 / 3);
+      --panel-w: calc(var(--panel-h) * .75);
+    }
+    /* Resplandor de brasa detrás de la pantalla */
+    .hero { background:
+      radial-gradient(calc(var(--panel-w) * 1.05) calc(var(--panel-h) * .7) at calc(100% - var(--panel-der) - var(--panel-w) / 2) 50%,
+        rgba(242,106,27,.22), rgba(214,39,24,.08) 55%, transparent 100%),
+      #0e0c0b; }
+    :global(.hero__fondo) {
+      inset: auto !important; top: 50% !important; right: var(--panel-der) !important;
+      width: var(--panel-w); height: var(--panel-h); transform: translateY(-50%);
+      border-radius: 24px;
+      box-shadow: 0 0 0 1px rgba(255,246,229,.12), 0 40px 80px -20px rgba(0,0,0,.8);
+      animation: pantalla 1s var(--ease-out) .15s both;
+    }
+    /* Viñeta interior: funde el borde del video con el comal */
+    :global(.hero__fondo)::after {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit;
+      box-shadow: inset 0 0 60px rgba(14,12,11,.55);
+      background: linear-gradient(0deg, rgba(14,12,11,.45) 0%, transparent 28%);
+    }
+    .hero__sello {
+      display: inline-block; position: absolute; top: 1.2rem; left: 1.2rem;
+      padding: .35rem .8rem .2rem; background: var(--chile); color: var(--tortilla);
+      font-size: 1rem; transform: rotate(-3deg); box-shadow: 0 6px 14px rgba(0,0,0,.4);
+    }
+    .hero__velo { background: linear-gradient(0deg, #0e0c0b 0%, transparent 18%); }
+    .hero__texto { max-width: min(46rem, calc(100% - var(--panel-w) - var(--panel-der) - 4rem)); padding-right: 0; }
+    /* El Chile se asoma por el borde izquierdo de la pantalla */
+    .anfitrion { right: calc(var(--panel-der) + var(--panel-w) - var(--chile-w) * .45); bottom: 1.5rem; }
+    /* El globo sube sobre la cabeza del Chile, hacia la pantalla: nunca tapa el texto */
+    .globo { z-index: 1; right: auto; left: 46%; bottom: calc(100% + .4rem); border-radius: 16px 16px 16px 4px; }
+    .globo::after { right: auto; left: 0; bottom: -11px; clip-path: polygon(0 0, 100% 0, 0 100%); }
+    .desliza { display: none; }
+  }
+  @keyframes pantalla { from { transform: translateY(calc(-50% + 28px)) scale(.97); } }
+
   @media (max-width: 767px) {
-    .nav__links { display: none; }
-    .nav__menu { display: inline-flex !important; }
     .hero__velo { background: linear-gradient(0deg, #0e0c0b 15%, rgba(14,12,11,.55) 60%, rgba(14,12,11,.3)); }
     .hero__texto { align-self: end; padding-bottom: 15rem; }
     .titulo { font-size: 2.6rem; }

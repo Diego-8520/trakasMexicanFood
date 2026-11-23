@@ -21,7 +21,7 @@ Copia cada archivo en `media-original/` con el nombre indicado.
 ## 1. `hero.mp4` — Fondo de la primera pantalla
 
 **Función:** primera impresión. Debe dar hambre en 3 segundos y verse como el inicio de una película.
-**Formato:** horizontal 16:9 · **duración final:** 8–10 s · **la acción a la derecha** (la mitad izquierda queda oscurecida bajo el titular "Birria que se moja en consomé").
+**Formato:** vertical 3:4 (p. ej. 1080 × 1440) · **duración final:** 8–10 s · **la acción en el centro**. En computador se ve entero en una pantalla vertical a la derecha del titular; en celular llena la pantalla bajo el texto, así que lo importante debe quedar en el centro y la mitad de abajo.
 
 | Tiempo | Escena | Detalle |
 |---|---|---|

@@ -12,14 +12,15 @@ interface Props {
   alt: string;
   prioridad?: boolean;      // true solo para el hero (póster = LCP)
   class?: string;
+  sizes?: string;           // ancho que ocupa el póster en pantalla (por defecto, todo el ancho)
 }
-const { clip, poster, alt, prioridad = false, class: clase } = Astro.props;
+const { clip, poster, alt, prioridad = false, class: clase, sizes = '100vw' } = Astro.props;
 const disponible = !!clip && existsSync(join(process.cwd(), 'public', 'videos', `${clip}-720.mp4`));
 ---
 <div class:list={['vs', clase]} data-video={clip ?? ''} data-prioridad={prioridad ? '' : undefined}>
   <Image
     class="vs__poster" src={poster} alt={alt}
-    widths={[480, 960, 1600]} sizes="100vw" quality={72}
+    widths={[480, 960, 1600]} sizes={sizes} quality={72}
     loading={prioridad ? 'eager' : 'lazy'} fetchpriority={prioridad ? 'high' : 'auto'}
   />
   {disponible && (

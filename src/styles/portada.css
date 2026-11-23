@@ -1,8 +1,4 @@
 /* Estilos compartidos de la portada (no se cargan en /menu) */
-/* Alto de la barra fija de la portada; los anclajes no quedan tapados por ella */
-:root { --nav-h: 76px; }
-html { scroll-padding-top: var(--nav-h); }
-
 /* Botones compartidos */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
